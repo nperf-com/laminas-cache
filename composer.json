@@ -54,8 +54,7 @@
     },
     "conflict": {
         "laminas/laminas-serializer": "<3.0",
-        "symfony/console": "<5.1",
-        "stella-maris/clock": "<0.1.7"
+        "symfony/console": "<5.1"
     },
     "provide": {
         "psr/cache-implementation": "1.0",
