@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ecce7e86866a8056d898df3fb56b80b",
+    "content-hash": "707ca9df9ab204e27bd092027fff6905",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1643,22 +1643,22 @@
         },
         {
             "name": "laminas/laminas-serializer",
-            "version": "3.0.x-dev",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-serializer.git",
-                "reference": "36abc73b6d9e52f3b64a39025e68a0d897733e31"
+                "reference": "ff2079773ba3e0f23c7806a1811f3b97876adc21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/36abc73b6d9e52f3b64a39025e68a0d897733e31",
-                "reference": "36abc73b6d9e52f3b64a39025e68a0d897733e31",
+                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/ff2079773ba3e0f23c7806a1811f3b97876adc21",
+                "reference": "ff2079773ba3e0f23c7806a1811f3b97876adc21",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-json": "^3.1",
-                "laminas/laminas-servicemanager": "^4.0",
-                "laminas/laminas-stdlib": "^3.2",
+                "laminas/laminas-servicemanager": "^4.1",
+                "laminas/laminas-stdlib": "^3.19",
                 "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
@@ -1666,13 +1666,11 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-servicemanager": "^4.0.0-rc2",
                 "lctrs/psalm-psr-container-plugin": "^1.9",
                 "phpunit/phpunit": "^10.2.6",
-                "psalm/plugin-phpunit": "^0.18.4",
+                "psalm/plugin-phpunit": "^0.19.0",
                 "vimeo/psalm": "^5.21"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laminas": {
@@ -1709,7 +1707,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-02-06T13:06:12+00:00"
+            "time": "2024-04-23T22:42:07+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -5114,9 +5112,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "laminas/laminas-serializer": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
