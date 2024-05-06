@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99df812d161e4b5162b4e5698069fb25",
+    "content-hash": "5ecce7e86866a8056d898df3fb56b80b",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -125,16 +125,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "4.0.0-rc3",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "d69bfefe07df0d8217056ec81f819c851027b9de"
+                "reference": "ae01570ecdf4559aef2f15d4e79e8c36874f7416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/d69bfefe07df0d8217056ec81f819c851027b9de",
-                "reference": "d69bfefe07df0d8217056ec81f819c851027b9de",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/ae01570ecdf4559aef2f15d4e79e8c36874f7416",
+                "reference": "ae01570ecdf4559aef2f15d4e79e8c36874f7416",
                 "shasum": ""
             },
             "require": {
@@ -200,7 +200,7 @@
                 "chat": "https://laminas.dev/chat",
                 "forum": "https://discourse.laminas.dev",
                 "issues": "https://github.com/laminas/laminas-servicemanager/issues",
-                "source": "https://github.com/laminas/laminas-servicemanager/tree/4.0.0-rc3"
+                "source": "https://github.com/laminas/laminas-servicemanager/tree/4.1.0"
             },
             "funding": [
                 {
@@ -208,7 +208,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-03-02T23:58:24+00:00"
+            "time": "2024-04-03T20:39:36+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -5115,8 +5115,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "laminas/laminas-serializer": 20,
-        "laminas/laminas-servicemanager": 5
+        "laminas/laminas-serializer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
