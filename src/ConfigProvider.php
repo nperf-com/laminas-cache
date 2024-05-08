@@ -25,9 +25,9 @@ class ConfigProvider
     /**
      * Return default configuration for laminas-cache.
      *
-     * @return array
+     * @return array{dependencies:ServiceManagerConfiguration,...<string,mixed>}
      */
-    public function __invoke()
+    public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencyConfig(),
@@ -40,7 +40,7 @@ class ConfigProvider
      *
      * @return ServiceManagerConfiguration
      */
-    public function getDependencyConfig()
+    public function getDependencyConfig(): array
     {
         $dependencies = [
             'abstract_factories' => [
