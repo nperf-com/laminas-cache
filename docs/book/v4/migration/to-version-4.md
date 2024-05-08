@@ -20,3 +20,6 @@ TODO
 - `Capabilities` do not provide `supportedMetadata` anymore. The supported metadata is tied to the used storage adapter and thus, was already requiring projects to explicitly know the exact implementation of the cache backend in case of using these metadatas anyway
 - `KeyListIterator` and the corresponding `IteratorInterface` does not provide the `mode` `CURRENT_AS_METADATA` anymore 
 - `PluginOptions#getSerializer` does not create a serializer anymore if a `string` option was passed, instead, the `string` is returned
+- Every method now has native return types
+- Every property now has native types
+- Every method argument now has native types
