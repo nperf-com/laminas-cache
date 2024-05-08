@@ -1,6 +1,9 @@
 # Migration to Version 4.0
 
-TODO
+Finally, native types **everywhere**. With v4.0, `laminas-cache` depends on `laminas-servicemanager` v4 which already introduced full native types and thus, cache now has native types as well.
+Along with these changes, we also decided to remove and/or enhance some features to make the usage of this component more user-friendly.
+So instead of working with metadata arrays, a new `MetadataCapableInterface` was introduced which provides a generic interface for storage adapters to tell both IDEs and static analysers to understand what metadata instances are returned for which storage adapter.
+This allows per-storage Metadata which can differ depending on the storage being used.
 
 ## Checklist
 
