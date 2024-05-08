@@ -26,16 +26,16 @@ $objectCache = new ObjectCache(
 
 ## Configuration Options
 
-Option | Data Type | Default Value | Description
------- | --------- | ------------- | -----------
-`storage` | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none | **deprecated** Adapter used for reading and writing cached data.
-`object` | `object` | none | The object for which to cache method calls.
-`object_key` | `null\|string` | Class name of object | Hopefully unique!
-`cache_output` | `bool` | `true` | Whether or not to cache method output.
-`cache_by_default` | `bool` | `true` | Cache all method calls by default.
-`object_cache_methods` | `array` | `[]` | List of methods to cache (if `cache_by_default` is disabled).
-`object_non_cache_methods` | `array` | `[]` | List of methods to blacklist (if `cache_by_default` is enabled).
-`object_cache_magic_properties` | `bool` | `false` | Whether or not to cache properties exposed by method overloading.
+| Option                          | Data Type                                               | Default Value        | Description                                                       |
+|---------------------------------|---------------------------------------------------------|----------------------|-------------------------------------------------------------------|
+| `storage`                       | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none                 | **deprecated** Adapter used for reading and writing cached data.  |
+| `object`                        | `object`                                                | none                 | The object for which to cache method calls.                       |
+| `object_key`                    | `null\|string`                                          | Class name of object | Hopefully unique!                                                 |
+| `cache_output`                  | `bool`                                                  | `true`               | Whether or not to cache method output.                            |
+| `cache_by_default`              | `bool`                                                  | `true`               | Cache all method calls by default.                                |
+| `object_cache_methods`          | `array`                                                 | `[]`                 | List of methods to cache (if `cache_by_default` is disabled).     |
+| `object_non_cache_methods`      | `array`                                                 | `[]`                 | List of methods to blacklist (if `cache_by_default` is enabled).  |
+| `object_cache_magic_properties` | `bool`                                                  | `false`              | Whether or not to cache properties exposed by method overloading. |
 
 ## Examples
 

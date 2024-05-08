@@ -23,10 +23,10 @@ $callbackCache = new CallbackCache(
 
 ## Configuration Options
 
-Option | Data Type | Default Value | Description
------- | --------- | ------------- | -----------
-`storage` | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none | **deprecated** Adapter used for reading and writing cached data.
-`cache_output` | `bool` | `true` | Whether or not to cache callback output.
+| Option         | Data Type                                               | Default Value | Description                                                      |
+|----------------|---------------------------------------------------------|---------------|------------------------------------------------------------------|
+| `storage`      | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none          | **deprecated** Adapter used for reading and writing cached data. |
+| `cache_output` | `bool`                                                  | `true`        | Whether or not to cache callback output.                         |
 
 ## Examples
 

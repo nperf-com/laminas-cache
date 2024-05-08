@@ -20,9 +20,9 @@ $outputCache = new OutputCache(
 
 ## Configuration Options
 
-Option | Data Type | Default Value | Description
------- | --------- | ------------- | -----------
-`storage` | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none | **deprecated** Adapter used for reading and writing cached data.
+| Option    | Data Type                                               | Default Value | Description                                                      |
+|-----------|---------------------------------------------------------|---------------|------------------------------------------------------------------|
+| `storage` | `string\|array\|Laminas\Cache\Storage\StorageInterface` | none          | **deprecated** Adapter used for reading and writing cached data. |
 
 ## Examples
 
