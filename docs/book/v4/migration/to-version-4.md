@@ -23,7 +23,8 @@ This allows per-storage Metadata which can differ depending on the storage being
 
 ## New Features
 
-- Every adapter which supports `metadata` now implements `MetadataCapableInterface` and provides a dedicated object containing all the metadata values it supports.
+- Every adapter which supports `metadata` now implements `MetadataCapableInterface` and provides a dedicated object containing all the metadata values it supports
+- Adds support for `psr/cache` and `psr/simple-cache` v2 & v3
 
 ## Removed Classes
 
