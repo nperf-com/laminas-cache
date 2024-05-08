@@ -211,7 +211,7 @@ class ObjectCache extends AbstractStorageCapablePattern implements Stringable
      *
      * @param  non-empty-string $name
      */
-    public function __set($name, mixed $value): void
+    public function __set(string $name, mixed $value): void
     {
         $this->call('__set', [$name, $value]);
     }

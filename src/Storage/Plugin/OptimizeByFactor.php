@@ -23,10 +23,9 @@ class OptimizeByFactor extends AbstractPlugin
     /**
      * Optimize by factor on a success _RESULT_
      *
-     * @return void
      * @phpcs:disable Generic.NamingConventions.ConstructorName.OldStyle
      */
-    public function optimizeByFactor(PostEvent $event)
+    public function optimizeByFactor(PostEvent $event): void
     {
         $storage = $event->getStorage();
         if (! $storage instanceof OptimizableInterface) {

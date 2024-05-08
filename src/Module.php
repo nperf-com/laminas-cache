@@ -6,10 +6,8 @@ class Module
 {
     /**
      * Return default laminas-cache configuration for laminas-mvc context.
-     *
-     * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         $provider = new ConfigProvider();
         return [
