@@ -18,7 +18,7 @@ This allows per-storage Metadata which can differ depending on the storage being
 5. Verify that you are **not** using `KeyListIterator` with mode `CURRENT_AS_METADATA` (use the returned `key` instead and pass it to the `MetadataCapable` storage adapter (**NOTE: not all adapters do implement `MetadataCapableInterface`**)
 6. If you use the `Serializer` plugin
    1. Verify that if you pass a `string` as `serializer` option, you do not directly depend on the return value of `PluginOptions#getSerializer` (method will return `string` instead of instantiating a new `SerializerInterface` instance). The plugin itself can still handle `string` and an instance of `SerializerInterface` as in previous versions
-7. If you provide own plugins, storage adapters, pattern, you have to upgrade to v4 and update all method/argument/property (return-) types according to the updated versions
+7. If you provide own plugins, storage adapters, pattern, you have to upgrade to v4 and update all method/argument/property (return-) types according to the updated versions. Check out [rector](https://github.com/rectorphp/rector) which can help with this kind of migration
 8. If you are handling `Laminas\Cache\Exception\MissingKeyException`, you can remove that code as the exception does not exist anymore
 
 ## New Features
