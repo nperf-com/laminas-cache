@@ -58,7 +58,7 @@ $storage->setItem('foo', 'bar');
 
 We provide scripts for benchmarking laminas-cache using the
 [PHPBench](https://github.com/phpbench/phpbench) framework; these can be
-found in the `benchmark/` directory.
+found in the `benchmark/` directory of each storage adapter.
 
 To execute the benchmarks you can run the following command:
 

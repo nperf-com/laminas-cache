@@ -16,10 +16,8 @@ trait SerializationTrait
 {
     /**
      * Determine if the given storage adapter requires serialization.
-     *
-     * @return bool
      */
-    private function isSerializationRequired(StorageInterface $storage)
+    private function isSerializationRequired(StorageInterface $storage): bool
     {
         $capabilities  = $storage->getCapabilities();
         $requiredTypes = ['string', 'integer', 'double', 'boolean', 'NULL', 'array', 'object'];

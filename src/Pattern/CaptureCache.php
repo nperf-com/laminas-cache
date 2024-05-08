@@ -28,13 +28,7 @@ use const LOCK_EX;
 
 class CaptureCache extends AbstractPattern
 {
-    /**
-     * Start the cache
-     *
-     * @param  string|null $pageId  Page identifier
-     * @return void
-     */
-    public function start(string|null $pageId = null)
+    public function start(string|null $pageId = null): void
     {
         if ($pageId === null) {
             $pageId = $this->detectPageId();
