@@ -4,15 +4,27 @@ TODO
 
 ## Checklist
 
-1. TODO
+1. Ensure you are on latest `laminas/laminas-cache` v3
+2. Ensure you are on latest `laminas/laminas-cache-storage-adapter-*` version (might differ)
+3. Verify that you are **not** using one of the following methods
+   1. `StorageInterface#incrementItem` (no replacement available, should be implemented in userland code)
+   2. `StorageInterface#incrementItems` (no replacement available, should be implemented in userland code)
+   3. `StorageInterface#decrementItem` (no replacement available, should be implemented in userland code)
+   4. `StorageInterface#decrementItems` (no replacement available, should be implemented in userland code)
+4. Verify that you are **not** using `supportedMetadata` capability (use `MetadataCapableInterface#getMetadata` instead)
+5. Verify that you are **not** using `KeyListIterator` with mode `CURRENT_AS_METADATA` (use the returned `key` instead and pass it to the `MetadataCapable` storage adapter (**NOTE: not all adapters do implement `MetadataCapableInterface`**)
+6. If you use the `Serializer` plugin
+   1. Verify that if you pass a `string` as `serializer` option, you do not directly depend on the return value of `PluginOptions#getSerializer` (method will return `string` instead of instantiating a new `SerializerInterface` instance). The plugin itself can still handle `string` and an instance of `SerializerInterface` as in previous versions
+7. If you provide own plugins, storage adapters, pattern, you have to upgrade to v4 and update all method/argument/property (return-) types according to the updated versions
+8. If you are handling `Laminas\Cache\Exception\MissingKeyException`, you can remove that code as the exception does not exist anymore
 
 ## New Features
 
 - Every adapter which supports `metadata` now implements `MetadataCapableInterface` and provides a dedicated object containing all the metadata values it supports.
 
-## Removed Classes and Traits
+## Removed Classes
 
-TODO
+- `Laminas\Cache\Exception\MissingKeyException`
 
 ## Breaking Changes
 
