@@ -79,35 +79,35 @@ class ObjectCache extends CallbackCache
     /**
      * Call and cache a class method
      *
-     * @param  string $method  Method name to call
+     * @param  non-empty-string $method  Method name to call
      * @param  array  $args    Method arguments
      * @return mixed
      * @throws Exception\RuntimeException
      * @throws \Exception
      */
-    public function call($method, array $args = []);
+    public function call(string $method, array $args = []): mixed;
 
     /**
      * Method overloading: proxies to call().
      *
-     * @param  string $method  Method name to call
+     * @param  non-empty-string $method  Method name to call
      * @param  array  $args    Method arguments
      * @return mixed
      * @throws Exception\RuntimeException
      * @throws \Exception
      */
-    public function __call($method, array $args);
+    public function __call(string $method, array $args): mixed;
 
     /**
      * Generate a unique key in base of a key representing the callback part
      * and a key representing the arguments part.
      *
-     * @param  string     $method  The method
+     * @param  non-empty-string     $method  The method
      * @param  array      $args    Callback arguments
-     * @return string
+     * @return non-empty-string
      * @throws Exception\RuntimeException
      */
-    public function generateKey($method, array $args = []);
+    public function generateKey(string $methodOrProperty, array $args = []): string;
 
     /**
      * Property overloading: write data to a named property.
@@ -117,12 +117,10 @@ class ObjectCache extends CallbackCache
      * is enabled and the property doesn't exist in real. If so it calls __set
      * and removes cached data of previous __get and __isset calls.
      *
-     * @param  string $name
-     * @param  mixed  $value
-     * @return void
+     * @param  non-empty-string $name
      * @see    http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
-    public function __set($name, $value);
+    public function __set(string $name, mixed $value): void;
 
     /**
      * Property overloading: read data from a named property.
@@ -131,11 +129,10 @@ class ObjectCache extends CallbackCache
      * Magic properties will be cached too if the option cacheMagicProperties
      * is enabled and the property doesn't exist in real. If so it calls __get.
      *
-     * @param  string $name
-     * @return mixed
+     * @param  non-empty-string $name
      * @see http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
-    public function __get($name);
+    public function __get($name): mixed;
 
     /**
      * Property overloading: check if a named property exists.
@@ -144,11 +141,10 @@ class ObjectCache extends CallbackCache
      * Magic properties will be cached too if the option cacheMagicProperties
      * is enabled and the property doesn't exist in real. If so it calls __get.
      *
-     * @param  string $name
-     * @return bool
+     * @param  non-empty-string $name
      * @see    http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
-    public function __isset($name);
+    public function __isset($name): bool;
 
     /**
      * Property overloading: unset a named property.
@@ -158,26 +154,23 @@ class ObjectCache extends CallbackCache
      * is enabled and the property doesn't exist in real. If so it removes
      * previous cached __isset and __get calls.
      *
-     * @param  string $name
-     * @return void
+     * @param  non-empty-string $name
      * @see    http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
-    public function __unset($name);
+    public function __unset(string $name): void;
 
     /**
      * Handle casting to string
      *
-     * @return string
      * @see    http://php.net/manual/language.oop5.magic.php#language.oop5.magic.tostring
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Intercept and cache invokable usage.
      *
-     * @return mixed
      * @see    http://php.net/manual/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function __invoke();
+    public function __invoke(): mixed;
 }
 ```

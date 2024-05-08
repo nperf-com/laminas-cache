@@ -59,18 +59,18 @@ class CallbackCache extends AbstractStorageCapablePattern
      * @throws Exception\RuntimeException if invalid cached data
      * @throws \Exception
      */
-    public function call($callback, array $args = []);
+    public function call(callable $callback, array $args = []): mixed;
 
     /**
      * Intercept method overloading; proxies to call()
      *
-     * @param  string $function  Function name to call
+     * @param  callable-string $function  Function name to call
      * @param  array  $args      Function arguments
      * @return mixed
      * @throws Exception\RuntimeException
      * @throws \Exception
      */
-    public function __call($function, array $args);
+    public function __call(string $function, array $args): mixed;
 
     /**
      * Generate a unique key in base of a key representing the callback part
@@ -78,10 +78,10 @@ class CallbackCache extends AbstractStorageCapablePattern
      *
      * @param  callable   $callback  A valid callback
      * @param  array      $args      Callback arguments
-     * @return string
+     * @return non-empty-string
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
      */
-    public function generateKey($callback, array $args = []);
+    public function generateKey(callable $callback, array $args = []): string;
 }
 ```

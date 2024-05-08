@@ -29,31 +29,23 @@ class Capabilities
     /**
      * Constructor
      *
-     * @param StorageInterface  $storage
-     * @param stdClass          $marker
-     * @param array             $capabilities
-     * @param null|Capabilities $baseCapabilities
      */
     public function __construct(
         StorageInterface $storage,
         stdClass $marker,
         array $capabilities = [],
-        Capabilities $baseCapabilities = null
+        Capabilities|null $baseCapabilities = null
     );
 
     /**
      * Get the storage adapter
-     *
-     * @return StorageInterface
      */
-    public function getAdapter();
+    public function getAdapter(): StorageInterface;
 
     /**
      * Get supported datatypes
-     *
-     * @return array
      */
-    public function getSupportedDatatypes();
+    public function getSupportedDatatypes(): array;
 
     /**
      * Set supported datatypes
@@ -70,7 +62,7 @@ class Capabilities
      *
      * @return int 0 means items never expire
      */
-    public function getMinTtl();
+    public function getMinTtl(): int;
 
     /**
      * Set minimum supported time-to-live
@@ -78,76 +70,55 @@ class Capabilities
      * @param  stdClass $marker
      * @param  int $minTtl
      * @throws Exception\InvalidArgumentException
-     * @return Capabilities Fluent interface
      */
-    public function setMinTtl(stdClass $marker, $minTtl);
+    public function setMinTtl(stdClass $marker, int $minTtl): self;
 
     /**
      * Get maximum supported time-to-live
      *
      * @return int 0 means infinite
      */
-    public function getMaxTtl();
+    public function getMaxTtl(): int;
 
     /**
      * Set maximum supported time-to-live
      *
-     * @param  stdClass $marker
-     * @param  int $maxTtl
      * @throws Exception\InvalidArgumentException
-     * @return Capabilities Fluent interface
      */
-    public function setMaxTtl(stdClass $marker, $maxTtl);
+    public function setMaxTtl(stdClass $marker, int $maxTtl): self;
 
     /**
      * Is the time-to-live handled static (on write)
      * or dynamic (on read)
-     *
-     * @return bool
      */
-    public function getStaticTtl();
+    public function getStaticTtl(): bool;
 
     /**
      * Set if the time-to-live handled static (on write) or dynamic (on read)
-     *
-     * @param  stdClass $marker
-     * @param  bool $flag
-     * @return Capabilities Fluent interface
      */
-    public function setStaticTtl(stdClass $marker, $flag);
+    public function setStaticTtl(stdClass $marker, bool $flag): self;
 
     /**
      * Get time-to-live precision
-     *
-     * @return float
      */
-    public function getTtlPrecision();
+    public function getTtlPrecision(): float;
 
     /**
      * Set time-to-live precision
      *
-     * @param  stdClass $marker
-     * @param  float $ttlPrecision
      * @throws Exception\InvalidArgumentException
-     * @return Capabilities Fluent interface
      */
-    public function setTtlPrecision(stdClass $marker, $ttlPrecision);
+    public function setTtlPrecision(stdClass $marker, float $ttlPrecision): self;
 
     /**
      * Get use request time
-     *
-     * @return bool
      */
-    public function getUseRequestTime();
+    public function getUseRequestTime(): bool;
 
     /**
      * Set use request time
-     *
-     * @param  stdClass $marker
-     * @param  bool $flag
-     * @return Capabilities Fluent interface
      */
-    public function setUseRequestTime(stdClass $marker, $flag);
+    public function setUseRequestTime(stdClass $marker, bool $flag): self;
 
 
     /**
@@ -157,19 +128,15 @@ class Capabilities
      *             >0 = Time in seconds an expired item could be retrieved
      *             -1 = Expired items could be retrieved forever
      */
-    public function getLockOnExpire()
+    public function getLockOnExpire(): int
     {
         return $this->getCapability('lockOnExpire', 0);
     }
 
     /**
      * Set "lock-on-expire" support in seconds.
-     *
-     * @param  stdClass $marker
-     * @param  int      $timeout
-     * @return Capabilities Fluent interface
      */
-    public function setLockOnExpire(stdClass $marker, $timeout)
+    public function setLockOnExpire(stdClass $marker, int $timeout): self
     {
         return $this->setCapability($marker, 'lockOnExpire', (int) $timeout);
     }
@@ -179,49 +146,34 @@ class Capabilities
      *
      * @return int -1 means unknown, 0 means infinite
      */
-    public function getMaxKeyLength();
+    public function getMaxKeyLength(): int;
 
     /**
      * Set maximum key length
      *
-     * @param  stdClass $marker
-     * @param  int $maxKeyLength
      * @throws Exception\InvalidArgumentException
-     * @return Capabilities Fluent interface
      */
-    public function setMaxKeyLength(stdClass $marker, $maxKeyLength);
+    public function setMaxKeyLength(stdClass $marker, int $maxKeyLength): self;
 
     /**
      * Get if namespace support is implemented as prefix
-     *
-     * @return bool
      */
-    public function getNamespaceIsPrefix();
+    public function getNamespaceIsPrefix(): bool;
 
     /**
      * Set if namespace support is implemented as prefix
-     *
-     * @param  stdClass $marker
-     * @param  bool $flag
-     * @return Capabilities Fluent interface
      */
-    public function setNamespaceIsPrefix(stdClass $marker, $flag);
+    public function setNamespaceIsPrefix(stdClass $marker, bool $flag): self;
 
     /**
      * Get namespace separator if namespace is implemented as prefix
-     *
-     * @return string
      */
-    public function getNamespaceSeparator();
+    public function getNamespaceSeparator(): string;
 
     /**
      * Set the namespace separator if namespace is implemented as prefix
-     *
-     * @param  stdClass $marker
-     * @param  string $separator
-     * @return Capabilities Fluent interface
      */
-    public function setNamespaceSeparator(stdClass $marker, $separator);
+    public function setNamespaceSeparator(stdClass $marker, string $separator): self;
 }
 ```
 

@@ -59,11 +59,10 @@ class OutputCache extends AbstractStorageCapablePattern
      * return true. Otherwise, start buffering output until end() is called, or
      * the script ends.
      *
-     * @param  string  $key Key
+     * @param  non-empty-string  $key
      * @throws Exception\MissingKeyException if key is missing
-     * @return bool
      */
-    public function start($key);
+    public function start(string $key): bool;
 
     /**
      * Stop buffering output, write buffered data to the cache using the key
@@ -72,6 +71,6 @@ class OutputCache extends AbstractStorageCapablePattern
      * @throws Exception\RuntimeException if output cache not started or buffering not active
      * @return bool TRUE on success, FALSE on failure writing to cache
      */
-    public function end();
+    public function end(): bool;
 }
 ```

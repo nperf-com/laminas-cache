@@ -88,65 +88,51 @@ use Laminas\Cache\Exception;
 class CaptureCache extends AbstractPattern
 {
     /**
-     * Start the cache.
-     *
-     * @param  string $pageId  Page identifier
-     * @return void
+     * Starts capturing.
      */
-    public function start($pageId = null);
+    public function start(string|null $pageId = null): void;
 
     /**
      * Write a page to the requested path.
      *
-     * @param string      $content
-     * @param null|string $pageId
      * @throws Exception\LogicException
      */
-    public function set($content, $pageId = null);
+    public function set(string $content, string|null $pageId = null): void;
 
     /**
      * Retrieve a generated page from the cache.
      *
-     * @param  null|string $pageId
-     * @return string|null
      * @throws Exception\LogicException
      * @throws Exception\RuntimeException
      */
-    public function get($pageId = null);
+    public function get(string|null $pageId = null): string|null;
 
     /**
      * Check if a cache exists for the given page.
      *
-     * @param  null|string $pageId
      * @throws Exception\LogicException
      * @return bool
      */
-    public function has($pageId = null);
+    public function has(string|null $pageId = null): bool;
 
     /**
      * Remove a page from the cache.
      *
-     * @param  null|string $pageId
      * @throws Exception\LogicException
      * @throws Exception\RuntimeException
-     * @return bool
      */
-    public function remove($pageId = null);
+    public function remove(string|null $pageId = null): bool;
 
     /**
      * Clear cached pages that match the specified glob pattern.
      *
-     * @param string $pattern
      * @throws Exception\LogicException
      */
-    public function clearByGlob($pattern = '**');
+    public function clearByGlob(string $pattern = '**'): void;
 
     /**
      * Returns the generated file name.
-     *
-     * @param null|string $pageId
-     * @return string
      */
-    public function getFilename($pageId = null);
+    public function getFilename(string|null $pageId = null): string;
 }
 ```

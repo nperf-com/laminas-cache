@@ -142,34 +142,23 @@ interface PluginInterface extends ListenerAggregateInterface
 {
     /**
      * Set options
-     *
-     * @param  PluginOptions $options
-     * @return PluginInterface
      */
-    public function setOptions(PluginOptions $options);
+    public function setOptions(PluginOptions $options): self;
 
     /**
      * Get options
-     *
-     * @return PluginOptions
      */
-    public function getOptions();
+    public function getOptions(): PluginOptions;
 
     /**
      * Attach listeners; inherited from ListenerAggregateInterface.
-     *
-     * @param EventManagerInterface $events
-     * @return void
      */
-    public function attach(EventManagerInterface $events);
+    public function attach(EventManagerInterface $events, int $priority = 1): void;
 
     /**
      * Detach listeners; inherited from ListenerAggregateInterface.
-     *
-     * @param EventManagerInterface $events
-     * @return void
      */
-    public function attach(EventManagerInterface $events);
+    public function detach(EventManagerInterface $events): void;
 }
 ```
 
@@ -189,16 +178,16 @@ class MyPlugin extends AbstractPlugin
     /**
      * Attach to all events this plugin is interested in.
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, int $priority = 1): void
     {
-        $this->handles[] = $events->attach('getItem.pre', array($this, 'onGetItemPre'));
-        $this->handles[] = $events->attach('getItem.post', array($this, 'onGetItemPost'));
+        $this->handles[] = $events->attach('getItem.pre', array($this, 'onGetItemPre'), $priority);
+        $this->handles[] = $events->attach('getItem.post', array($this, 'onGetItemPost'), $priority);
     }
 
     /**
      * Detach all handlers this plugin previously attached.
      */
-    public function detach(EventManagerInterface $events)
+    public function detach(EventManagerInterface $events): void
     {
         foreach ($this->handles as $handle) {
            $events->detach($handle);
@@ -206,13 +195,13 @@ class MyPlugin extends AbstractPlugin
         $this->handles = [];
     }
 
-    public function onGetItemPre(Event $event)
+    public function onGetItemPre(Event $event): void
     {
         $params = $event->getParams();
         echo sprintf("Method 'getItem' with key '%s' started\n", $params['key']);
     }
 
-    public function onGetItemPost(Event $event)
+    public function onGetItemPost(Event $event): void
     {
         $params = $event->getParams();
         echo sprintf("Method 'getItem' with key '%s' finished\n", $params['key']);
