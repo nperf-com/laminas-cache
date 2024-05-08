@@ -42,4 +42,4 @@ This allows per-storage Metadata which can differ depending on the storage being
 - Every method now has native return types
 - Every property now has native types
 - Every method argument now has native types
-- `ObjectCache` does not inherit (but decorate) the `CallbackCache` pattern anymore
+- `ObjectCache` does not inherit the `CallbackCache` pattern anymore
