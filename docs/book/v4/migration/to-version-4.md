@@ -19,3 +19,4 @@ TODO
 - `AbstractAdapter` and `StorageInterface` are not aware of the methods `getMetadata` anymore. These were moved to the new `MetadataCapableInterface`
 - `Capabilities` do not provide `supportedMetadata` anymore. The supported metadata is tied to the used storage adapter and thus, was already requiring projects to explicitly know the exact implementation of the cache backend in case of using these metadatas anyway
 - `KeyListIterator` and the corresponding `IteratorInterface` does not provide the `mode` `CURRENT_AS_METADATA` anymore 
+- `PluginOptions#getSerializer` does not create a serializer anymore if a `string` option was passed, instead, the `string` is returned
