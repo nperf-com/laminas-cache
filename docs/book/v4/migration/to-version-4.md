@@ -20,6 +20,7 @@ This allows per-storage Metadata which can differ depending on the storage being
    1. Verify that if you pass a `string` as `serializer` option, you do not directly depend on the return value of `PluginOptions#getSerializer` (method will return `string` instead of instantiating a new `SerializerInterface` instance). The plugin itself can still handle `string` and an instance of `SerializerInterface` as in previous versions
 7. If you provide own plugins, storage adapters, pattern, you have to upgrade to v4 and update all method/argument/property (return-) types according to the updated versions. Check out [rector](https://github.com/rectorphp/rector) which can help with this kind of migration
 8. If you are handling `Laminas\Cache\Exception\MissingKeyException`, you can remove that code as the exception does not exist anymore
+9. Check if you use `ObjectCache` pattern, that your code does not expect an instance of `CallbackCache` to be passed
 
 ## New Features
 
@@ -41,3 +42,4 @@ This allows per-storage Metadata which can differ depending on the storage being
 - Every method now has native return types
 - Every property now has native types
 - Every method argument now has native types
+- `ObjectCache` does not inherit (but decorate) the `CallbackCache` pattern anymore
