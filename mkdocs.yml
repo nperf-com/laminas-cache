@@ -63,8 +63,9 @@ extra:
     installation:
         config_provider_class: 'Laminas\Cache\ConfigProvider'
         module_class: 'Laminas\Cache\Module'
-    current_version: v3
+    current_version: v4
     versions:
+        - v4
         - v3
         - v2
     show_special_homepage: true
