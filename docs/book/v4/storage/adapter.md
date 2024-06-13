@@ -515,15 +515,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                                                 |
 |----------------------|---------------------------------------------------------------------------------------|
 | `supportedDatatypes` | `null`, `bool`, `int`, `float`, `string`, `array` (serialized), `object` (serialized) |
-| `minTtl`             | 1                                                                                     |
-| `maxTtl`             | 0                                                                                     |
-| `staticTtl`          | `true`                                                                                |
-| `ttlPrecision`       | 1                                                                                     |
-| `useRequestTime`     | value of `apc.use_request_time` from `php.ini`                                        |
-| `lockOnExpire`       | 0                                                                                     |
-| `maxKeyLength`       | 5182                                                                                  |
+| `ttlSupported`       | `true`                                                                                |
+| `ttlPrecision`       | `1`                                                                                   |
+| `usesRequestTime`    | value of `apc.use_request_time` INI value, disabled by default.                       |
+| `maxKeyLength`       | `5182`                                                                                |
 | `namespaceIsPrefix`  | `true`                                                                                |
-| `namespaceSeparator` | Option value of `namespace_separator`                                                 |
 
 ### Metadata
 
@@ -570,15 +566,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                       |
 |----------------------|-------------------------------------------------------------|
 | `supportedDatatypes` | `null`, `bool`, `int`, `float`, `string`, `array`, `object` |
-| `minTtl`             | 1                                                           |
-| `maxTtl`             | 0                                                           |
-| `staticTtl`          | `false` or `true`, depending on `psr` option                |
-| `ttlPrecision`       | 1                                                           |
-| `useRequestTime`     | false                                                       |
-| `lockOnExpire`       | 0                                                           |
-| `maxKeyLength`       | -1                                                          |
+| `ttlSupported`       | `true`                                                      |
+| `ttlPrecision`       | `1`                                                         |
+| `usesRequestTime`    | `false`                                                     |
+| `maxKeyLength`       | unlimited as nothing will be cached anyways                 |
 | `namespaceIsPrefix`  | `true`                                                      |
-| `namespaceSeparator` | none                                                        |
 
 ## Filesystem Adapter
 
@@ -602,15 +594,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                                                            |
 |----------------------|--------------------------------------------------------------------------------------------------|
 | `supportedDatatypes` | `string`, `null` => `string`, `boolean` => `string`, `integer` => `string`, `double` => `string` |
-| `minTtl`             | 1                                                                                                |
-| `maxTtl`             | 0                                                                                                |
-| `staticTtl`          | `false`                                                                                          |
-| `ttlPrecision`       | 1                                                                                                |
-| `useRequestTime`     | `false`                                                                                          |
-| `lockOnExpire`       | 0                                                                                                |
-| `maxKeyLength`       | 251                                                                                              |
+| `ttlSupported`       | `true`                                                                                           |
+| `ttlPrecision`       | `1`                                                                                              |
+| `usesRequestTime`    | `false`                                                                                          |
+| `maxKeyLength`       | `251`                                                                                            |
 | `namespaceIsPrefix`  | `true`                                                                                           |
-| `namespaceSeparator` | Option value of `namespace_separator`                                                            |
 
 ### Metadata
 
@@ -661,15 +649,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                                                         |
 |----------------------|-----------------------------------------------------------------------------------------------|
 | `supportedDatatypes` | `null`, `boolean`, `integer`, `double`, `string`, `array` (serialized), `object` (serialized) |
-| `minTtl`             | 1                                                                                             |
-| `maxTtl`             | 0                                                                                             |
-| `staticTtl`          | `true`                                                                                        |
-| `ttlPrecision`       | 1                                                                                             |
-| `useRequestTime`     | `false`                                                                                       |
-| `lockOnExpire`       | 0                                                                                             |
-| `maxKeyLength`       | 255                                                                                           |
+| `ttlSupported`       | `true`                                                                                        |
+| `ttlPrecision`       | `1`                                                                                           |
+| `usesRequestTime`    | `false`                                                                                       |
+| `maxKeyLength`       | `255`                                                                                         |
 | `namespaceIsPrefix`  | `true`                                                                                        |
-| `namespaceSeparator` | none                                                                                          |
 
 ### Adapter Specific Options
 
@@ -695,15 +679,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                 |
 |----------------------|-------------------------------------------------------|
 | `supportedDatatypes` | `string`, `array` (serialized), `object` (serialized) |
-| `minTtl`             | 1                                                     |
-| `maxTtl`             | 0                                                     |
-| `staticTtl`          | `true`                                                |
-| `ttlPrecision`       | 1                                                     |
-| `useRequestTime`     | `false`                                               |
-| `lockOnExpire`       | 0                                                     |
-| `maxKeyLength`       | 512000000 (in Redis v3+, 255 otherwise)               |
+| `ttlSupported`       | `true`                                                |
+| `ttlPrecision`       | `1`                                                   |
+| `usesRequestTime`    | `false`                                               |
+| `maxKeyLength`       | `512000000` (in Redis v3+, `255` in older versions)   |
 | `namespaceIsPrefix`  | `true`                                                |
-| `namespaceSeparator` | none                                                  |
 
 ### Metadata
 
@@ -745,15 +725,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                 |
 |----------------------|-------------------------------------------------------|
 | `supportedDatatypes` | `string`, `array` (serialized), `object` (serialized) |
-| `minTtl`             | 1                                                     |
-| `maxTtl`             | 0                                                     |
-| `staticTtl`          | `true`                                                |
-| `ttlPrecision`       | 1                                                     |
-| `useRequestTime`     | `false`                                               |
-| `lockOnExpire`       | 0                                                     |
-| `maxKeyLength`       | 512000000 (in Redis v3+, 255 otherwise)               |
+| `ttlSupported`       | `true`                                                |
+| `ttlPrecision`       | `1`                                                   |
+| `usesRequestTime`    | `false`                                               |
+| `maxKeyLength`       | `512000000` (in Redis v3+, `255` in older versions)   |
 | `namespaceIsPrefix`  | `true`                                                |
-| `namespaceSeparator` | none                                                  |
 
 ### Metadata
 
@@ -796,13 +772,10 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                                           |
 |----------------------|---------------------------------------------------------------------------------|
 | `supportedDatatypes` | `string`, `null`, `boolean`, `integer`, `double`, `array`, `object`, `resource` |
-| `minTtl`             | 1                                                                               |
-| `maxTtl`             | Value of `PHP_INT_MAX`                                                          |
-| `staticTtl`          | `false`                                                                         |
-| `ttlPrecision`       | 0.05                                                                            |
-| `useRequestTime`     | `false`                                                                         |
-| `lockOnExpire`       | 0                                                                               |
-| `maxKeyLength`       | 0                                                                               |
+| `ttlSupported`       | `true`                                                                          |
+| `ttlPrecision`       | `0.05`                                                                          |
+| `usesRequestTime`    | `false`                                                                         |
+| `maxKeyLength`       | `0`                                                                             |
 | `namespaceIsPrefix`  | `false`                                                                         |
 
 ### Metadata
@@ -851,15 +824,11 @@ This adapter implements the following interfaces:
 | Capability           | Value                                                     |
 |----------------------|-----------------------------------------------------------|
 | `supportedDatatypes` | `string`, `null`, `boolean`, `integer`, `double`, `array` |
-| `minTtl`             | 0                                                         |
-| `maxTtl`             | 0                                                         |
-| `staticTtl`          | `true`                                                    |
-| `ttlPrecision`       | 1                                                         |
-| `useRequestTime`     | `false`                                                   |
-| `lockOnExpire`       | 0                                                         |
-| `maxKeyLength`       | 255                                                       |
+| `ttlSupported`       | `true`                                                    |
+| `ttlPrecision`       | `1`                                                       |
+| `usesRequestTime`    | `false`                                                   |
+| `maxKeyLength`       | `255`                                                     |
 | `namespaceIsPrefix`  | `true`                                                    |
-| `namespaceSeparator` | *Option value of `namespace_separator`*                   |
 
 ### Metadata
 

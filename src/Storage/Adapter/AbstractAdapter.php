@@ -16,7 +16,6 @@ use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ResponseCollection;
 use SplObjectStorage;
-use stdClass;
 use Throwable;
 use Webmozart\Assert\Assert;
 
@@ -55,11 +54,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
      * Capabilities of this adapter
      */
     protected ?Capabilities $capabilities = null;
-
-    /**
-     * Marker to change capabilities
-     */
-    protected ?object $capabilityMarker = null;
 
     /**
      * options
@@ -1180,7 +1174,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
             Assert::isInstanceOf($result, Capabilities::class);
             return $result;
         } catch (Throwable $throwable) {
-            $result = $this->triggerThrowable(__FUNCTION__, $args, new Capabilities($this, new stdClass()), $throwable);
+            $result = $this->triggerThrowable(__FUNCTION__, $args, new Capabilities(), $throwable);
             Assert::isInstanceOf($result, Capabilities::class);
 
             return $result;
@@ -1192,12 +1186,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
      */
     protected function internalGetCapabilities(): Capabilities
     {
-        if ($this->capabilities === null) {
-            $this->capabilityMarker = new stdClass();
-            $this->capabilities     = new Capabilities($this, $this->capabilityMarker);
-        }
-
-        return $this->capabilities;
+        return $this->capabilities ??= new Capabilities();
     }
 
     /* internal */

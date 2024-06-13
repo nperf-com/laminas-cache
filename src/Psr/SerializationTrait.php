@@ -21,7 +21,7 @@ trait SerializationTrait
     {
         $capabilities  = $storage->getCapabilities();
         $requiredTypes = ['string', 'integer', 'double', 'boolean', 'NULL', 'array', 'object'];
-        $types         = $capabilities->getSupportedDatatypes();
+        $types         = $capabilities->supportedDataTypes;
 
         foreach ($requiredTypes as $type) {
             // 'object' => 'object' is OK

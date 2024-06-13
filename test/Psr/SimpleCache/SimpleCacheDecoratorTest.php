@@ -39,11 +39,11 @@ use function str_repeat;
  * try/catch blocks and assert identity against the result of getPrevious().
  *
  * phpcs:disable Generic.Files.LineLength.TooLong
+ * @psalm-import-type SupportedDataTypesArrayShape from Capabilities
  */
-class SimpleCacheDecoratorTest extends TestCase
+final class SimpleCacheDecoratorTest extends TestCase
 {
-    /** @var array<string,bool|string> */
-    private array $requiredTypes = [
+    private const SIMPLE_CACHE_REQUIRED_TYPES = [
         'NULL'     => true,
         'boolean'  => true,
         'integer'  => true,
@@ -68,7 +68,7 @@ class SimpleCacheDecoratorTest extends TestCase
     public function unsupportedCapabilities(): Generator
     {
         yield 'minimum key length <64 characters' => [
-            $this->getMockCapabilities(null, true, 60, 63),
+            $this->createCapabilities(null, true, 63),
         ];
     }
 
@@ -80,43 +80,36 @@ class SimpleCacheDecoratorTest extends TestCase
         $this->cache = new SimpleCacheDecorator($this->storage);
     }
 
-    private function getMockCapabilities(
+    /**
+     * @param SupportedDataTypesArrayShape|null $supportedDataTypes
+     * @param int<-1,max> $maxKeyLength
+     */
+    private function createCapabilities(
         ?array $supportedDataTypes = null,
-        bool $staticTtl = true,
-        int $minTtl = 60,
+        bool $ttlSupported = true,
         int $maxKeyLength = -1
     ): Capabilities {
-        $supportedDataTypes = $supportedDataTypes ?? $this->requiredTypes;
-        $capabilities       = $this->createMock(Capabilities::class);
-        $capabilities
-            ->method('getSupportedDatatypes')
-            ->willReturn($supportedDataTypes);
-
-        $capabilities
-            ->method('getStaticTtl')
-            ->willReturn($staticTtl);
-        $capabilities
-            ->method('getMinTtl')
-            ->willReturn($minTtl);
-
-        $capabilities
-            ->method('getMaxKeyLength')
-            ->willReturn($maxKeyLength);
-
-        return $capabilities;
+        $supportedDataTypes = $supportedDataTypes ?? self::SIMPLE_CACHE_REQUIRED_TYPES;
+        return new Capabilities(
+            maxKeyLength: $maxKeyLength,
+            ttlSupported: $ttlSupported,
+            supportedDataTypes: $supportedDataTypes,
+        );
     }
 
+    /**
+     * @param SupportedDataTypesArrayShape|null $supportedDataTypes
+     * @param int<-1,max> $maxKeyLength
+     */
     private function mockCapabilities(
-        MockObject $storage,
+        MockObject&StorageInterface $storage,
         ?array $supportedDataTypes = null,
-        bool $staticTtl = true,
-        int $minTtl = 60,
+        bool $ttlSupported = true,
         int $maxKeyLength = -1
     ): void {
-        $capabilities = $this->getMockCapabilities(
+        $capabilities = $this->createCapabilities(
             $supportedDataTypes,
-            $staticTtl,
-            $minTtl,
+            $ttlSupported,
             $maxKeyLength
         );
 
@@ -168,16 +161,14 @@ class SimpleCacheDecoratorTest extends TestCase
 
     public function testStorageNeedsSerializerWillThrowException(): void
     {
-        $dataTypes = [
-            'staticTtl'          => true,
-            'minTtl'             => 1,
-            'supportedDatatypes' => [
+        $storage = $this->createMock(StorageInterface::class);
+        $this->mockCapabilities(
+            $storage,
+            supportedDataTypes: [
                 'double' => false,
             ],
-        ];
+        );
 
-        $storage = $this->createMock(StorageInterface::class);
-        $this->mockCapabilities($storage, $dataTypes, false);
         $storage
             ->expects(self::never())
             ->method('getOptions');
@@ -320,10 +311,10 @@ class SimpleCacheDecoratorTest extends TestCase
         self::assertTrue($this->cache->set('key', 'value', $ttl));
     }
 
-    public function testSetShouldReturnFalseWhenProvidedWithPositiveTtlAndStorageDoesNotSupportPerItemTtl(): void
+    public function testSetShouldReturnFalseWhenProvidedWithPositiveTtlAndStorageDoesNotSupportTtl(): void
     {
         $storage = $this->createMock(StorageInterface::class);
-        $this->mockCapabilities($storage, null, false);
+        $this->mockCapabilities($storage, null, ttlSupported: false);
         $storage
             ->expects(self::never())
             ->method('getOptions');
@@ -339,12 +330,11 @@ class SimpleCacheDecoratorTest extends TestCase
 
     /**
      * @dataProvider invalidatingTtls
-     * @param int $ttl
      */
-    public function testSetShouldRemoveItemFromCacheIfTtlIsBelow1AndStorageDoesNotSupportPerItemTtl($ttl)
+    public function testSetShouldRemoveItemFromCacheIfTtlIsBelow1AndStorageDoesNotSupportTtl(int $ttl): void
     {
         $storage = $this->createMock(StorageInterface::class);
-        $this->mockCapabilities($storage, null, false);
+        $this->mockCapabilities($storage, null, ttlSupported: false);
         $storage
             ->expects(self::never())
             ->method('getOptions');
@@ -390,7 +380,7 @@ class SimpleCacheDecoratorTest extends TestCase
             ->method('getOptions')
             ->willReturn($this->options);
 
-        $this->mockCapabilities($storage, null, false, 60, 251);
+        $this->mockCapabilities($storage, null, true, 251);
         $storage
             ->expects(self::once())
             ->method('setItem')
@@ -747,7 +737,7 @@ class SimpleCacheDecoratorTest extends TestCase
         self::assertTrue($this->cache->setMultiple($values, $ttl));
     }
 
-    public function testSetMultipleShouldReturnFalseWhenProvidedWithPositiveTtlAndStorageDoesNotSupportPerItemTtl(): void
+    public function testSetMultipleShouldReturnFalseWhenProvidedWithPositiveTtlAndStorageDoesNotSupportTtl(): void
     {
         $values = [
             'one'   => 1,
@@ -756,7 +746,7 @@ class SimpleCacheDecoratorTest extends TestCase
         ];
 
         $storage = $this->createMock(StorageInterface::class);
-        $this->mockCapabilities($storage, null, false);
+        $this->mockCapabilities($storage, null, ttlSupported: false);
         $storage
             ->expects(self::never())
             ->method('getOptions');
@@ -772,9 +762,8 @@ class SimpleCacheDecoratorTest extends TestCase
 
     /**
      * @dataProvider invalidatingTtls
-     * @param int $ttl
      */
-    public function testSetMultipleShouldRemoveItemsFromCacheIfTtlIsBelow1AndStorageDoesNotSupportPerItemTtl($ttl)
+    public function testSetMultipleShouldRemoveItemsFromCacheIfTtlIsBelow1AndStorageDoesNotSupportTtl(int $ttl): void
     {
         $values = [
             'one'   => 1,
@@ -783,7 +772,7 @@ class SimpleCacheDecoratorTest extends TestCase
         ];
 
         $storage = $this->createMock(StorageInterface::class);
-        $this->mockCapabilities($storage, null, false);
+        $this->mockCapabilities($storage, ttlSupported: false);
         $storage
             ->expects(self::never())
             ->method('getOptions');
@@ -986,7 +975,7 @@ class SimpleCacheDecoratorTest extends TestCase
 
     public function testUseTtlFromOptionsWhenNotProvidedOnSet(): void
     {
-        $capabilities = $this->getMockCapabilities();
+        $capabilities = $this->createCapabilities();
 
         $storage = new TestAsset\TtlStorage(['ttl' => 20]);
         $storage->setCapabilities($capabilities);
@@ -999,7 +988,7 @@ class SimpleCacheDecoratorTest extends TestCase
 
     public function testUseTtlFromOptionsWhenNotProvidedOnSetMultiple(): void
     {
-        $capabilities = $this->getMockCapabilities();
+        $capabilities = $this->createCapabilities();
 
         $storage = new TestAsset\TtlStorage(['ttl' => 20]);
         $storage->setCapabilities($capabilities);
@@ -1082,11 +1071,10 @@ class SimpleCacheDecoratorTest extends TestCase
     public function testWillUsePcreMaximumQuantifierLengthIfAdapterAllowsMoreThanThat(): void
     {
         $storage      = $this->createMock(StorageInterface::class);
-        $capabilities = $this->getMockCapabilities(
+        $capabilities = $this->createCapabilities(
             null,
-            true,
-            60,
-            SimpleCacheDecorator::$pcreMaximumQuantifierLength
+            ttlSupported: true,
+            maxKeyLength: SimpleCacheDecorator::$pcreMaximumQuantifierLength
         );
 
         $storage
@@ -1121,7 +1109,7 @@ class SimpleCacheDecoratorTest extends TestCase
     {
         $storage = $this->createMock(StorageInterface::class);
 
-        $capabilities = $this->getMockCapabilities();
+        $capabilities = $this->createCapabilities();
 
         $storage
             ->method('getCapabilities')

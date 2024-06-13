@@ -307,23 +307,16 @@ class CacheItemPoolDecorator implements CacheItemPoolInterface
 
         // we've got to be able to set per-item TTL on write
         $capabilities = $storage->getCapabilities();
-        if (! ($capabilities->getStaticTtl() && $capabilities->getMinTtl())) {
+        if (! $capabilities->ttlSupported) {
             throw new CacheException(sprintf(
                 'Storage %s does not support static TTL',
                 $storage::class
             ));
         }
 
-        if ($capabilities->getUseRequestTime()) {
+        if ($capabilities->usesRequestTime) {
             throw new CacheException(sprintf(
                 'The capability "use-request-time" of storage %s violates PSR-6',
-                $storage::class
-            ));
-        }
-
-        if ($capabilities->getLockOnExpire()) {
-            throw new CacheException(sprintf(
-                'The capability "lock-on-expire" of storage %s violates PSR-6',
                 $storage::class
             ));
         }
