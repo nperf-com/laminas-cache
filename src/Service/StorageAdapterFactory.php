@@ -30,7 +30,7 @@ final class StorageAdapterFactory implements StorageAdapterFactoryInterface
 
     public function createFromArrayConfiguration(array $configuration): StorageInterface
     {
-        $adapterName = $configuration['adapter'] ?? $configuration['name'] ?? null;
+        $adapterName = $configuration['adapter'] ?? null;
         Assert::stringNotEmpty($adapterName, 'Configuration must contain a "adapter" key.');
         $adapterOptions = $configuration['options'] ?? [];
         $plugins        = $configuration['plugins'] ?? [];
@@ -73,7 +73,7 @@ final class StorageAdapterFactory implements StorageAdapterFactoryInterface
         try {
             Assert::isNonEmptyMap($configuration, 'Configuration must be a non-empty array.');
 
-            $adapter = $configuration['adapter'] ?? $configuration['name'] ?? null;
+            $adapter = $configuration['adapter'] ?? null;
 
             if (! is_string($adapter)) {
                 throw new InvalidArgumentException('Configuration must contain a "adapter" key.');
