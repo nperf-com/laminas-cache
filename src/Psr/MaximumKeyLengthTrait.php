@@ -37,7 +37,7 @@ trait MaximumKeyLengthTrait
 
     private function memoizeMaximumKeyLengthCapability(StorageInterface $storage, Capabilities $capabilities): void
     {
-        $maximumKeyLength = $capabilities->getMaxKeyLength();
+        $maximumKeyLength = $capabilities->maxKeyLength;
 
         if ($maximumKeyLength === Capabilities::UNLIMITED_KEY_LENGTH) {
             $this->maximumKeyLength = Capabilities::UNLIMITED_KEY_LENGTH;

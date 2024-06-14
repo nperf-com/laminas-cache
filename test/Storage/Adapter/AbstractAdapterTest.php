@@ -24,7 +24,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
-use stdClass;
 
 use function array_keys;
 use function array_merge;
@@ -371,7 +370,7 @@ final class AbstractAdapterTest extends TestCase
 
     public function simpleEventHandlingMethodDefinitions(): array
     {
-        $capabilities = new Capabilities($this->getMockForAbstractAdapter(), new stdClass());
+        $capabilities = new Capabilities();
 
         return [
             //    name, internalName, args, returnValue

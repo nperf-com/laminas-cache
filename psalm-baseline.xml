@@ -265,73 +265,6 @@
       <code><![CDATA[AvailableSpaceCapableInterface]]></code>
     </UnusedClass>
   </file>
-  <file src="src/Storage/Capabilities.php">
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$name]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[float]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->getCapability('lockOnExpire', 0)]]></code>
-      <code><![CDATA[$this->getCapability('maxKeyLength', self::UNKNOWN_KEY_LENGTH)]]></code>
-      <code><![CDATA[$this->getCapability('maxTtl', 0)]]></code>
-      <code><![CDATA[$this->getCapability('minTtl', 0)]]></code>
-      <code><![CDATA[$this->getCapability('namespaceIsPrefix', true)]]></code>
-      <code><![CDATA[$this->getCapability('namespaceSeparator', '')]]></code>
-      <code><![CDATA[$this->getCapability('staticTtl', false)]]></code>
-      <code><![CDATA[$this->getCapability('supportedDatatypes', [
-            'NULL'     => false,
-            'boolean'  => false,
-            'integer'  => false,
-            'double'   => false,
-            'string'   => true,
-            'array'    => false,
-            'object'   => false,
-            'resource' => false,
-        ])]]></code>
-      <code><![CDATA[$this->getCapability('ttlPrecision', 1)]]></code>
-      <code><![CDATA[$this->getCapability('useRequestTime', false)]]></code>
-    </MixedReturnStatement>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getNamespaceIsPrefix]]></code>
-      <code><![CDATA[getNamespaceSeparator]]></code>
-      <code><![CDATA[getTtlPrecision]]></code>
-      <code><![CDATA[setLockOnExpire]]></code>
-      <code><![CDATA[setMaxKeyLength]]></code>
-      <code><![CDATA[setMinTtl]]></code>
-      <code><![CDATA[setNamespaceIsPrefix]]></code>
-      <code><![CDATA[setNamespaceSeparator]]></code>
-      <code><![CDATA[setStaticTtl]]></code>
-      <code><![CDATA[setSupportedDatatypes]]></code>
-      <code><![CDATA[setTtlPrecision]]></code>
-      <code><![CDATA[setUseRequestTime]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$lockOnExpire]]></code>
-      <code><![CDATA[$maxKeyLength]]></code>
-      <code><![CDATA[$maxTtl]]></code>
-      <code><![CDATA[$minTtl]]></code>
-      <code><![CDATA[$namespaceIsPrefix]]></code>
-      <code><![CDATA[$namespaceSeparator]]></code>
-      <code><![CDATA[$staticTtl]]></code>
-      <code><![CDATA[$supportedDatatypes]]></code>
-      <code><![CDATA[$ttlPrecision]]></code>
-      <code><![CDATA[$useRequestTime]]></code>
-    </PossiblyUnusedProperty>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[self]]></code>
-    </PossiblyUnusedReturnValue>
-  </file>
   <file src="src/Storage/ClearByPrefixInterface.php">
     <UnusedClass>
       <code><![CDATA[ClearByPrefixInterface]]></code>
@@ -383,9 +316,6 @@
   </file>
   <file src="src/Storage/Plugin/Serializer.php">
     <MixedArgument>
-      <code><![CDATA[$baseCapabilities]]></code>
-      <code><![CDATA[$baseCapabilities]]></code>
-      <code><![CDATA[$baseCapabilities->getAdapter()]]></code>
       <code><![CDATA[$result]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
@@ -397,9 +327,6 @@
       <code><![CDATA[$params['keyValuePairs'][$index]]]></code>
       <code><![CDATA[$result[$index]]]></code>
     </MixedArrayOffset>
-    <MixedMethodCall>
-      <code><![CDATA[getAdapter]]></code>
-    </MixedMethodCall>
   </file>
   <file src="src/Storage/StorageInterface.php">
     <PossiblyUnusedMethod>
@@ -547,11 +474,9 @@
       <code><![CDATA[testHasProxiesToStorage]]></code>
       <code><![CDATA[testSetMultipleShouldRaisePsrInvalidArgumentExceptionForInvalidKeys]]></code>
       <code><![CDATA[testSetMultipleShouldRemoveItemsFromCacheIfTtlIsBelow1]]></code>
-      <code><![CDATA[testSetMultipleShouldRemoveItemsFromCacheIfTtlIsBelow1AndStorageDoesNotSupportPerItemTtl]]></code>
       <code><![CDATA[testSetShouldAcknowledgeStorageAdapterMaxKeyLengthWithPsrDecorator]]></code>
       <code><![CDATA[testSetShouldRaisePsrInvalidArgumentExceptionForInvalidKeys]]></code>
       <code><![CDATA[testSetShouldRemoveItemFromCacheIfTtlIsBelow1]]></code>
-      <code><![CDATA[testSetShouldRemoveItemFromCacheIfTtlIsBelow1AndStorageDoesNotSupportPerItemTtl]]></code>
     </MissingReturnType>
     <MixedInferredReturnType>
       <code><![CDATA[array]]></code>

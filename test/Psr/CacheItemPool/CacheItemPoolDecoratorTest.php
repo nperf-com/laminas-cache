@@ -16,14 +16,12 @@ use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\ClearByNamespaceInterface;
 use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\StorageInterface;
-use Laminas\EventManager\EventManager;
 use LaminasTest\Cache\Psr\CacheItemPool\TestAsset\FlushableStorageAdapterInterface;
 use LaminasTest\Cache\Psr\TestAsset\FlushableNamespaceStorageInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Clock\ClockInterface;
-use stdClass;
 use Throwable;
 
 use function array_keys;
@@ -34,15 +32,17 @@ use function sprintf;
 use function str_repeat;
 use function time;
 
+/**
+ * @psalm-import-type SupportedDataTypesArrayShape from Capabilities
+ */
 final class CacheItemPoolDecoratorTest extends TestCase
 {
     /** @var StorageInterface&FlushableInterface&MockObject */
-    private $storage;
+    private StorageInterface&FlushableInterface&MockObject $storage;
 
     private ?CacheItemPoolDecorator $adapter;
 
-    /** @var array<string,bool|string> */
-    private array $requiredTypes = [
+    private const REQUIRED_TYPES = [
         'NULL'     => true,
         'boolean'  => true,
         'integer'  => true,
@@ -53,8 +53,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
         'resource' => false,
     ];
 
-    /** @var AdapterOptions&MockObject */
-    private $options;
+    private AdapterOptions&MockObject $options;
 
     protected function setUp(): void
     {
@@ -65,31 +64,24 @@ final class CacheItemPoolDecoratorTest extends TestCase
     }
 
     /**
+     * @param SupportedDataTypesArrayShape|null $supportedDataTypes
+     * @param int<-1,max> $maxKeyLength
      * @return StorageInterface&FlushableInterface&ClearByNamespaceInterface&MockObject
      */
     private function createMockedStorage(
         ?AdapterOptions $options = null,
         ?array $supportedDataTypes = null,
-        bool $staticTtl = true,
-        int $minTtl = 1,
+        bool $ttlSupported = true,
         int $maxKeyLength = -1,
         bool $useRequestTime = false,
-        bool $lockOnExpire = false
     ): StorageInterface {
         $storage = $this->createMock(FlushableNamespaceStorageInterface::class);
 
-        $storage
-            ->method('getEventManager')
-            ->willReturn(new EventManager());
-
         $capabilities = $this->createCapabilities(
-            $storage,
             $supportedDataTypes,
-            $staticTtl,
-            $minTtl,
+            $ttlSupported,
             $maxKeyLength,
             $useRequestTime,
-            $lockOnExpire
         );
 
         $storage
@@ -108,7 +100,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
         $this->expectException(CacheException::class);
         $storage = $this->createMock(FlushableStorageAdapterInterface::class);
 
-        $capabilities = $this->createCapabilities($storage, [
+        $capabilities = $this->createCapabilities(supportedDataTypes: [
             'NULL'     => true,
             'boolean'  => true,
             'integer'  => true,
@@ -127,17 +119,10 @@ final class CacheItemPoolDecoratorTest extends TestCase
         $this->getAdapter($storage);
     }
 
-    public function testStorageFalseStaticTtlThrowsException(): void
+    public function testBackendDoesNotSupportTtlThrowsException(): void
     {
         $this->expectException(CacheException::class);
-        $storage = $this->createMockedStorage(null, null, false);
-        $this->getAdapter($storage);
-    }
-
-    public function testStorageZeroMinTtlThrowsException(): void
-    {
-        $this->expectException(CacheException::class);
-        $storage = $this->createMockedStorage(null, null, true, 0);
+        $storage = $this->createMockedStorage(null, null, ttlSupported: false);
         $this->getAdapter($storage);
     }
 
@@ -930,7 +915,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
         $adapter
             ->expects(self::atLeast(3))
             ->method('getCapabilities')
-            ->willReturn($this->createCapabilities($adapter));
+            ->willReturn($this->createCapabilities());
 
         $adapter
             ->expects(self::never())
@@ -973,11 +958,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
     {
         $storage      = $this->createMock(FlushableStorageAdapterInterface::class);
         $capabilities = $this->createCapabilities(
-            $storage,
-            null,
-            true,
-            60,
-            SimpleCacheDecorator::$pcreMaximumQuantifierLength
+            maxKeyLength: SimpleCacheDecorator::$pcreMaximumQuantifierLength
         );
 
         $storage
@@ -1008,23 +989,22 @@ final class CacheItemPoolDecoratorTest extends TestCase
         );
     }
 
+    /**
+     * @param SupportedDataTypesArrayShape|null $supportedDataTypes
+     * @param int<-1,max> $maxKeyLength
+     */
     private function createCapabilities(
-        StorageInterface $storage,
         ?array $supportedDataTypes = null,
-        bool $staticTtl = true,
-        int $minTtl = 1,
+        bool $ttlSupported = true,
         int $maxKeyLength = -1,
         bool $useRequestTime = false,
-        bool $lockOnExpire = false
     ): Capabilities {
-        return new Capabilities($storage, new stdClass(), [
-            'supportedDatatypes' => $supportedDataTypes ?? $this->requiredTypes,
-            'staticTtl'          => $staticTtl,
-            'minTtl'             => $minTtl,
-            'maxKeyLength'       => $maxKeyLength,
-            'useRequestTime'     => $useRequestTime,
-            'lockOnExpire'       => $lockOnExpire,
-        ]);
+        return new Capabilities(
+            maxKeyLength: $maxKeyLength,
+            ttlSupported: $ttlSupported,
+            supportedDataTypes: $supportedDataTypes ?? self::REQUIRED_TYPES,
+            usesRequestTime: $useRequestTime,
+        );
     }
 
     public function testKeepsDeferredItemsWhenCommitFails(): void

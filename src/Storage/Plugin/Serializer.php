@@ -8,15 +8,11 @@ use Laminas\Cache\Storage\PostEvent;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Serializer\Adapter\AdapterInterface;
 use Laminas\ServiceManager\PluginManagerInterface;
-use stdClass;
 
 use function assert;
-use function spl_object_hash;
 
 final class Serializer extends AbstractPlugin
 {
-    protected array $capabilities = [];
-
     private ?AdapterInterface $serializer = null;
 
     /**
@@ -111,34 +107,32 @@ final class Serializer extends AbstractPlugin
     }
 
     /**
-     * On get capabilities
+     * Update data types when using serializer plugin.
      */
     public function onGetCapabilitiesPost(PostEvent $event): void
     {
-        $baseCapabilities = $event->getResult();
-        $index            = spl_object_hash($baseCapabilities);
+        $capabilities = $event->getResult();
+        assert($capabilities instanceof Capabilities);
 
-        if (! isset($this->capabilities[$index])) {
-            $this->capabilities[$index] = new Capabilities(
-                $baseCapabilities->getAdapter(),
-                new stdClass(), // marker
-                [
-                    'supportedDatatypes' => [
-                        'NULL'     => true,
-                        'boolean'  => true,
-                        'integer'  => true,
-                        'double'   => true,
-                        'string'   => true,
-                        'array'    => true,
-                        'object'   => 'object',
-                        'resource' => false,
-                    ],
-                ],
-                $baseCapabilities
-            );
-        }
+        $capabilitiesWithUpdatedDataTypes = new Capabilities(
+            $capabilities->maxKeyLength,
+            $capabilities->ttlSupported,
+            $capabilities->namespaceIsPrefix,
+            [
+                'NULL'     => true,
+                'boolean'  => true,
+                'integer'  => true,
+                'double'   => true,
+                'string'   => true,
+                'array'    => true,
+                'object'   => 'object',
+                'resource' => false,
+            ],
+            $capabilities->ttlPrecision,
+            $capabilities->usesRequestTime,
+        );
 
-        $event->setResult($this->capabilities[$index]);
+        $event->setResult($capabilitiesWithUpdatedDataTypes);
     }
 
     public function getSerializer(): AdapterInterface

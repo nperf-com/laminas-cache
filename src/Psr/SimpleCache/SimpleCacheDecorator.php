@@ -361,7 +361,7 @@ class SimpleCacheDecorator implements SimpleCacheInterface
      */
     private function memoizeTtlCapabilities(Capabilities $capabilities): void
     {
-        $this->providesPerItemTtl = $capabilities->getStaticTtl() && (0 < $capabilities->getMinTtl());
+        $this->providesPerItemTtl = 0 < $capabilities->ttlSupported;
     }
 
     /**
