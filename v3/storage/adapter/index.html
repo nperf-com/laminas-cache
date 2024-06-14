@@ -1715,6 +1715,12 @@ using the PHP extension <a href="https://github.com/phpredis/phpredis">PhpRedis<
 <td>""</td>
 <td>The Redis server version. <strong>MUST</strong> be specified in a <a href="https://semver.org/#semantic-versioning-200">Semantic Versioning 2.0.0</a> format. This information is used to determine some features/capabilities without opening a connection to the server.</td>
 </tr>
+<tr>
+<td><code>ssl_context</code></td>
+<td><code>array|SslContext|null</code></td>
+<td><code>null</code></td>
+<td>Associative array with <a href="https://www.php.net/manual/en/context.ssl.php">SSL context</a> options. Can be also an instance of <code>SslContext</code> (class available from within the <code>redis</code> adapter). Available since adapter version v2.8.0.</td>
+</tr>
 </tbody>
 </table></div>
 <h2 id="memory-adapter">Memory Adapter</h2>
