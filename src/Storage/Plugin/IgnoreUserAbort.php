@@ -9,7 +9,7 @@ use Laminas\EventManager\EventManagerInterface;
 use function connection_aborted;
 use function ignore_user_abort;
 
-class IgnoreUserAbort extends AbstractPlugin
+final class IgnoreUserAbort extends AbstractPlugin
 {
     /**
      * The storage who activated ignore_user_abort.

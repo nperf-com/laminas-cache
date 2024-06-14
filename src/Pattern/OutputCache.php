@@ -9,7 +9,7 @@ use function ob_get_flush;
 use function ob_implicit_flush;
 use function ob_start;
 
-class OutputCache extends AbstractStorageCapablePattern
+final class OutputCache extends AbstractStorageCapablePattern
 {
     /**
      * The key stack

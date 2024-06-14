@@ -26,7 +26,7 @@ use function unlink;
 use const DIRECTORY_SEPARATOR;
 use const LOCK_EX;
 
-class CaptureCache extends AbstractPattern
+final class CaptureCache extends AbstractPattern
 {
     public function start(string|null $pageId = null): void
     {

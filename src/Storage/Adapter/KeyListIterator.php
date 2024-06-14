@@ -5,17 +5,14 @@ namespace Laminas\Cache\Storage\Adapter;
 use Countable;
 use Laminas\Cache\Storage\IteratorInterface;
 use Laminas\Cache\Storage\StorageInterface;
-use ReturnTypeWillChange;
 
 use function count;
 
 /**
- * @see ReturnTypeWillChange
- *
  * @template-covariant TValue
  * @template-implements IteratorInterface<non-empty-string, TValue>
  */
-class KeyListIterator implements IteratorInterface, Countable
+final class KeyListIterator implements IteratorInterface, Countable
 {
     /**
      * The iterator mode

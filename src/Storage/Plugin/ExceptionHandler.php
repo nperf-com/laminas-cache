@@ -7,7 +7,7 @@ use Laminas\EventManager\EventManagerInterface;
 
 use function call_user_func;
 
-class ExceptionHandler extends AbstractPlugin
+final class ExceptionHandler extends AbstractPlugin
 {
     /**
      * {@inheritDoc}

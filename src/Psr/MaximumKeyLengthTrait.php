@@ -29,11 +29,8 @@ trait MaximumKeyLengthTrait
      */
     public static $pcreMaximumQuantifierLength = 65535;
 
-    /**
-     * @var int
-     * @psalm-var 0|positive-int
-     */
-    private $maximumKeyLength;
+    /** @var int<0,max> */
+    private int $maximumKeyLength;
 
     private function memoizeMaximumKeyLengthCapability(StorageInterface $storage, Capabilities $capabilities): void
     {

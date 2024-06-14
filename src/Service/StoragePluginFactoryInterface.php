@@ -13,7 +13,7 @@ use Laminas\Cache\Storage\Plugin\PluginInterface;
 interface StoragePluginFactoryInterface
 {
     /**
-     * @psalm-param PluginArrayConfigurationType $configuration
+     * @param PluginArrayConfigurationType $configuration
      */
     public function createFromArrayConfiguration(array $configuration): PluginInterface;
 

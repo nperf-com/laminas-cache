@@ -34,7 +34,7 @@ use function var_export;
 /**
  * Decorate a laminas-cache storage adapter for usage as a PSR-16 implementation.
  */
-class SimpleCacheDecorator implements SimpleCacheInterface
+final class SimpleCacheDecorator implements SimpleCacheInterface
 {
     use MaximumKeyLengthTrait;
     use SerializationTrait;
@@ -385,7 +385,7 @@ class SimpleCacheDecorator implements SimpleCacheInterface
     }
 
     /**
-     * @psalm-return list<non-empty-string>
+     * @return list<non-empty-string>
      * @throws SimpleCacheInvalidArgumentException For invalid $iterable values.
      */
     private function convertIterableKeysToList(iterable $keys): array

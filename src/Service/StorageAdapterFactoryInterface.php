@@ -22,14 +22,14 @@ use Laminas\Cache\Storage\StorageInterface;
 interface StorageAdapterFactoryInterface
 {
     /**
-     * @psalm-param StorageAdapterArrayConfigurationType $configuration
+     * @param StorageAdapterArrayConfigurationType $configuration
      */
     public function createFromArrayConfiguration(array $configuration): StorageInterface;
 
     /**
-     * @psalm-param non-empty-string $storage
+     * @param non-empty-string $storage
      * @param array<string,mixed>  $options
-     * @psalm-param list<PluginArrayConfigurationWithPriorityType> $plugins
+     * @param list<PluginArrayConfigurationWithPriorityType> $plugins
      */
     public function create(string $storage, array $options = [], array $plugins = []): StorageInterface;
 

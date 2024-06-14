@@ -8,7 +8,7 @@ use Laminas\EventManager\EventManagerInterface;
 
 use function random_int;
 
-class ClearExpiredByFactor extends AbstractPlugin
+final class ClearExpiredByFactor extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
