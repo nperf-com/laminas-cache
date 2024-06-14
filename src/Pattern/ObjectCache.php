@@ -17,7 +17,7 @@ use function property_exists;
 use function sprintf;
 use function strtolower;
 
-class ObjectCache extends AbstractStorageCapablePattern implements Stringable
+final class ObjectCache extends AbstractStorageCapablePattern implements Stringable
 {
     private CallbackCache $callbackCache;
 

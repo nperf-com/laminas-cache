@@ -17,7 +17,7 @@ use function ob_start;
 use function serialize;
 use function strtolower;
 
-class CallbackCache extends AbstractStorageCapablePattern
+final class CallbackCache extends AbstractStorageCapablePattern
 {
     /**
      * Call the specified callback or get the result from cache

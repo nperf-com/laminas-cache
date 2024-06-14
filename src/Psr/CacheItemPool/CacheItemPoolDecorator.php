@@ -37,7 +37,7 @@ use function var_export;
  * @link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-6-cache.md
  * @link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-6-cache-meta.md
  */
-class CacheItemPoolDecorator implements CacheItemPoolInterface
+final class CacheItemPoolDecorator implements CacheItemPoolInterface
 {
     use MaximumKeyLengthTrait;
     use SerializationTrait;
@@ -373,8 +373,8 @@ class CacheItemPoolDecorator implements CacheItemPoolInterface
     }
 
     /**
-     * @psalm-param non-empty-list<CacheItem> $items
-     * @psalm-return array<string,CacheItem>
+     * @param non-empty-list<CacheItem> $items
+     * @return array<string,CacheItem>
      */
     private function saveMultipleItems(array $items, ?int $itemTtl): array
     {

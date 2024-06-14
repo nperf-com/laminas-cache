@@ -8,7 +8,7 @@ use Laminas\EventManager\EventManagerInterface;
 
 use function random_int;
 
-class OptimizeByFactor extends AbstractPlugin
+final class OptimizeByFactor extends AbstractPlugin
 {
     /**
      * {@inheritDoc}

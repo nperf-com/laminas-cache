@@ -94,8 +94,8 @@ final class StorageAdapterFactory implements StorageAdapterFactoryInterface
     }
 
     /**
-     * @psalm-param non-empty-string $adapter
-     * @psalm-param list<mixed> $plugins
+     * @param non-empty-string $adapter
+     * @param list<mixed> $plugins
      * @psalm-assert list<PluginArrayConfigurationWithPriorityType> $plugins
      */
     private function assertValidPluginConfigurationStructure(string $adapter, array $plugins): void
