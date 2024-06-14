@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.22.2@d768d914152dbbf3486c36398802f74e80cfde48">
-  <file src="src/Command/DeprecatedStorageFactoryConfigurationCheckCommand.php">
-    <MixedArgument>
-      <code><![CDATA[$cacheConfiguration]]></code>
-      <code><![CDATA[$configuration]]></code>
-    </MixedArgument>
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[$projectConfiguration]]></code>
-    </MixedPropertyTypeCoercion>
-  </file>
   <file src="src/Exception/BadMethodCallException.php">
     <UnusedClass>
       <code><![CDATA[BadMethodCallException]]></code>
@@ -352,15 +343,6 @@
       <code><![CDATA[TotalSpaceCapableInterface]]></code>
     </UnusedClass>
   </file>
-  <file src="test/Command/DeprecatedStorageFactoryConfigurationCheckCommandTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
-  </file>
   <file src="test/Pattern/AbstractCommonPatternTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[getCommonPatternNamesProvider]]></code>
@@ -481,12 +463,6 @@
     <MixedInferredReturnType>
       <code><![CDATA[array]]></code>
       <code><![CDATA[array]]></code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Service/DeprecatedSchemaDetectorTest.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[Generator]]></code>
-      <code><![CDATA[Generator]]></code>
     </MixedInferredReturnType>
   </file>
   <file src="test/Service/StorageAdapterFactoryFactoryTest.php">

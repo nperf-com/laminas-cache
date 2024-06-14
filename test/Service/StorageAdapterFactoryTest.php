@@ -118,30 +118,6 @@ final class StorageAdapterFactoryTest extends TestCase
      * @param array<string,mixed> $adapterConfiguration
      * @dataProvider storageConfigurations
      */
-    public function testWillCreateStorageFromArrayConfigurationWithDeprecatedNameKey(
-        string $adapterName,
-        array $adapterConfiguration
-    ): void {
-        $adapterMock = $this->createMock(AbstractAdapter::class);
-        $this->adapters
-            ->expects(self::once())
-            ->method('build')
-            ->with($adapterName, $adapterConfiguration)
-            ->willReturn($adapterMock);
-
-        $adapter = $this->factory->createFromArrayConfiguration([
-            'name'    => $adapterName,
-            'options' => $adapterConfiguration,
-        ]);
-
-        self::assertSame($adapterMock, $adapter);
-    }
-
-    /**
-     * @psalm-param non-empty-string $adapterName
-     * @param array<string,mixed> $adapterConfiguration
-     * @dataProvider storageConfigurations
-     */
     public function testWillCreateStorageFromArrayConfiguration(
         string $adapterName,
         array $adapterConfiguration
