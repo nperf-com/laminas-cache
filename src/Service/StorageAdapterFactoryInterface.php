@@ -14,10 +14,6 @@ use Laminas\Cache\Storage\StorageInterface;
  * @psalm-type PluginArrayConfigurationWithPriorityType =
  *              InternalPluginArrayConfigurationType&InternalOptionalPriorityConfigurationType
  * @psalm-type StorageAdapterArrayConfigurationType = array{
- *     name:non-empty-string,
- *     options?:array<string,mixed>,
- *     plugins?: list<PluginArrayConfigurationWithPriorityType>
- * }|array{
  *     adapter:non-empty-string,
  *     options?:array<string,mixed>,
  *     plugins?: list<PluginArrayConfigurationWithPriorityType>
