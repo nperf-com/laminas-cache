@@ -213,8 +213,6 @@
     </PossiblyInvalidPropertyAssignmentValue>
     <PossiblyUnusedMethod>
       <code><![CDATA[getCaching]]></code>
-      <code><![CDATA[normalizeKey]]></code>
-      <code><![CDATA[normalizeKeyValuePairs]]></code>
       <code><![CDATA[setCaching]]></code>
     </PossiblyUnusedMethod>
     <ReferenceConstraintViolation>
