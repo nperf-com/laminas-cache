@@ -9,7 +9,6 @@ use Laminas\Cache\Exception\InvalidArgumentException;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Event;
-use Laminas\Cache\Storage\StorageInterface;
 use LaminasTest\Cache\Storage\Adapter\TestAsset\AdapterOptionsWithPrioritizedOptions;
 use PHPUnit\Framework\TestCase;
 
@@ -21,19 +20,7 @@ use function func_get_args;
  */
 class AdapterOptionsTest extends TestCase
 {
-    /**
-     * Mock of the storage
-     *
-     * @var StorageInterface
-     */
-    protected $storage;
-
-    /**
-     * Adapter options
-     *
-     * @var null|AdapterOptions
-     */
-    protected $options;
+    protected AdapterOptions $options;
 
     public function setUp(): void
     {

@@ -4,22 +4,20 @@ namespace Laminas\Cache\Storage;
 
 use Laminas\Cache\Exception\ExceptionInterface;
 
+/**
+ * NOTE: when providing integrish cache keys in iterables, internal array conversion might convert these to int, even
+ *       tho they were non-empty-string beforehand. See https://3v4l.org/GsiBl for more details.
+ *
+ * @psalm-type CacheKeyInIterableType = non-empty-string|int
+ */
 interface StorageInterface
 {
-    /**
-     * Set options.
-     */
     public function setOptions(iterable|Adapter\AdapterOptions $options): self;
 
-    /**
-     * Get options
-     */
     public function getOptions(): Adapter\AdapterOptions;
 
     /* reading */
     /**
-     * Get an item.
-     *
      * @param non-empty-string $key
      * @param-out bool $success
      * @return mixed Data on success, null on failure
@@ -30,8 +28,8 @@ interface StorageInterface
     /**
      * Get multiple items.
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return array<non-empty-string,mixed> Associative array of keys and values
+     * @param non-empty-list<CacheKeyInIterableType> $keys
+     * @return array<CacheKeyInIterableType,mixed> Associative array of keys and values
      * @throws ExceptionInterface
      */
     public function getItems(array $keys): array;
@@ -47,8 +45,8 @@ interface StorageInterface
     /**
      * Test multiple items.
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of found keys
+     * @param non-empty-list<CacheKeyInIterableType> $keys
+     * @return list<CacheKeyInIterableType> Array of found keys
      * @throws ExceptionInterface
      */
     public function hasItems(array $keys): array;
@@ -65,8 +63,8 @@ interface StorageInterface
     /**
      * Store multiple items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<CacheKeyInIterableType,mixed> $keyValuePairs
+     * @return list<CacheKeyInIterableType> Array of not stored keys
      * @throws ExceptionInterface
      */
     public function setItems(array $keyValuePairs): array;
@@ -74,6 +72,7 @@ interface StorageInterface
     /**
      * Add an item.
      *
+     * @param non-empty-string $key
      * @throws ExceptionInterface
      */
     public function addItem(string $key, mixed $value): bool;
@@ -81,8 +80,8 @@ interface StorageInterface
     /**
      * Add multiple items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<CacheKeyInIterableType,mixed> $keyValuePairs
+     * @return list<CacheKeyInIterableType> Array of not stored keys
      * @throws ExceptionInterface
      */
     public function addItems(array $keyValuePairs): array;
@@ -98,8 +97,8 @@ interface StorageInterface
     /**
      * Replace multiple existing items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<CacheKeyInIterableType,mixed> $keyValuePairs
+     * @return list<CacheKeyInIterableType> Array of not stored keys
      * @throws ExceptionInterface
      */
     public function replaceItems(array $keyValuePairs): array;
@@ -130,8 +129,8 @@ interface StorageInterface
     /**
      * Reset lifetime of multiple items.
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of not updated keys
+     * @param non-empty-list<CacheKeyInIterableType> $keys
+     * @return list<CacheKeyInIterableType> Array of not updated keys
      * @throws ExceptionInterface
      */
     public function touchItems(array $keys): array;
@@ -147,8 +146,8 @@ interface StorageInterface
     /**
      * Remove multiple items.
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of not removed keys
+     * @param non-empty-list<CacheKeyInIterableType> $keys
+     * @return list<CacheKeyInIterableType> Array of not removed keys
      * @throws ExceptionInterface
      */
     public function removeItems(array $keys): array;

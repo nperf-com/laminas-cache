@@ -24,6 +24,7 @@ use function array_unique;
 use function array_values;
 use function func_num_args;
 use function is_array;
+use function is_int;
 use function is_string;
 use function preg_match;
 use function sprintf;
@@ -71,6 +72,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         if ($options !== null) {
             $this->setOptions($options);
         }
+    }
+
+    /**
+     * @psalm-assert list<non-empty-string|int> $result
+     */
+    private function assertListOfKeys(mixed $result): void
+    {
+        Assert::isList($result);
+        $this->assertValidKeys($result);
     }
 
     /**
@@ -329,7 +339,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         try {
             $eventRs = $this->triggerPre(__FUNCTION__, $args);
             $key     = $args['key'];
-            $this->assertValidKey($key);
+            Assert::stringNotEmpty($key);
 
             if ($eventRs->stopped()) {
                 $result = $eventRs->last();
@@ -372,11 +382,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     ): mixed;
 
     /**
-     * Get multiple items.
+     * {@inheritDoc}
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return array<non-empty-string,mixed> Associative array of keys and values
-     * @throws Exception\ExceptionInterface
      * @triggers getItems.pre(PreEvent)
      * @triggers getItems.post(PostEvent)
      * @triggers getItems.exception(ExceptionEvent)
@@ -418,8 +425,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to get multiple items.
      *
-     * @param non-empty-list<non-empty-string> $normalizedKeys
-     * @return array<non-empty-string,mixed> Associative array of keys and values
+     * @param non-empty-list<non-empty-string|int> $normalizedKeys
+     * @return array<non-empty-string|int,mixed> Associative array of keys and values
      * @throws Exception\ExceptionInterface
      */
     protected function internalGetItems(array $normalizedKeys): array
@@ -427,7 +434,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         $success = null;
         $result  = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            $value = $this->internalGetItem($normalizedKey, $success);
+            $value = $this->internalGetItem((string) $normalizedKey, $success);
             if ($success) {
                 $result[$normalizedKey] = $value;
             }
@@ -486,11 +493,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Test multiple items.
+     * {@inheritDoc}
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of found keys
-     * @throws Exception\ExceptionInterface
      * @triggers hasItems.pre(PreEvent)
      * @triggers hasItems.post(PostEvent)
      * @triggers hasItems.exception(ExceptionEvent)
@@ -518,24 +522,22 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
             $result = $this->triggerThrowable(__FUNCTION__, $args, [], $throwable);
         }
 
-        Assert::isList($result);
-        Assert::allStringNotEmpty($result);
-
+        self::assertListOfKeys($result);
         return $result;
     }
 
     /**
      * Internal method to test multiple items.
      *
-     * @param non-empty-list<non-empty-string> $normalizedKeys
-     * @return list<non-empty-string> Array of found keys
+     * @param non-empty-list<non-empty-string|int> $normalizedKeys
+     * @return list<non-empty-string|int> Array of found keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalHasItems(array $normalizedKeys): array
     {
         $result = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            if ($this->internalHasItem($normalizedKey)) {
+            if ($this->internalHasItem((string) $normalizedKey)) {
                 $result[] = $normalizedKey;
             }
         }
@@ -590,11 +592,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     abstract protected function internalSetItem(string $normalizedKey, mixed $value): bool;
 
     /**
-     * Store multiple items.
+     * {@inheritDoc}
      *
-     * @param array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
-     * @throws Exception\ExceptionInterface
      * @triggers setItems.pre(PreEvent)
      * @triggers setItems.post(PostEvent)
      * @triggers setItems.exception(ExceptionEvent)
@@ -624,8 +623,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
             $result = $this->triggerThrowable(__FUNCTION__, $args, array_keys($keyValuePairs), $throwable);
         }
 
-        Assert::isList($result);
-        Assert::allStringNotEmpty($result);
+        $this->assertListOfKeys($result);
         return $result;
     }
 
@@ -703,11 +701,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Add multiple items.
+     * {@inheritDoc}
      *
-     * @param array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
-     * @throws Exception\ExceptionInterface
      * @triggers addItems.pre(PreEvent)
      * @triggers addItems.post(PostEvent)
      * @triggers addItems.exception(ExceptionEvent)
@@ -816,11 +811,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Replace multiple existing items.
+     * {@inheritDoc}
      *
-     * @param array<non-empty-string,mixed> $keyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
-     * @throws Exception\ExceptionInterface
      * @triggers replaceItems.pre(PreEvent)
      * @triggers replaceItems.post(PostEvent)
      * @triggers replaceItems.exception(ExceptionEvent)
@@ -848,8 +840,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
             $result = $this->triggerThrowable(__FUNCTION__, $args, array_keys($keyValuePairs), $throwable);
         }
 
-        Assert::isList($result);
-        Assert::allStringNotEmpty($result);
+        $this->assertListOfKeys($result);
         return $result;
     }
 
@@ -984,11 +975,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Reset lifetime of multiple items.
+     * {@inheritDoc}
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of not updated keys
-     * @throws Exception\ExceptionInterface
      * @triggers touchItems.pre(PreEvent)
      * @triggers touchItems.post(PostEvent)
      * @triggers touchItems.exception(ExceptionEvent)
@@ -1012,13 +1000,11 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
                 : $this->internalTouchItems($args['keys']);
 
             $result = $this->triggerPost(__FUNCTION__, $args, $result);
-            Assert::isList($result);
-            Assert::allStringNotEmpty($result);
+            $this->assertListOfKeys($result);
             return $result;
         } catch (Throwable $throwable) {
             $result = $this->triggerThrowable(__FUNCTION__, $args, $keys, $throwable);
-            Assert::isList($result);
-            Assert::allStringNotEmpty($result);
+            $this->assertListOfKeys($result);
             return $result;
         }
     }
@@ -1026,15 +1012,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to reset lifetime of multiple items.
      *
-     * @param non-empty-list<non-empty-string> $normalizedKeys
-     * @return list<non-empty-string> Array of not updated keys
+     * @param non-empty-list<non-empty-string|int> $normalizedKeys
+     * @return list<non-empty-string|int> Array of not updated keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalTouchItems(array $normalizedKeys): array
     {
         $result = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            if (! $this->internalTouchItem($normalizedKey)) {
+            if (! $this->internalTouchItem((string) $normalizedKey)) {
                 $result[] = $normalizedKey;
             }
         }
@@ -1089,11 +1075,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     abstract protected function internalRemoveItem(string $normalizedKey): bool;
 
     /**
-     * Remove multiple items.
+     * {@inheritDoc}
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return list<non-empty-string> Array of not removed keys
-     * @throws Exception\ExceptionInterface
      * @triggers removeItems.pre(PreEvent)
      * @triggers removeItems.post(PostEvent)
      * @triggers removeItems.exception(ExceptionEvent)
@@ -1133,15 +1116,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to remove multiple items.
      *
-     * @param non-empty-list<non-empty-string> $normalizedKeys
-     * @return list<non-empty-string> Array of not removed keys
+     * @param non-empty-list<non-empty-string|int> $normalizedKeys
+     * @return list<non-empty-string|int> Array of not removed keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalRemoveItems(array $normalizedKeys): array
     {
         $result = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            if (! $this->internalRemoveItem($normalizedKey)) {
+            if (! $this->internalRemoveItem((string) $normalizedKey)) {
                 $result[] = $normalizedKey;
             }
         }
@@ -1207,8 +1190,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Validates and normalizes multiple keys
      *
-     * @param non-empty-list<non-empty-string> $keys
-     * @return non-empty-list<non-empty-string> $keys
+     * @param non-empty-list<non-empty-string|int> $keys
+     * @return non-empty-list<non-empty-string|int> $keys
      * @throws Exception\InvalidArgumentException On an invalid key.
      */
     protected function normalizeKeys(array $keys): array
@@ -1235,13 +1218,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * @psalm-assert non-empty-string $key
+     * @template TKey
+     * @param TKey $key
+     * @psalm-assert (TKey is string ? non-empty-string : non-empty-string|int) $key
      */
     protected function assertValidKey(mixed $key): void
     {
-        if (! is_string($key)) {
+        if (! is_int($key) && ! is_string($key)) {
             throw new Exception\InvalidArgumentException(
-                "Key has to be string"
+                "Key has to be either string or int"
             );
         }
 
@@ -1250,6 +1235,8 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
                 "An empty key isn't allowed"
             );
         }
+
+        $key = (string) $key;
 
         $pattern = $this->getOptions()->getKeyPattern();
         if ($pattern !== '' && ! preg_match($pattern, $key)) {
@@ -1279,6 +1266,16 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         }
 
         foreach (array_keys($keyValuePairs) as $key) {
+            $this->assertValidKey($key);
+        }
+    }
+
+    /**
+     * @psalm-assert list<non-empty-string|int> $keys
+     */
+    private function assertValidKeys(array $keys): void
+    {
+        foreach ($keys as $key) {
             $this->assertValidKey($key);
         }
     }

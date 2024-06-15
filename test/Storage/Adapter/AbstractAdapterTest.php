@@ -7,7 +7,6 @@ namespace LaminasTest\Cache\Storage\Adapter;
 use ArrayObject;
 use Laminas\Cache;
 use Laminas\Cache\Exception;
-use Laminas\Cache\Exception\InvalidArgumentException;
 use Laminas\Cache\Exception\RuntimeException;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
@@ -19,6 +18,7 @@ use Laminas\Cache\Storage\PostEvent;
 use Laminas\EventManager\ResponseCollection;
 use Laminas\Serializer\AdapterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
+use LaminasTest\Cache\Storage\TestAsset\MockAdapter;
 use LaminasTest\Cache\Storage\TestAsset\MockPlugin;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -800,5 +800,18 @@ final class AbstractAdapterTest extends TestCase
             ->willReturn(serialize('bar'));
 
         self::assertTrue($storage->checkAndSetItem('bar', 'foo', 'baz'));
+    }
+
+    public function testCanHandleIntegerishKeysInIterables(): void
+    {
+        $storage      = new MockAdapter();
+        $keyValuePair = ['0' => '0'];
+        self::assertSame([], $storage->setItems($keyValuePair));
+        self::assertSame([], $storage->addItems($keyValuePair));
+        self::assertSame([0], $storage->replaceItems($keyValuePair));
+        self::assertSame([], $storage->removeItems(array_keys($keyValuePair)));
+        self::assertSame([], $storage->getItems(array_keys($keyValuePair)));
+        self::assertSame([], $storage->hasItems(array_keys($keyValuePair)));
+        self::assertSame([0], $storage->touchItems(array_keys($keyValuePair)));
     }
 }

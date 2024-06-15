@@ -132,15 +132,15 @@ abstract class AbstractMetadataCapableAdapter extends AbstractAdapter implements
     /**
      * Internal method to get multiple metadata
      *
-     * @param array<string> $normalizedKeys
-     * @return array<string,TMetadata> Associative array of keys and metadata
+     * @param array<non-empty-string|int> $normalizedKeys
+     * @return array<non-empty-string|int,TMetadata> Associative array of keys and metadata
      * @throws ExceptionInterface
      */
     protected function internalGetMetadatas(array $normalizedKeys): array
     {
         $result = [];
         foreach ($normalizedKeys as $normalizedKey) {
-            $metadata = $this->internalGetMetadata($normalizedKey);
+            $metadata = $this->internalGetMetadata((string) $normalizedKey);
             if ($metadata === null) {
                 continue;
             }

@@ -247,7 +247,7 @@ final class SimpleCacheDecorator implements SimpleCacheInterface
         }
 
         foreach ($result as $index => $key) {
-            if (! $this->storage->hasItem($key)) {
+            if (! $this->storage->hasItem((string) $key)) {
                 unset($result[$index]);
             }
         }
@@ -276,7 +276,7 @@ final class SimpleCacheDecorator implements SimpleCacheInterface
         }
 
         foreach ($result as $index => $key) {
-            if (! $this->storage->hasItem($key)) {
+            if (! $this->storage->hasItem((string) $key)) {
                 unset($result[$index]);
             }
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.22.2@d768d914152dbbf3486c36398802f74e80cfde48">
+<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
   <file src="src/Exception/BadMethodCallException.php">
     <UnusedClass>
       <code><![CDATA[BadMethodCallException]]></code>
@@ -118,11 +118,6 @@
       <code><![CDATA[setPublicDir]]></code>
       <code><![CDATA[setUmask]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Psr/SimpleCache/SimpleCacheDecorator.php">
-    <InvalidArgument>
-      <code><![CDATA[$values]]></code>
-    </InvalidArgument>
   </file>
   <file src="src/Service/StorageAdapterFactory.php">
     <InvalidArgument>
@@ -460,10 +455,6 @@
       <code><![CDATA[testSetShouldRaisePsrInvalidArgumentExceptionForInvalidKeys]]></code>
       <code><![CDATA[testSetShouldRemoveItemFromCacheIfTtlIsBelow1]]></code>
     </MissingReturnType>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[array]]></code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/Service/StorageAdapterFactoryFactoryTest.php">
     <DeprecatedMethod>
@@ -499,42 +490,12 @@
     <MixedMethodCall>
       <code><![CDATA[getResult]]></code>
     </MixedMethodCall>
-    <PossiblyNullReference>
-      <code><![CDATA[getNamespace]]></code>
-      <code><![CDATA[setKeyPattern]]></code>
-      <code><![CDATA[setKeyPattern]]></code>
-      <code><![CDATA[setKeyPattern]]></code>
-      <code><![CDATA[setNamespace]]></code>
-      <code><![CDATA[setNamespace]]></code>
-      <code><![CDATA[setReadable]]></code>
-      <code><![CDATA[setTtl]]></code>
-      <code><![CDATA[setTtl]]></code>
-      <code><![CDATA[setWritable]]></code>
-    </PossiblyNullReference>
     <PossiblyUndefinedVariable>
       <code><![CDATA[$success]]></code>
     </PossiblyUndefinedVariable>
     <PossiblyUnusedMethod>
       <code><![CDATA[simpleEventHandlingMethodDefinitions]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Storage/Adapter/AdapterOptionsTest.php">
-    <PossiblyNullReference>
-      <code><![CDATA[getKeyPattern]]></code>
-      <code><![CDATA[getTtl]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[setFromArray]]></code>
-      <code><![CDATA[setKeyPattern]]></code>
-      <code><![CDATA[setKeyPattern]]></code>
-      <code><![CDATA[setNamespace]]></code>
-      <code><![CDATA[setReadable]]></code>
-      <code><![CDATA[setTtl]]></code>
-      <code><![CDATA[setTtl]]></code>
-      <code><![CDATA[setWritable]]></code>
-    </PossiblyNullReference>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$storage]]></code>
-    </PossiblyUnusedProperty>
   </file>
   <file src="test/Storage/Adapter/TestAsset/AdapterWithStorageAndEventsCapableInterface.php">
     <MissingReturnType>
