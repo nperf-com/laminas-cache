@@ -14,6 +14,7 @@ interface MetadataCapableInterface
     /**
      * Get metadata of an item.
      *
+     * @param non-empty-string $key
      * @return TMetadata|null Metadata on success, null on failure or in case metadata is not accessible.
      * @throws ExceptionInterface
      */
@@ -23,7 +24,7 @@ interface MetadataCapableInterface
      * Get multiple metadata
      *
      * @param non-empty-list<non-empty-string> $keys
-     * @return array<string,TMetadata> Associative array of keys and metadata
+     * @return array<non-empty-string|int,TMetadata> Associative array of keys and metadata
      * @throws ExceptionInterface
      */
     public function getMetadatas(array $keys): array;

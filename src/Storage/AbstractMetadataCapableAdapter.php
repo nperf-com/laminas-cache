@@ -14,6 +14,7 @@ use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Webmozart\Assert\Assert;
 
+use function array_keys;
 use function is_array;
 use function is_object;
 
@@ -74,6 +75,7 @@ abstract class AbstractMetadataCapableAdapter extends AbstractAdapter implements
     /**
      * Internal method to get metadata of an item.
      *
+     * @param non-empty-string $normalizedKey
      * @return TMetadata|null Metadata on success, null on failure or in case metadata is not accessible.
      * @throws ExceptionInterface
      */
@@ -103,28 +105,14 @@ abstract class AbstractMetadataCapableAdapter extends AbstractAdapter implements
             }
 
             $result = $this->triggerPost(__FUNCTION__, $args, $result);
-            Assert::isMap($result);
-            Assert::allObject($result);
+            $this->assertValidMetadataResult($result);
 
-            /**
-             * NOTE: We do trust the event handling here and assume that it will return a map of instances of Metadata
-             *      and thus does not modify the type.
-             *
-             * @var array<string,TMetadata> $result
-             */
             return $result;
         } catch (Exception $exception) {
             $result = [];
             $result = $this->triggerThrowable(__FUNCTION__, $args, $result, $exception);
-            Assert::isArray($result);
-            Assert::allObject($result);
+            $this->assertValidMetadataResult($result);
 
-            /**
-             * NOTE: We do trust the event handling here and assume that it will return a map of instances of Metadata
-             *      and thus does not modify the type.
-             *
-             * @var array<string,TMetadata> $result
-             */
             return $result;
         }
     }
@@ -149,5 +137,15 @@ abstract class AbstractMetadataCapableAdapter extends AbstractAdapter implements
         }
 
         return $result;
+    }
+
+    /**
+     * @psalm-assert array<non-empty-string,TMetadata> $result
+     */
+    private function assertValidMetadataResult(mixed $result): void
+    {
+        Assert::isMap($result);
+        $this->assertValidKeys(array_keys($result));
+        Assert::allObject($result);
     }
 }

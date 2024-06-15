@@ -1273,7 +1273,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * @psalm-assert list<non-empty-string|int> $keys
      */
-    private function assertValidKeys(array $keys): void
+    protected function assertValidKeys(array $keys): void
     {
         foreach ($keys as $key) {
             $this->assertValidKey($key);
