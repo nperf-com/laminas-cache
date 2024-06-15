@@ -14,6 +14,7 @@ interface MetadataCapableInterface
     /**
      * Get metadata of an item.
      *
+     * @param non-empty-string $key
      * @return TMetadata|null Metadata on success, null on failure or in case metadata is not accessible.
      * @throws ExceptionInterface
      */
