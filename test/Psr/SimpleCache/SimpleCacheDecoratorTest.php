@@ -128,9 +128,9 @@ final class SimpleCacheDecoratorTest extends TestCase
      * Set of string key names that should be considered invalid for operations
      * that create cache entries.
      *
-     * @return array
+     * @return non-empty-array<non-empty-string,array{string,string}>
      */
-    public function invalidKeyProvider()
+    public function invalidKeyProvider(): array
     {
         return [
             'brace-start'   => ['key{', 'cannot contain'],
@@ -148,9 +148,9 @@ final class SimpleCacheDecoratorTest extends TestCase
     /**
      * TTL values less than 1 should result in immediate cache removal.
      *
-     * @return array
+     * @return non-empty-array<non-empty-string,array{int}>
      */
-    public function invalidatingTtls()
+    public function invalidatingTtls(): array
     {
         return [
             'zero'         => [0],

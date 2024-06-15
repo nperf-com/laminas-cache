@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace LaminasTest\Cache\Storage\Adapter;
 
 use Laminas\Cache\Exception;
+use Laminas\Cache\Exception\InvalidArgumentException;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Event;
-use Laminas\Cache\Storage\StorageInterface;
 use LaminasTest\Cache\Storage\Adapter\TestAsset\AdapterOptionsWithPrioritizedOptions;
 use PHPUnit\Framework\TestCase;
 
@@ -20,23 +20,77 @@ use function func_get_args;
  */
 class AdapterOptionsTest extends TestCase
 {
-    /**
-     * Mock of the storage
-     *
-     * @var StorageInterface
-     */
-    protected $storage;
-
-    /**
-     * Adapter options
-     *
-     * @var null|AdapterOptions
-     */
-    protected $options;
+    protected AdapterOptions $options;
 
     public function setUp(): void
     {
         $this->options = new AdapterOptions();
+    }
+
+    public function testSetWritable(): void
+    {
+        $this->options->setWritable(true);
+        self::assertTrue($this->options->getWritable());
+
+        $this->options->setWritable(false);
+        self::assertFalse($this->options->getWritable());
+    }
+
+    public function testSetReadable(): void
+    {
+        $this->options->setReadable(true);
+        self::assertTrue($this->options->getReadable());
+
+        $this->options->setReadable(false);
+        self::assertFalse($this->options->getReadable());
+    }
+
+    public function testSetTtl(): void
+    {
+        $this->options->setTtl('123');
+        self::assertSame(123, $this->options->getTtl());
+    }
+
+    public function testSetTtlThrowsInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->options->setTtl(-1);
+    }
+
+    public function testGetDefaultNamespaceNotEmpty(): void
+    {
+        $ns = $this->options->getNamespace();
+        self::assertNotEmpty($ns);
+    }
+
+    public function testSetNamespace(): void
+    {
+        $this->options->setNamespace('new_namespace');
+        self::assertSame('new_namespace', $this->options->getNamespace());
+    }
+
+    public function testSetNamespace0(): void
+    {
+        $this->options->setNamespace('0');
+        self::assertSame('0', $this->options->getNamespace());
+    }
+
+    public function testSetKeyPattern(): void
+    {
+        $this->options->setKeyPattern('/^[key]+$/Di');
+        self::assertEquals('/^[key]+$/Di', $this->options->getKeyPattern());
+    }
+
+    public function testUnsetKeyPattern(): void
+    {
+        $this->options->setKeyPattern('');
+        self::assertSame('', $this->options->getKeyPattern());
+    }
+
+    public function testSetKeyPatternThrowsExceptionOnInvalidPattern(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->options->setKeyPattern('#');
     }
 
     public function testKeyPattern(): void

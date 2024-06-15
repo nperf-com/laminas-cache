@@ -7,7 +7,6 @@ namespace LaminasTest\Cache\Storage\Adapter;
 use ArrayObject;
 use Laminas\Cache;
 use Laminas\Cache\Exception;
-use Laminas\Cache\Exception\InvalidArgumentException;
 use Laminas\Cache\Exception\RuntimeException;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
@@ -19,6 +18,7 @@ use Laminas\Cache\Storage\PostEvent;
 use Laminas\EventManager\ResponseCollection;
 use Laminas\Serializer\AdapterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
+use LaminasTest\Cache\Storage\TestAsset\MockAdapter;
 use LaminasTest\Cache\Storage\TestAsset\MockPlugin;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -54,72 +54,6 @@ final class AbstractAdapterTest extends TestCase
         self::assertIsInt($options->getTtl());
         self::assertIsString($options->getNamespace());
         self::assertIsString($options->getKeyPattern());
-    }
-
-    public function testSetWritable(): void
-    {
-        $this->options->setWritable(true);
-        self::assertTrue($this->options->getWritable());
-
-        $this->options->setWritable(false);
-        self::assertFalse($this->options->getWritable());
-    }
-
-    public function testSetReadable(): void
-    {
-        $this->options->setReadable(true);
-        self::assertTrue($this->options->getReadable());
-
-        $this->options->setReadable(false);
-        self::assertFalse($this->options->getReadable());
-    }
-
-    public function testSetTtl(): void
-    {
-        $this->options->setTtl('123');
-        self::assertSame(123, $this->options->getTtl());
-    }
-
-    public function testSetTtlThrowsInvalidArgumentException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->options->setTtl(-1);
-    }
-
-    public function testGetDefaultNamespaceNotEmpty(): void
-    {
-        $ns = $this->options->getNamespace();
-        self::assertNotEmpty($ns);
-    }
-
-    public function testSetNamespace(): void
-    {
-        $this->options->setNamespace('new_namespace');
-        self::assertSame('new_namespace', $this->options->getNamespace());
-    }
-
-    public function testSetNamespace0(): void
-    {
-        $this->options->setNamespace('0');
-        self::assertSame('0', $this->options->getNamespace());
-    }
-
-    public function testSetKeyPattern(): void
-    {
-        $this->options->setKeyPattern('/^[key]+$/Di');
-        self::assertEquals('/^[key]+$/Di', $this->options->getKeyPattern());
-    }
-
-    public function testUnsetKeyPattern(): void
-    {
-        $this->options->setKeyPattern('');
-        self::assertSame('', $this->options->getKeyPattern());
-    }
-
-    public function testSetKeyPatternThrowsExceptionOnInvalidPattern(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->options->setKeyPattern('#');
     }
 
     public function testPluginRegistry(): void
@@ -866,5 +800,18 @@ final class AbstractAdapterTest extends TestCase
             ->willReturn(serialize('bar'));
 
         self::assertTrue($storage->checkAndSetItem('bar', 'foo', 'baz'));
+    }
+
+    public function testCanHandleIntegerishKeysInIterables(): void
+    {
+        $storage      = new MockAdapter();
+        $keyValuePair = ['0' => '0'];
+        self::assertSame([], $storage->setItems($keyValuePair));
+        self::assertSame([], $storage->addItems($keyValuePair));
+        self::assertSame([0], $storage->replaceItems($keyValuePair));
+        self::assertSame([], $storage->removeItems(array_keys($keyValuePair)));
+        self::assertSame([], $storage->getItems(array_keys($keyValuePair)));
+        self::assertSame([], $storage->hasItems(array_keys($keyValuePair)));
+        self::assertSame([0], $storage->touchItems(array_keys($keyValuePair)));
     }
 }

@@ -129,7 +129,7 @@ final class CacheItemPoolDecorator implements CacheItemPoolInterface
             }
 
             foreach ($cacheItems as $key => $value) {
-                $items[$key] = new CacheItem($key, $value, true, $this->clock);
+                $items[$key] = new CacheItem((string) $key, $value, true, $this->clock);
             }
 
             // Return empty items for any keys that where not found

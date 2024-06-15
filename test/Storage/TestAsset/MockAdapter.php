@@ -15,6 +15,7 @@ class MockAdapter extends AbstractAdapter
 {
     protected function internalGetItem(string $normalizedKey, ?bool &$success = null, mixed &$casToken = null): mixed
     {
+        $success = false;
         return null;
     }
 
