@@ -593,10 +593,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @triggers setItems.pre(PreEvent)
-     * @triggers setItems.post(PostEvent)
-     * @triggers setItems.exception(ExceptionEvent)
      */
     public function setItems(array $keyValuePairs): array
     {
@@ -630,15 +626,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to store multiple items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $normalizedKeyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<non-empty-string|int,mixed> $normalizedKeyValuePairs
+     * @return list<non-empty-string|int> Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalSetItems(array $normalizedKeyValuePairs): array
     {
         $failedKeys = [];
         foreach ($normalizedKeyValuePairs as $normalizedKey => $value) {
-            if (! $this->internalSetItem($normalizedKey, $value)) {
+            if (! $this->internalSetItem((string) $normalizedKey, $value)) {
                 $failedKeys[] = $normalizedKey;
             }
         }
@@ -647,12 +643,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Add an item.
-     *
-     * @throws Exception\ExceptionInterface
-     * @triggers addItem.pre(PreEvent)
-     * @triggers addItem.post(PostEvent)
-     * @triggers addItem.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
     public function addItem(string $key, mixed $value): bool
     {
@@ -702,10 +693,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @triggers addItems.pre(PreEvent)
-     * @triggers addItems.post(PostEvent)
-     * @triggers addItems.exception(ExceptionEvent)
      */
     public function addItems(array $keyValuePairs): array
     {
@@ -740,15 +727,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to add multiple items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $normalizedKeyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<non-empty-string|int,mixed> $normalizedKeyValuePairs
+     * @return list<non-empty-string|int> Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalAddItems(array $normalizedKeyValuePairs): array
     {
         $result = [];
         foreach ($normalizedKeyValuePairs as $normalizedKey => $value) {
-            if (! $this->internalAddItem($normalizedKey, $value)) {
+            if (! $this->internalAddItem((string) $normalizedKey, $value)) {
                 $result[] = $normalizedKey;
             }
         }
@@ -757,12 +744,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Replace an existing item.
-     *
-     * @throws Exception\ExceptionInterface
-     * @triggers replaceItem.pre(PreEvent)
-     * @triggers replaceItem.post(PostEvent)
-     * @triggers replaceItem.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
     public function replaceItem(string $key, mixed $value): bool
     {
@@ -812,10 +794,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @triggers replaceItems.pre(PreEvent)
-     * @triggers replaceItems.post(PostEvent)
-     * @triggers replaceItems.exception(ExceptionEvent)
      */
     public function replaceItems(array $keyValuePairs): array
     {
@@ -847,15 +825,15 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to replace multiple existing items.
      *
-     * @param non-empty-array<non-empty-string,mixed> $normalizedKeyValuePairs
-     * @return list<non-empty-string> Array of not stored keys
+     * @param non-empty-array<non-empty-string|int,mixed> $normalizedKeyValuePairs
+     * @return list<non-empty-string|int> Array of not stored keys
      * @throws Exception\ExceptionInterface
      */
     protected function internalReplaceItems(array $normalizedKeyValuePairs): array
     {
         $result = [];
         foreach ($normalizedKeyValuePairs as $normalizedKey => $value) {
-            if (! $this->internalReplaceItem($normalizedKey, $value)) {
+            if (! $this->internalReplaceItem((string) $normalizedKey, $value)) {
                 $result[] = $normalizedKey;
             }
         }
@@ -864,15 +842,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Set an item only if token matches
-     *
-     * It uses the token received from getItem() to check if the item has
-     * changed before overwriting it.
-     *
-     * @see    setItem()
-     * @see    getItem()
-     *
-     * @throws Exception\ExceptionInterface
+     * {@inheritDoc}
      */
     public function checkAndSetItem(mixed $token, string $key, mixed $value): bool
     {
@@ -906,9 +876,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /**
      * Internal method to set an item only if token matches
      *
-     * @see    getItem()
-     * @see    setItem()
-     *
      * @param non-empty-string $normalizedKey
      * @throws Exception\ExceptionInterface
      */
@@ -923,12 +890,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Reset lifetime of an item
-     *
-     * @throws Exception\ExceptionInterface
-     * @triggers touchItem.pre(PreEvent)
-     * @triggers touchItem.post(PostEvent)
-     * @triggers touchItem.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
     public function touchItem(string $key): bool
     {
@@ -976,10 +938,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @triggers touchItems.pre(PreEvent)
-     * @triggers touchItems.post(PostEvent)
-     * @triggers touchItems.exception(ExceptionEvent)
      */
     public function touchItems(array $keys): array
     {
@@ -1029,12 +987,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     }
 
     /**
-     * Remove an item.
-     *
-     * @throws Exception\ExceptionInterface
-     * @triggers removeItem.pre(PreEvent)
-     * @triggers removeItem.post(PostEvent)
-     * @triggers removeItem.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
     public function removeItem(string $key): bool
     {
@@ -1076,10 +1029,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @triggers removeItems.pre(PreEvent)
-     * @triggers removeItems.post(PostEvent)
-     * @triggers removeItems.exception(ExceptionEvent)
      */
     public function removeItems(array $keys): array
     {
@@ -1135,11 +1084,7 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
     /* status */
 
     /**
-     * Get capabilities of this adapter
-     *
-     * @triggers getCapabilities.pre(PreEvent)
-     * @triggers getCapabilities.post(PostEvent)
-     * @triggers getCapabilities.exception(ExceptionEvent)
+     * {@inheritDoc}
      */
     public function getCapabilities(): Capabilities
     {
@@ -1172,21 +1117,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         return $this->capabilities ??= new Capabilities();
     }
 
-    /* internal */
-
-    /**
-     * Validates and normalizes a key
-     *
-     * @deprecated Use {@see AbstractAdapter::assertValidKey()} instead.
-     *
-     * @throws Exception\InvalidArgumentException On an invalid key.
-     * @psalm-assert non-empty-string $key
-     */
-    protected function normalizeKey(string $key): void
-    {
-        $this->assertValidKey($key);
-    }
-
     /**
      * Validates and normalizes multiple keys
      *
@@ -1201,20 +1131,6 @@ abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
         }
 
         return array_values(array_unique($keys));
-    }
-
-    /**
-     * Validates and normalizes an array of key-value pairs
-     *
-     * @deprecated Please use {@see AbstractAdapter::assertValidKeyValuePairs()} instead.
-     *
-     * @param array<string,mixed>                  $keyValuePairs
-     * @psalm-assert array<non-empty-string,mixed> $keyValuePairs
-     * @throws Exception\InvalidArgumentException On an invalid key.
-     */
-    protected function normalizeKeyValuePairs(array $keyValuePairs): void
-    {
-        $this->assertValidKeyValuePairs($keyValuePairs);
     }
 
     /**
