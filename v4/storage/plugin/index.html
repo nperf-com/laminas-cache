@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-cache">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-cache/v3/migration/to-version-3/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-cache/v4/storage/plugin/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Migration to Version 3.0 - laminas-cache - Laminas Docs</title>
+    <title>Plugins - laminas-cache - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -134,14 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -156,19 +148,19 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../storage/adapter/" class="subnavigation__link">Adapters</a>
+        <a href="../adapter/" class="subnavigation__link">Adapters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../storage/capabilities/" class="subnavigation__link">Capabilities</a>
+        <a href="../capabilities/" class="subnavigation__link">Capabilities</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../../storage/plugin/" class="subnavigation__link">Plugins</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Plugins</a>
     </li>
 
             
@@ -257,14 +249,22 @@
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Migration to Version 3.0</a>
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/to-version-4/" class="subnavigation__link">Migration to Version 4.0</a>
     </li>
 
             
         </ul>
     </li>
 
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -321,13 +321,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v3
+                v4
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../../v4/installation/" class="dropdown-item">
+                    <a href="../../installation/" class="dropdown-item active">
                         
                             v4 (latest)
                         
@@ -335,7 +335,7 @@
                 
             
                 
-                    <a href="../../installation/" class="dropdown-item active">
+                    <a href="../../../v3/installation/" class="dropdown-item">
                         
                             v3
                         
@@ -383,31 +383,35 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#checklist" class="toc__link nav-link">Checklist</a>
+                        <a href="#quick-start" class="toc__link nav-link">Quick Start</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#new-features" class="toc__link nav-link">New Features</a>
+                        <a href="#the-clearexpiredbyfactor-plugin" class="toc__link nav-link">The ClearExpiredByFactor Plugin</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#removed-classes-and-traits" class="toc__link nav-link">Removed Classes and Traits</a>
+                        <a href="#the-exceptionhandler-plugin" class="toc__link nav-link">The ExceptionHandler Plugin</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#breaking-changes" class="toc__link nav-link">Breaking Changes</a>
+                        <a href="#the-ignoreuserabort-plugin" class="toc__link nav-link">The IgnoreUserAbort Plugin</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#satellite-packages" class="toc__link nav-link">Satellite Packages</a>
+                        <a href="#the-optimizebyfactor-plugin" class="toc__link nav-link">The OptimizeByFactor Plugin</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#composition-over-inheritance" class="toc__link nav-link">Composition Over Inheritance</a>
+                        <a href="#the-serializer-plugin" class="toc__link nav-link">The Serializer Plugin</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#storagefactory-dependency" class="toc__link nav-link">StorageFactory Dependency</a>
+                        <a href="#available-methods" class="toc__link nav-link">Available Methods</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#examples" class="toc__link nav-link">Examples</a>
                     </li>
                 
             </ul>
@@ -435,12 +439,12 @@
                     
                         
                         
-                            <li class="breadcrumb-item">Migration Guide</li>
+                            <li class="breadcrumb-item">Storage</li>
                         
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Migration to Version 3.0</li>
+                <li class="breadcrumb-item active" aria-current="page">Plugins</li>
             
         
     </ol>
@@ -448,140 +452,282 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../../..">Switch to the latest (v4) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
-        <h2 class="chapter__headline">Migration Guide</h2>
+        <h2 class="chapter__headline">Storage</h2>
     
 
-    <h1 id="migration-to-version-30">Migration to Version 3.0</h1>
-<p>Upgrading to <code>laminas-cache</code> will require a few code-changes, depending on how the storage adapters were used. Please note that the migration guide assumes that <code>laminas-cache</code> is <a href="../../installation/">installed via Composer</a>.</p>
-<p>Please check out the <a href="#checklist">checklist</a> to see what changes need to be done.</p>
-<p>The biggest change with <code>laminas-cache</code> v3.0 is that this component will be shipped without a specific cache adapter. The idea behind this is, that projects can freely choose those cache adapters they really use.</p>
-<p>In the past, most of the adapters Laminas does officially support were not properly tested, blocked PHP version upgrades (due to extensions lacking compatibility) and had to be maintained due to backwards compatibility. Starting with v3.0, all adapters can be maintained and evolve independently.</p>
-<h2 id="checklist">Checklist</h2>
-<ol>
-<li><code>laminas-cache</code> is updated to the latest version from within <code>2.x</code> (currently <code>2.13.2</code>)</li>
-<li><a href="https://docs.laminas.dev/laminas-cli/"><code>laminas-cli</code> is installed</a> to verify the configuration integrity (<code>vendor/bin/laminas laminas-cache:deprecation:check-storage-factory-config</code>); in case you don't want to use <code>laminas-cli</code>, please check out the <a href="https://github.com/laminas/laminas-cache/releases/tag/2.12.0">normalized array configuration</a> example in the release notes of 2.12.0</li>
-<li><code>laminas-cache</code> is required with <code>^3.0</code> within <code>composer.json</code></li>
-<li>Cache adapters which are used within the project needs to be required in at least <code>^2.0</code>; in case you don't know which adapters are in use, either check your project configuration or search for the <code>Laminas\Cache\Storage\Adapter</code> namespace in your projects source code. Every adapter has to be listed in either your <code>module.config.php</code> (laminas-mvc) or <code>config.php</code> (mezzio) configuration.</li>
-<li>Project does not use any of the <a href="#removed-classes-and-traits">removed classes and traits</a></li>
-<li>Storage adapters are not extended in any way as <a href="#breaking-changes">all adapters are <code>final</code></a> starting with v2.0 of the individual adapter component</li>
-<li>PSR-6 <code>CacheItemPoolDecorator</code> does now validate the maximum key length the same way as PSR-6 <code>SimpleCacheDecorator</code> and therefore fulfills the requirements by the underlying PSR.</li>
-</ol>
-<h2 id="new-features">New Features</h2>
+    <h1 id="plugins">Plugins</h1>
+<p>Cache storage plugins are objects that provide additional functionality to or
+influence behavior of a storage adapter.</p>
+<p>The plugins listen to events the adapter triggers, and can:</p>
 <ul>
-<li>Each cache adapter has its <a href="#satellite-packages">own package</a>.</li>
-<li>Support for PHP 8.1</li>
-<li>PSR-6 <code>CacheItemPoolDecorator</code> validates the maximum key length.</li>
+<li>change the arguments provided to the method triggering the event (via <code>*.post</code> events)</li>
+<li>skip and directly return a result (by calling <code>stopPropagation</code>)</li>
+<li>change the result (by calling <code>setResult</code> on the provided <code>Laminas\Cache\Storage\PostEvent</code>)</li>
+<li>catch exceptions (by reacting to <code>Laminas\Cache\Storage\ExceptionEvent</code>)</li>
 </ul>
-<h2 id="removed-classes-and-traits">Removed Classes and Traits</h2>
-<p>With <code>laminas-cache</code> v3, some classes/traits were removed as well:</p>
-<ul>
-<li>Due to the switch to <a href="#satellite-packages">satellite packages</a>, the <code>StorageFactory</code> was replaced with the <code>StorageAdapterFactoryInterface</code>. Due to the same reason, the <code>PatternFactory</code> was removed. Cache patterns mostly need an underlying adapter which have to be created with the new <code>StorageAdapterFactoryInterface</code></li>
-<li><code>ClassCache</code> cache pattern was removed. For more details, please read the <a href="https://github.com/laminas/laminas-cache/issues/107">related issue</a>.</li>
-<li><code>PatternCacheFactory</code> and <code>StoragePatternCacheFactory</code> which were introduced in v2.12.0 to provide forward compatibility.</li>
-<li><code>PatternPluginManager</code> and <code>PatternPluginManagerFactory</code> which were removed due to the fact that most cache patterns require underlying cache adapter and thus are not instantiable from their name and options.</li>
-<li><code>PluginManagerLookupTrait</code> which was used to provide forward compatibility for the <code>StorageAdapterFactoryInterface</code>.</li>
-<li><code>PatternOptions</code> are not capable of the <code>storage</code> option anymore</li>
-</ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
-<ul>
-<li><code>CallbackCache</code>, <code>OutputCache</code> and <code>ObjectCache</code> now require the underlying cache adapter (<code>StorageInterface</code>) as 1st <code>__construct</code> dependency. The options can be passed via 2nd <code>__construct)[https://github.com/CallbackCache</code>, <code>OutputCache</code> and <code>ObjectCache</code> now require the underlying cache adapter (<code>StorageInterface</code> arguments but are optional.<br />
-<strong>Please note that it is not possible to inject the pattern configuration as an array anymore</strong></li>
-<li>Storage configurations must be in a specific shape. For more details, head to the release notes of <a href="https://github.com/laminas/laminas-cache/releases/tag/2.12.0">2.12.0</a></li>
-<li>All cache adapters are now marked as <code>final</code> and are not extensible anymore. In case that you are extending one of the cache adapters, please change your code as <code>composition</code> should be preferred over inheritance. For an example, please check out the <a href="#composition-over-inheritance">composition over inheritance</a> section.</li>
-<li>Due to the enhancement of <code>CacheItemPoolDecorator</code>, the maximum key length for the underlying cache adapter is validated before it is passed to the adapter.</li>
-<li>The <code>SerializationTrait</code> which was meant to be used by both <code>PSR-6</code> and <code>PSR-16</code> decorators is now marked as <code>internal</code>.</li>
-<li>The <code>PCRE_MAXIMUM_QUANTIFIER_LENGTH</code> constant of the <code>SimpleCacheDecorator</code> (which was marked as <code>internal</code>) has now been moved to the new (also <code>internal</code>) <code>MaximumKeyLengthTrait</code> and thus had to become a public static property (as traits do not support constants).</li>
-</ul>
-<h2 id="satellite-packages">Satellite Packages</h2>
-<p>Starting with laminas-cache v3, we are introducing satellite packages for each cache backend.</p>
-<p>In order to make this package work, you have to specify at least <strong>one</strong> satellite package.</p>
-<p>A list of available cache adapters can be found here (starting with their v2 release):</p>
-<ul>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-apcu">laminas/laminas-cache-storage-adapter-apcu</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-blackhole">laminas/laminas-cache-storage-adapter-blackhole</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-ext-mongodb">laminas/laminas-cache-storage-adapter-ext-mongodb</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-filesystem">laminas/laminas-cache-storage-adapter-filesystem</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-memcached">laminas/laminas-cache-storage-adapter-memcached</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-memory">laminas/laminas-cache-storage-adapter-memory</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-redis">laminas/laminas-cache-storage-adapter-redis</a></li>
-<li><a href="https://github.com/laminas/laminas-cache-storage-adapter-session">laminas/laminas-cache-storage-adapter-session</a></li>
-</ul>
-<h2 id="composition-over-inheritance">Composition Over Inheritance</h2>
-<p>In case you are extending one of the cache implementations, your code might look as follows:</p>
-<pre class="highlight"><code class="language-php">use Laminas\Cache\Storage\Adapter\Filesystem;
+<h2 id="quick-start">Quick Start</h2>
+<p>Storage plugins can either be created from
+<code>Laminas\Cache\Service\StoragePluginFactoryInterface::create()</code>, or by instantiating one of the
+<code>Laminas\Cache\Storage\Plugin\*</code> classes.</p>
+<p>To make life easier, <code>Laminas\Cache\Service\StoragePluginFactoryInterface::create()</code> can create both the
+requested adapter and all specified plugins at once.</p>
+<pre class="highlight"><code class="language-php">use Laminas\Cache\Service\StoragePluginFactoryInterface;
+use Psr\Container\ContainerInterface;
+use Laminas\Cache\Service\StorageAdapterFactoryInterface;
 
-class MyFileystemStorage extends Filesystem
-{
-    protected function internalSetItem(&amp;$normalizedKey,&amp;$value)
-    {
-        $value = doSomethingWithValue($value);
-        $normalizedKey = doSOmethingWithKey($normalizedKey);
-        return parent::internalSetItem($normalizedKey,$value);
-    }
-} </code></pre>
-<p>If this looks familiar, using composition would look like this:</p>
-<pre class="highlight"><code class="language-php">use Laminas\Cache\Exception;
-use Laminas\Cache\Storage\Adapter\AbstractAdapter;
-use Laminas\Cache\Storage\Adapter\Filesystem;
-use Laminas\Cache\Storage\Adapter\FilesystemOptions;
+/** @var ContainerInterface $container */
+$container = null; // can be any configured PSR-11 container
 
-final class MyFilesytemStorage extends AbstractAdapter
+$storageFactory = $container-&gt;get(StorageAdapterFactoryInterface::class);
+
+// All at once:
+$cache = $storageFactory-&gt;create(
+    'filesystem', 
+    [], 
+    [
+        ['name' =&gt; 'serializer'],
+    ]
+);
+
+// Alternately, via discrete factory methods:
+$cache  = $storageFactory-&gt;create('filesystem');
+
+$pluginFactory = $container-&gt;get(StoragePluginFactoryInterface::class);
+$plugin = $pluginFactory-&gt;create('serializer');
+$cache-&gt;addPlugin($plugin);
+
+// Or manually:
+$cache  = new Laminas\Cache\Storage\Adapter\Filesystem();
+$plugin = new Laminas\Cache\Storage\Plugin\Serializer();
+$cache-&gt;addPlugin($plugin);</code></pre>
+<h2 id="the-clearexpiredbyfactor-plugin">The ClearExpiredByFactor Plugin</h2>
+<p><code>Laminas\Cache\Storage\Plugin\ClearExpiredByFactor</code> calls the storage method
+<code>clearExpired()</code> randomly (by factor) after every call of <code>setItem()</code>,
+<code>setItems()</code>, <code>addItem()</code>, and <code>addItems()</code>.</p>
+<h3 id="plugin-specific-options">Plugin specific Options</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clearing_factor</code></td>
+<td><code>integer</code></td>
+<td><code>0</code></td>
+<td>The automatic clearing factor.</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<h3 id="adapter-must-implement-clearexpiredinterface">Adapter must implement ClearExpiredInterface</h3>
+<p>The storage adapter must implement <code>Laminas\Cache\Storage\ClearExpiredInterface</code>
+to work with this plugin.</p>
+</blockquote>
+<h2 id="the-exceptionhandler-plugin">The ExceptionHandler Plugin</h2>
+<p><code>Laminas\Cache\Storage\Plugin\ExceptionHandler</code> catches all exceptions thrown on
+reading from or writing to the cache, and sends the exception to a defined callback function.
+You may also configure the plugin to re-throw exceptions.</p>
+<h3 id="plugin-specific-options_1">Plugin specific Options</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exception_callback</code></td>
+<td><code>callable | null</code></td>
+<td>null</td>
+<td>Callback to invoke on exception; receives the exception as the sole argument.</td>
+</tr>
+<tr>
+<td><code>throw_exceptions</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Re-throw caught exceptions.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="the-ignoreuserabort-plugin">The IgnoreUserAbort Plugin</h2>
+<p><code>Laminas\Cache\Storage\Plugin\IgnoreUserAbort</code> ignores user-invoked script
+termination when, allowing cache write operations to complete first.</p>
+<h3 id="plugin-specific-options_2">Plugin specific Options</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exit_on_abort</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Terminate script execution on user abort.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="the-optimizebyfactor-plugin">The OptimizeByFactor Plugin</h2>
+<p><code>Laminas\Cache\Storage\Plugin\OptimizeByFactor</code> calls the storage method <code>optimize()</code>
+randomly (by factor) after removing items from the cache.</p>
+<h3 id="plugin-specific-options_3">Plugin specific Options</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>optimizing_factor</code></td>
+<td><code>integer</code></td>
+<td><code>0</code></td>
+<td>The automatic optimization factor.</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<h3 id="adapter-must-implement-optimizableinterface">Adapter must implement OptimizableInterface</h3>
+<p>The storage adapter must implement <code>Laminas\Cache\Storage\OptimizableInterface</code>
+to work with this plugin.</p>
+</blockquote>
+<h2 id="the-serializer-plugin">The Serializer Plugin</h2>
+<p><code>Laminas\Cache\Storage\Plugin\Serializer</code> will serialize data when writing to
+cache, and deserialize when reading. This allows storing datatypes not supported
+by the underlying storage adapter.</p>
+<h3 id="plugin-specific-options_4">Plugin specific Options</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>serializer</code></td>
+<td><code>null|string|Laminas\Serializer\Adapter\AdapterInterface</code></td>
+<td><code>null</code></td>
+<td>The serializer to use; see below.</td>
+</tr>
+<tr>
+<td><code>serializer_options</code></td>
+<td><code>array</code></td>
+<td><code>[]</code></td>
+<td>Array of options to use when instantiating the specified serializer.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>serializer</code> value has two special cases:</p>
+<ul>
+<li>When <code>null</code>, the default serializer is used (JSON).</li>
+<li>When a <code>string</code>, the value will be pulled via
+  <code>Laminas\Serializer\AdapterPluginManager</code>, with the provided
+  <code>serializer_options</code>.</li>
+</ul>
+<h2 id="available-methods">Available Methods</h2>
+<p>The following methods are available to all <code>Laminas\Cache\Storage\Plugin\PluginInterface</code> implementations:</p>
+<pre class="highlight"><code class="language-php">namespace Laminas\Cache\Storage\Plugin;
+
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+
+interface PluginInterface extends ListenerAggregateInterface
 {
     /**
-    * @var \Laminas\Cache\Storage\Adapter\Filesystem
-    */
-    private $filesystem;
+     * Set options
+     */
+    public function setOptions(PluginOptions $options): self;
 
-    public function __construct(Filesystem $filesystem) 
-    {
-        $this-&gt;filesystem = $filesystem;
-        parent::__construct();
-    }
+    /**
+     * Get options
+     */
+    public function getOptions(): PluginOptions;
 
-    protected function internalGetItem(&amp;$normalizedKey,&amp;$success = null,&amp;$casToken = null)
-    {
-        return $this-&gt;filesystem-&gt;getItem(
-            $normalizedKey, 
-            $success,
-            $casToken
-        );
-    }
+    /**
+     * Attach listeners; inherited from ListenerAggregateInterface.
+     */
+    public function attach(EventManagerInterface $events, int $priority = 1): void;
 
-    protected function internalSetItem(&amp;$normalizedKey,&amp;$value)
-    {
-        $value = doSomethingWithValue($value);
-        $normalizedKey = doSomethingWithValue($normalizedKey);
-        return $this-&gt;filesystem-&gt;setItem(
-            $normalizedKey, 
-            $value
-        );
-    }
-
-    protected function internalRemoveItem(&amp;$normalizedKey)
-    {
-        return $this-&gt;filesystem-&gt;removeItem(
-            $normalizedKey
-        );
-    }   
+    /**
+     * Detach listeners; inherited from ListenerAggregateInterface.
+     */
+    public function detach(EventManagerInterface $events): void;
 }</code></pre>
-<p>Even tho, that this is more code to add/change than the previous solution, this gives the maintainers of the cache adapters more freedom to provide more stable adapter implementations.</p>
-<p>If this does not fit your requirements, please let us know via the <code>laminas-cache</code> <a href="https://github.com/laminas/laminas-cache">repository on GitHub</a> and tell us more about your implementations. Maybe your addition should be part of our official adapter or could be provided as a dedicated Plugin instead.</p>
-<h2 id="storagefactory-dependency">StorageFactory Dependency</h2>
-<p>In case your code heavily depends on <code>StorageFactory</code> (or if you are using not yet compatible laminas components (e.g. <code>laminas-i18n</code>, ...), Laminas got your back.
-With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>StorageFactory</code> is retained to create a temporary backwards compatibility layer.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="basic-plugin-implementation">Basic Plugin Implementation</h3>
+<pre class="highlight"><code class="language-php">use Laminas\Cache\Storage\Event;
+use Laminas\Cache\Storage\Plugin\AbstractPlugin;
+use Laminas\EventManager\EventManagerInterface;
+
+class MyPlugin extends AbstractPlugin
+{
+    protected $handles = [];
+
+    /**
+     * Attach to all events this plugin is interested in.
+     */
+    public function attach(EventManagerInterface $events, int $priority = 1): void
+    {
+        $this-&gt;handles[] = $events-&gt;attach('getItem.pre', array($this, 'onGetItemPre'), $priority);
+        $this-&gt;handles[] = $events-&gt;attach('getItem.post', array($this, 'onGetItemPost'), $priority);
+    }
+
+    /**
+     * Detach all handlers this plugin previously attached.
+     */
+    public function detach(EventManagerInterface $events): void
+    {
+        foreach ($this-&gt;handles as $handle) {
+           $events-&gt;detach($handle);
+        }
+        $this-&gt;handles = [];
+    }
+
+    public function onGetItemPre(Event $event): void
+    {
+        $params = $event-&gt;getParams();
+        echo sprintf("Method 'getItem' with key '%s' started\n", $params['key']);
+    }
+
+    public function onGetItemPost(Event $event): void
+    {
+        $params = $event-&gt;getParams();
+        echo sprintf("Method 'getItem' with key '%s' finished\n", $params['key']);
+    }
+}
+
+// After defining this plugin, we can instantiate and add it to an adapter
+// instance:
+$plugin = new MyPlugin();
+$cache-&gt;addPlugin($plugin);
+
+// Now when calling getItem(), our plugin should print the expected output:
+$cache-&gt;getItem('cache-key');
+// Method 'getItem' with key 'cache-key' started
+// Method 'getItem' with key 'cache-key' finished</code></pre>
 
 
 
@@ -592,10 +738,10 @@ With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>St
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../application-integration/usage-in-a-laminas-mvc-application/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../capabilities/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Usage in a laminas-mvc Application
+                    Capabilities
                 </a>
             
         </li>
@@ -603,9 +749,9 @@ With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>St
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../../../v2/installation/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../pattern/intro/">
                     <small class="page-nav__label">Next</small>
-                    Installation
+                    Introduction
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -648,14 +794,6 @@ With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>St
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -670,19 +808,19 @@ With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>St
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../storage/adapter/" class="subnavigation__link">Adapters</a>
+        <a href="../adapter/" class="subnavigation__link">Adapters</a>
     </li>
 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../../storage/capabilities/" class="subnavigation__link">Capabilities</a>
+        <a href="../capabilities/" class="subnavigation__link">Capabilities</a>
     </li>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../../storage/plugin/" class="subnavigation__link">Plugins</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Plugins</a>
     </li>
 
             
@@ -771,14 +909,22 @@ With <code>laminas/laminas-cache-storage-deprecated-factory</code>, the <code>St
         <ul class="subnavigation__list">
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Migration to Version 3.0</a>
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/to-version-4/" class="subnavigation__link">Migration to Version 4.0</a>
     </li>
 
             
         </ul>
     </li>
 
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             

@@ -15,7 +15,7 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-cache">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-cache/v2/storage/adapter/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-cache/v4/storage/adapter/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
     <title>Adapters - laminas-cache - Laminas Docs</title>
@@ -134,22 +134,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -244,6 +228,52 @@
     </li>
 
                     
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../application-integration/usage-in-a-laminas-mvc-application/" class="subnavigation__link">Usage in a laminas-mvc Application</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration Guide</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/to-version-4/" class="subnavigation__link">Migration to Version 4.0</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
+                    
                 
             
         </ul>
@@ -291,13 +321,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v2
+                v4
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../../v4/installation/" class="dropdown-item">
+                    <a href="../../installation/" class="dropdown-item active">
                         
                             v4 (latest)
                         
@@ -313,7 +343,7 @@
                 
             
                 
-                    <a href="../../installation/" class="dropdown-item active">
+                    <a href="../../../v2/installation/" class="dropdown-item">
                         
                             v2
                         
@@ -401,15 +431,11 @@
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#apc-adapter" class="toc__link nav-link">Apc Adapter</a>
+                        <a href="#apcu-adapter" class="toc__link nav-link">APCu Adapter</a>
                     </li>
                 
                     <li class="toc__entry">
                         <a href="#blackhole-adapter" class="toc__link nav-link">BlackHole Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#dba-adapter" class="toc__link nav-link">Dba Adapter</a>
                     </li>
                 
                     <li class="toc__entry">
@@ -433,27 +459,7 @@
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#mongodb-adapter" class="toc__link nav-link">MongoDB Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#extmongodb-adapter" class="toc__link nav-link">ExtMongoDB Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#wincache-adapter" class="toc__link nav-link">WinCache Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#xcache-adapter" class="toc__link nav-link">XCache Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#zendserverdisk-adapter" class="toc__link nav-link">ZendServerDisk Adapter</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#zendservershm-adapter" class="toc__link nav-link">ZendServerShm Adapter</a>
                     </li>
                 
                     <li class="toc__entry">
@@ -498,14 +504,6 @@
 
 
 
-    <div class="alert alert-danger" role="alert">
-        <h4>Caution</h4>
-        <p>
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../../..">Switch to the latest (v4) version.</a>
-        </p>
-    </div>
-
 
 
 
@@ -546,7 +544,7 @@ $storageFactory = $container-&gt;get(StorageAdapterFactoryInterface::class);
 
 // Via factory:
 $cache = $storageFactory-&gt;create(
-    'apc',
+    'apcu',
     ['ttl' =&gt; 3600],
     [
         [
@@ -560,7 +558,7 @@ $cache = $storageFactory-&gt;create(
 
 // Via array configuration:
 $cache = $storageFactory-&gt;createFromArrayConfiguration([
-    'adapter' =&gt; 'apc',
+    'adapter' =&gt; 'apcu',
     'options' =&gt; ['ttl' =&gt; 3600],
     'plugins' =&gt; [
         [
@@ -573,7 +571,7 @@ $cache = $storageFactory-&gt;createFromArrayConfiguration([
 ]);
 
 // Alternately, create the adapter and plugin separately:
-$cache  = $storageFactory-&gt;create('apc', ['ttl' =&gt; 3600]);
+$cache  = $storageFactory-&gt;create('apcu', ['ttl' =&gt; 3600]);
 $pluginFactory = $container-&gt;get(StoragePluginFactoryInterface::class);
 $plugin = $pluginFactory-&gt;create('exception_handler', [
     'throw_exceptions' =&gt; false,
@@ -581,7 +579,7 @@ $plugin = $pluginFactory-&gt;create('exception_handler', [
 $cache-&gt;addPlugin($plugin);
 
 // Or do it completely manually:
-$cache  = new Laminas\Cache\Storage\Adapter\Apc();
+$cache  = new Laminas\Cache\Storage\Adapter\Apcu();
 $cache-&gt;getOptions()-&gt;setTtl(3600);
 
 $plugin = new Laminas\Cache\Storage\Plugin\ExceptionHandler();
@@ -623,7 +621,7 @@ adapter level below.</p>
 </tr>
 <tr>
 <td><code>key_pattern</code></td>
-<td><code>null|string</code></td>
+<td><code>null     | string</code></td>
 <td><code>null</code></td>
 <td>Pattern against which to validate cache keys</td>
 </tr>
@@ -704,24 +702,6 @@ interface StorageInterface
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
     public function hasItems(array $keys);
-
-    /**
-     * Get metadata of an item.
-     *
-     * @param  string $key
-     * @return array|bool Metadata on success, false on failure
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function getMetadata($key);
-
-    /**
-     * Get multiple metadata
-     *
-     * @param  array $keys
-     * @return array Associative array of keys and metadata
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function getMetadatas(array $keys);
 
     /* writing */
 
@@ -833,44 +813,6 @@ interface StorageInterface
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
     public function removeItems(array $keys);
-
-    /**
-     * Increment an item.
-     *
-     * @param  string $key
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function incrementItem($key, $value);
-
-    /**
-     * Increment multiple items.
-     *
-     * @param  array $keyValuePairs
-     * @return array Associative array of keys and new values
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function incrementItems(array $keyValuePairs);
-
-    /**
-     * Decrement an item.
-     *
-     * @param  string $key
-     * @param  int    $value
-     * @return int|bool The new value on success, false on failure
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function decrementItem($key, $value);
-
-    /**
-     * Decrement multiple items.
-     *
-     * @param  array $keyValuePairs
-     * @return array Associative array of keys and new values
-     * @throws \Laminas\Cache\Exception\ExceptionInterface
-     */
-    public function decrementItems(array $keyValuePairs);
 
     /* status */
 
@@ -1039,9 +981,9 @@ interface TaggableInterface
      */
     public function clearByTags(array $tags, $disjunction = false);
 }</code></pre>
-<h2 id="apc-adapter">Apc Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\Apc</code> stores cache items in shared memory through the
-PHP extension <a href="http://pecl.php.net/package/APC">APC</a> (Alternative PHP Cache).</p>
+<h2 id="apcu-adapter">APCu Adapter</h2>
+<p><code>Laminas\Cache\Storage\Adapter\Apcu</code> stores cache items in shared memory through the
+PHP extension <a href="http://pecl.php.net/package/APCu">APCu</a> (Alternative PHP Cache).</p>
 <p>This adapter implements the following interfaces:</p>
 <ul>
 <li><code>Laminas\Cache\Storage\StorageInterface</code></li>
@@ -1066,44 +1008,73 @@ PHP extension <a href="http://pecl.php.net/package/APC">APC</a> (Alternative PHP
 <td><code>null</code>, <code>bool</code>, <code>int</code>, <code>float</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>internal_key, atime, ctime, mtime, rtime, size, hits, ttl</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
-<td>value of <code>apc.use_request_time</code> from <code>php.ini</code></td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
+<td><code>usesRequestTime</code></td>
+<td>value of <code>apc.use_request_time</code> INI value, disabled by default.</td>
 </tr>
 <tr>
 <td><code>maxKeyLength</code></td>
-<td>5182</td>
+<td><code>5182</code></td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
+</tbody>
+</table></div>
+<h3 id="metadata">Metadata</h3>
+<p>The APCu adapter does provide a couple of metadatas, which can be fetched by by using either <code>MetadataCapableInterface#getMetadata</code> or <code>MetadataCapableInterface#getMetadatas</code>.</p>
+<p>It will return an object with the following properties (or null):</p>
+<div class="table-responsive"><table>
+<thead>
 <tr>
-<td><code>namespaceSeparator</code></td>
-<td>Option value of <code>namespace_separator</code></td>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>internalKey</code></td>
+<td><code>string</code></td>
+<td style="text-align: left;">The internal key used to store the cache item</td>
+</tr>
+<tr>
+<td><code>lastAccessTime</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The time the cache item was last accessed</td>
+</tr>
+<tr>
+<td><code>creationTime</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The time the cache item was created</td>
+</tr>
+<tr>
+<td><code>lastModifiedTime</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The time the cache item was last modified</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The size the cache item is consuming within the cache</td>
+</tr>
+<tr>
+<td><code>hits</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The amount of times the item was requested and returned from the backend</td>
+</tr>
+<tr>
+<td><code>timeToLive</code></td>
+<td><code>int</code></td>
+<td style="text-align: left;">The overall time to live (in seconds) the cache item was persisted for</td>
 </tr>
 </tbody>
 </table></div>
@@ -1155,83 +1126,40 @@ PHP extension <a href="http://pecl.php.net/package/APC">APC</a> (Alternative PHP
 <td><code>null</code>, <code>bool</code>, <code>int</code>, <code>float</code>, <code>string</code>, <code>array</code>, <code>object</code></td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>none</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>0 or 1, depending on <code>psr</code> option.</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>false</code> or <code>true</code>, depending on <code>psr</code> option</td>
+<td><code>ttlSupported</code></td>
+<td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
-<td>false</td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
+<td><code>usesRequestTime</code></td>
+<td><code>false</code></td>
 </tr>
 <tr>
 <td><code>maxKeyLength</code></td>
-<td>-1</td>
+<td>unlimited as nothing will be cached anyways</td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td>none</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_1">Adapter Specific Options</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Data Type</th>
-<th>Default Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>psr</code></td>
-<td><code>bool</code></td>
-<td><code>false</code></td>
-<td>Flag to specify whether the adapter should be compatible with <code>CacheItemPoolDecorator</code> or <code>SimpleCacheDecorator</code></td>
-</tr>
-</tbody>
-</table></div>
-<blockquote>
-<h3 id="deprecation-notice">Deprecation Notice</h3>
-<p>The <code>psr</code> option was introduce to provide non-BC compatible way to use the <code>BlackHole</code> adapter with the PSR-6 and PSR-16 decorator. Ignore this option if this adapter is not used in combination with these decorators. This option is already flagged as internal and thus will be removed in <code>laminas/laminas-cache-storage-adapter-blackhole</code> 2.0.</p>
-</blockquote>
-<h2 id="dba-adapter">Dba Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\Dba</code> stores cache items into
-<a href="http://en.wikipedia.org/wiki/Dbm">dbm</a>-like databases using the PHP extension
-<a href="http://php.net/manual/book.dba.php">dba</a>.</p>
+<h2 id="filesystem-adapter">Filesystem Adapter</h2>
+<p><code>Laminas\Cache\Storage\Adapter\Filesystem</code> stores cache items on the filesystem.</p>
 <p>This adapter implements the following interfaces:</p>
 <ul>
 <li><code>Laminas\Cache\Storage\StorageInterface</code></li>
 <li><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code></li>
 <li><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code></li>
 <li><code>Laminas\Cache\Storage\ClearByPrefixInterface</code></li>
+<li><code>Laminas\Cache\Storage\ClearExpiredInterface</code></li>
 <li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
 <li><code>Laminas\Cache\Storage\IterableInterface</code></li>
 <li><code>Laminas\Cache\Storage\OptimizableInterface</code></li>
+<li><code>Laminas\Cache\Storage\TaggableInterface</code></li>
 <li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
 </ul>
 <h3 id="capabilities_2">Capabilities</h3>
@@ -1248,140 +1176,65 @@ PHP extension <a href="http://pecl.php.net/package/APC">APC</a> (Alternative PHP
 <td><code>string</code>, <code>null</code> =&gt; <code>string</code>, <code>boolean</code> =&gt; <code>string</code>, <code>integer</code> =&gt; <code>string</code>, <code>double</code> =&gt; <code>string</code></td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>none</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxKeyLength</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td>Option value of <code>namespace_separator</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="adapter-specific-options_2">Adapter Specific Options</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Data Type</th>
-<th>Default Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>namespace_separator</code></td>
-<td><code>string</code></td>
-<td>":"</td>
-<td>A separator for the namespace and prefix.</td>
-</tr>
-<tr>
-<td><code>pathname</code></td>
-<td><code>string</code></td>
-<td>""</td>
-<td>Pathname to the database file.</td>
-</tr>
-<tr>
-<td><code>mode</code></td>
-<td><code>string</code></td>
-<td>"c"</td>
-<td>The mode with which to open the database; please read <a href="http://php.net/manual/function.dba-open.php">dba_open</a> for more information.</td>
-</tr>
-<tr>
-<td><code>handler</code></td>
-<td><code>string</code></td>
-<td>"flatfile"</td>
-<td>The name of the handler which shall be used for accessing the database.</td>
-</tr>
-</tbody>
-</table></div>
-<blockquote>
-<h3 id="this-adapter-doesnt-support-automatic-expiry">This adapter doesn't support automatic expiry</h3>
-<p>Because this adapter doesn't support automatic expiry, it's very important to clean
-outdated items periodically!</p>
-</blockquote>
-<h2 id="filesystem-adapter">Filesystem Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\Filesystem</code> stores cache items on the filesystem.</p>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\StorageInterface</code></li>
-<li><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByPrefixInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearExpiredInterface</code></li>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-<li><code>Laminas\Cache\Storage\IterableInterface</code></li>
-<li><code>Laminas\Cache\Storage\OptimizableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TaggableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
-</ul>
-<h3 id="capabilities_3">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>string</code>, <code>null</code> =&gt; <code>string</code>, <code>boolean</code> =&gt; <code>string</code>, <code>integer</code> =&gt; <code>string</code>, <code>double</code> =&gt; <code>string</code></td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>mtime, filespec, atime, ctime</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>false</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>251</td>
+<td><code>251</code></td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
+</tbody>
+</table></div>
+<h3 id="metadata_1">Metadata</h3>
+<div class="table-responsive"><table>
+<thead>
 <tr>
-<td><code>namespaceSeparator</code></td>
-<td>Option value of <code>namespace_separator</code></td>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lastAccessTime</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The time the cache item was last accessed</td>
+</tr>
+<tr>
+<td><code>creationTime</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The time the cache item was created</td>
+</tr>
+<tr>
+<td><code>lastModifiedTime</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The time the cache item was last modified</td>
+</tr>
+<tr>
+<td><code>filesize</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The amount of bytes the cache item is consuming in the filesystem</td>
+</tr>
+<tr>
+<td><code>filespec</code></td>
+<td><code>string</code></td>
+<td style="text-align: left;">The absolute path to the cache file without suffix</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_3">Adapter Specific Options</h3>
+<h3 id="adapter-specific-options_1">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1418,9 +1271,9 @@ outdated items periodically!</p>
 </tr>
 <tr>
 <td><code>dir_permission</code></td>
-<td><code>integer</code></td>
-<td><code>false</code></td>
-<td>0700    Set explicit permission on creating new directories.</td>
+<td><code>integer|false</code></td>
+<td><code>0700</code></td>
+<td>Set explicit permission on creating new directories.</td>
 </tr>
 <tr>
 <td><code>file_locking</code></td>
@@ -1444,13 +1297,13 @@ outdated items periodically!</p>
 <td><code>no_atime</code></td>
 <td><code>boolean</code></td>
 <td><code>true</code></td>
-<td>Don’t get ‘fileatime’ as ‘atime’ on metadata.</td>
+<td>Don’t get <code>fileatime</code> as <code>atime</code> on metadata.</td>
 </tr>
 <tr>
 <td><code>no_ctime</code></td>
 <td><code>boolean</code></td>
 <td><code>true</code></td>
-<td>Don’t get ‘filectime’ as ‘ctime’ on metadata.</td>
+<td>Don’t get <code>filectime</code> as <code>ctime</code> on metadata.</td>
 </tr>
 <tr>
 <td><code>umask</code></td>
@@ -1485,7 +1338,7 @@ based on <a href="http://libmemcached.org/">Libmemcached</a>.</p>
 <li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
 <li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
 </ul>
-<h3 id="capabilities_4">Capabilities</h3>
+<h3 id="capabilities_3">Capabilities</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1499,48 +1352,28 @@ based on <a href="http://libmemcached.org/">Libmemcached</a>.</p>
 <td><code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>none</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>255</td>
+<td><code>255</code></td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td>none</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_4">Adapter Specific Options</h3>
+<h3 id="adapter-specific-options_2">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1575,7 +1408,7 @@ using the PHP extension <a href="https://github.com/phpredis/phpredis">PhpRedis<
 <li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
 <li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
 </ul>
-<h3 id="capabilities_5">Capabilities</h3>
+<h3 id="capabilities_4">Capabilities</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1589,48 +1422,45 @@ using the PHP extension <a href="https://github.com/phpredis/phpredis">PhpRedis<
 <td><code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>ttl (Redis v2+)</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>512000000 (in Redis v3+, 255 otherwise)</td>
+<td><code>512000000</code> (in Redis v3+, <code>255</code> in older versions)</td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
+</tbody>
+</table></div>
+<h3 id="metadata_2">Metadata</h3>
+<div class="table-responsive"><table>
+<thead>
 <tr>
-<td><code>namespaceSeparator</code></td>
-<td>none</td>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>remainingTimeToLive</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The amount of time (seconds) the cache item will remain in the cache. Will be <code>null</code> in case the cache item won't expire.</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_5">Adapter Specific Options</h3>
+<h3 id="adapter-specific-options_3">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1705,7 +1535,7 @@ using the PHP extension <a href="https://github.com/phpredis/phpredis">PhpRedis<
 <li><code>Laminas\Cache\Storage\ClearByPrefixInterface</code></li>
 <li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
 </ul>
-<h3 id="capabilities_6">Capabilities</h3>
+<h3 id="capabilities_5">Capabilities</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1719,48 +1549,45 @@ using the PHP extension <a href="https://github.com/phpredis/phpredis">PhpRedis<
 <td><code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>ttl (Redis v2+)</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>512000000 (in Redis v3+, 255 otherwise)</td>
+<td><code>512000000</code> (in Redis v3+, <code>255</code> in older versions)</td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
+</tbody>
+</table></div>
+<h3 id="metadata_3">Metadata</h3>
+<div class="table-responsive"><table>
+<thead>
 <tr>
-<td><code>namespaceSeparator</code></td>
-<td>none</td>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>remainingTimeToLive</code></td>
+<td><code>int|null</code></td>
+<td style="text-align: left;">The amount of time (seconds) the cache item will remain in the cache. Will be <code>null</code> in case the cache item won't expire.</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_6">Adapter Specific Options</h3>
+<h3 id="adapter-specific-options_4">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1841,7 +1668,7 @@ process only.</p>
 <li><code>Laminas\Cache\Storage\TaggableInterface</code></li>
 <li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
 </ul>
-<h3 id="capabilities_7">Capabilities</h3>
+<h3 id="capabilities_6">Capabilities</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1855,36 +1682,20 @@ process only.</p>
 <td><code>string</code>, <code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>array</code>, <code>object</code>, <code>resource</code></td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>mtime</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>Value of <code>PHP_INT_MAX</code></td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>false</code></td>
+<td><code>ttlSupported</code></td>
+<td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>0.05</td>
+<td><code>0.05</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>0</td>
+<td><code>0</code></td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
@@ -1892,7 +1703,24 @@ process only.</p>
 </tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_7">Adapter Specific Options</h3>
+<h3 id="metadata_4">Metadata</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lastModifiedTime</code></td>
+<td><code>float</code></td>
+<td style="text-align: left;">The time the cache item was last modified</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="adapter-specific-options_5">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1905,7 +1733,7 @@ process only.</p>
 <tbody>
 <tr>
 <td><code>memory_limit</code></td>
-<td><code>string|integer</code></td>
+<td><code>string|int</code></td>
 <td>50% of <code>memory_limit</code> INI value</td>
 <td>Limit of how much memory can PHP allocate to allow store items.</td>
 </tr>
@@ -1916,163 +1744,25 @@ process only.</p>
 <p>The adapter has the following behavior with regards to the memory limit:</p>
 <ul>
 <li>If the consumed memory exceeds the limit provided, an <code>OutOfSpaceException</code>
-  is thrown.</li>
+    &gt;   is thrown.</li>
 <li>A number less the or equal to zero disables the memory limit.</li>
 <li>When a value is provided for the memory limit, the value is measured in
-  bytes. Shorthand notation may also be provided.</li>
+    &gt;   bytes. Shorthand notation may also be provided.</li>
 </ul>
 <h3 id="current-process-only">Current process only</h3>
 <p>All stored items will be lost on termination of the script. For web-facing
 requests, this typically means the cache is volatile.</p>
 </blockquote>
-<h2 id="mongodb-adapter">MongoDB Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\MongoDB</code> stores cache items using MongoDB, via either the
-PHP extension <a href="http://php.net/mongo">mongo</a>, or a MongoDB polyfill library, such as
-<a href="https://github.com/mongofill/mongofill">Mongofill</a>.</p>
-<blockquote>
-<h3 id="ext-mongodb">ext-mongodb</h3>
-<p>If you are using the mongodb extension (vs the mongo extension), you will need
-to use the <a href="#extmongodb-adapter">ExtMongoDb adapter</a> instead.</p>
-</blockquote>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-</ul>
-<h3 id="capabilities_8">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>string</code>, <code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>array</code></td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>_id</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>ttlPrecision</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>useRequestTime</code></td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxKeyLength</code></td>
-<td>255</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td><em>Option value of <code>namespace_separator</code></em></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="adapter-specific-options_8">Adapter Specific Options</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Data Type</th>
-<th>Default Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>lib_option</code></td>
-<td><code>array</code></td>
-<td></td>
-<td>Associative array of options where the array key is the option name.</td>
-</tr>
-<tr>
-<td><code>namespace_separator</code></td>
-<td><code>string</code></td>
-<td>":"</td>
-<td>A separator for the namespace and prefix.</td>
-</tr>
-</tbody>
-</table></div>
-<p>Available keys for <code>lib_option</code> include:</p>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>server</code></td>
-<td><code>mongodb://localhost:27017</code></td>
-<td>The MongoDB server connection string (see the <a href="http://php.net/MongoClient">MongoClient docs</a>).</td>
-</tr>
-<tr>
-<td><code>database</code></td>
-<td><code>laminas</code></td>
-<td>Name of the database to use; MongoDB will create this database if it does not exist.</td>
-</tr>
-<tr>
-<td><code>collection</code></td>
-<td><code>cache</code></td>
-<td>Name of the collection to use; MongoDB will create this collection if it does not exist.</td>
-</tr>
-<tr>
-<td><code>connectionOptions</code></td>
-<td><code>['fsync' =&gt; false, 'journal' =&gt; true]</code></td>
-<td>Associative array of options to pass to <code>MongoClient</code> (see the <a href="http://php.net/MongoClient">MongoClient docs</a>).</td>
-</tr>
-<tr>
-<td><code>driverOptions</code></td>
-<td><code>[]</code></td>
-<td>Associative array of driver options to pass to <code>MongoClient</code> (see the <a href="http://php.net/MongoClient">MongoClient docs</a>).</td>
-</tr>
-</tbody>
-</table></div>
 <h2 id="extmongodb-adapter">ExtMongoDB Adapter</h2>
-<blockquote>
-<p>Available since version 2.8.0</p>
-</blockquote>
 <p><code>Laminas\Cache\Storage\Adapter\ExtMongoDB</code> stores cache items using the mongodb extension, and
 requires that the MongoDB PHP Client library is also installed. You can install the client
 library using the following:</p>
 <pre class="highlight"><code class="language-bash">$ composer require mongodb/mongodb</code></pre>
-<blockquote>
-<h3 id="ext-mongo">ext-mongo</h3>
-<p>If you are using the mongo extension (vs the mongodb extension), you will need
-to use the <a href="#mongodb-adapter">MongoDb adapter</a> instead.</p>
-</blockquote>
 <p>This adapter implements the following interfaces:</p>
 <ul>
 <li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
 </ul>
-<h3 id="capabilities_9">Capabilities</h3>
+<h3 id="capabilities_7">Capabilities</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -2086,48 +1776,45 @@ to use the <a href="#mongodb-adapter">MongoDb adapter</a> instead.</p>
 <td><code>string</code>, <code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>array</code></td>
 </tr>
 <tr>
-<td><code>supportedMetadata</code></td>
-<td>_id</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
+<td><code>ttlSupported</code></td>
 <td><code>true</code></td>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td>1</td>
+<td><code>1</code></td>
 </tr>
 <tr>
-<td><code>useRequestTime</code></td>
+<td><code>usesRequestTime</code></td>
 <td><code>false</code></td>
 </tr>
 <tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
 <td><code>maxKeyLength</code></td>
-<td>255</td>
+<td><code>255</code></td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
 <td><code>true</code></td>
 </tr>
+</tbody>
+</table></div>
+<h3 id="metadata_5">Metadata</h3>
+<div class="table-responsive"><table>
+<thead>
 <tr>
-<td><code>namespaceSeparator</code></td>
-<td><em>Option value of <code>namespace_separator</code></em></td>
+<th>Metadata</th>
+<th>Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td style="text-align: left;">The primary key within the mongo collection.</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="adapter-specific-options_9">Adapter Specific Options</h3>
+<h3 id="adapter-specific-options_6">Adapter Specific Options</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -2186,322 +1873,6 @@ to use the <a href="#mongodb-adapter">MongoDb adapter</a> instead.</p>
 <td><code>driverOptions</code></td>
 <td><code>[]</code></td>
 <td>Associative array of driver options to pass to <code>MongoDB\\Client</code> (see the <a href="https://docs.mongodb.com/php-library/current/reference/method/MongoDBClient__construct/">MongoDB\Client docs</a>).</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="wincache-adapter">WinCache Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\WinCache</code> stores cache items into shared memory
-through the PHP extension <a href="http://pecl.php.net/package/WinCache">WinCache</a>.</p>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\StorageInterface</code></li>
-<li><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code></li>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
-</ul>
-<h3 id="capabilities_10">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>internal_key, ttl, hits, size</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>ttlPrecision</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>useRequestTime</code></td>
-<td><code>apc.use_request_time</code> <code>php.ini</code> value.</td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td>Option value of <code>namespace_separator</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="adapter-specific-options_10">Adapter Specific Options</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Data Type</th>
-<th>Default Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>namespace_separator</code></td>
-<td><code>string</code></td>
-<td>":"</td>
-<td>A separator for the namespace and prefix.</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="xcache-adapter">XCache Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\XCache</code> stores cache items into shared memory through the
-PHP extension <a href="http://xcache.lighttpd.net/">XCache</a>.</p>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\StorageInterface</code></li>
-<li><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByPrefixInterface</code></li>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-<li><code>Laminas\Cache\Storage\IterableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
-</ul>
-<h3 id="capabilities_11">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>boolean</code>, <code>integer</code>, <code>double</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>internal_key, size, refcount, hits, ctime, atime, hvalue</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td><code>xcache.var_maxttl</code> <code>php.ini</code> value</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>ttlPrecision</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>useRequestTime</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxKeyLength</code></td>
-<td>5182</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td>Option value of <code>namespace_separator</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="adapter-specific-options_11">Adapter Specific Options</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Data Type</th>
-<th>Default Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>namespace_separator</code></td>
-<td><code>string</code></td>
-<td>":"</td>
-<td>A separator for the namespace and prefix.</td>
-</tr>
-<tr>
-<td><code>admin_auth</code></td>
-<td><code>boolean</code></td>
-<td><code>false</code></td>
-<td>Enable admin authentication by configuration options <code>admin_user</code> and <code>admin_pass</code>.  This makes XCache administration functions accessible without the need of HTTP-Authentication if <code>xcache.admin.enable_auth</code> is enabled.</td>
-</tr>
-<tr>
-<td><code>admin_user</code></td>
-<td><code>string</code></td>
-<td>""</td>
-<td>The username of <code>xcache.admin.user</code>.</td>
-</tr>
-<tr>
-<td><code>admin_pass</code></td>
-<td><code>string</code></td>
-<td>""</td>
-<td>The password of <code>xcache.admin.pass</code> in plain text.</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="zendserverdisk-adapter">ZendServerDisk Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\ZendServerDisk</code> stores cache items on the filesystem
-using the <a href="https://www.zend.com/en/products/server/">Zend Server Data Caching API</a>.</p>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\StorageInterface</code></li>
-<li><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code></li>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
-</ul>
-<h3 id="capabilities_12">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>none</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxKeyLength</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>ttlPrecision</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>useRequestTime</code></td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>if 'zend_datacache.lock_on_expire' is enabled 120 else 0</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td><code>::</code></td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="zendservershm-adapter">ZendServerShm Adapter</h2>
-<p><code>Laminas\Cache\Storage\Adapter\ZendServerShm</code> stores cache items in shared memory
-through the <a href="https://www.zend.com/en/products/server/">Zend Server Data Caching API</a>.</p>
-<p>This adapter implements the following interfaces:</p>
-<ul>
-<li><code>Laminas\Cache\Storage\StorageInterface</code></li>
-<li><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code></li>
-<li><code>Laminas\Cache\Storage\FlushableInterface</code></li>
-<li><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code></li>
-</ul>
-<h3 id="capabilities_13">Capabilities</h3>
-<div class="table-responsive"><table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>supportedDatatypes</code></td>
-<td><code>null</code>, <code>boolean</code>, <code>integer</code>, <code>double</code>, <code>string</code>, <code>array</code> (serialized), <code>object</code> (serialized)</td>
-</tr>
-<tr>
-<td><code>supportedMetadata</code></td>
-<td>none</td>
-</tr>
-<tr>
-<td><code>minTtl</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>maxTtl</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>maxKeyLength</code></td>
-<td>0</td>
-</tr>
-<tr>
-<td><code>staticTtl</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>ttlPrecision</code></td>
-<td>1</td>
-</tr>
-<tr>
-<td><code>useRequestTime</code></td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>lockOnExpire</code></td>
-<td>if 'zend_datacache.lock_on_expire' is enabled 120 else 0</td>
-</tr>
-<tr>
-<td><code>namespaceIsPrefix</code></td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>namespaceSeparator</code></td>
-<td><code>::</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -2653,22 +2024,6 @@ if (count($results) &lt; count($ids)) {
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
     <li class="subnavigation__list-item ">
@@ -2762,6 +2117,52 @@ if (count($results) &lt; count($ids)) {
         </ul>
     </li>
 
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Application Integration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../application-integration/usage-in-a-laminas-mvc-application/" class="subnavigation__link">Usage in a laminas-mvc Application</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration Guide</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/to-version-4/" class="subnavigation__link">Migration to Version 4.0</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
