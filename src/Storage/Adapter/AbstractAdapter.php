@@ -31,6 +31,7 @@ use function sprintf;
 
 /**
  * @template TOptions of AdapterOptions
+ * @template-implements StorageInterface<TOptions>
  */
 abstract class AbstractAdapter implements StorageInterface, PluginAwareInterface
 {
