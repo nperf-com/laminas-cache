@@ -3,18 +3,23 @@
 namespace Laminas\Cache\Storage;
 
 use Laminas\Cache\Exception\ExceptionInterface;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 
 /**
- * NOTE: when providing integrish cache keys in iterables, internal array conversion might convert these to int, even
+ * NOTE: when providing integerish cache keys in iterables, internal array conversion might convert these to int, even
  *       tho they were non-empty-string beforehand. See https://3v4l.org/GsiBl for more details.
  *
  * @psalm-type CacheKeyInIterableType = non-empty-string|int
+ * @template TOptions of AdapterOptions
  */
 interface StorageInterface
 {
-    public function setOptions(iterable|Adapter\AdapterOptions $options): self;
+    public function setOptions(iterable|AdapterOptions $options): self;
 
-    public function getOptions(): Adapter\AdapterOptions;
+    /**
+     * @return TOptions
+     */
+    public function getOptions(): AdapterOptions;
 
     /* reading */
     /**
