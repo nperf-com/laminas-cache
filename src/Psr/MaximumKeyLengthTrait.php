@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Cache\Psr;
 
 use Laminas\Cache\Psr\SimpleCache\SimpleCacheInvalidArgumentException;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\StorageInterface;
 
@@ -32,6 +33,9 @@ trait MaximumKeyLengthTrait
     /** @var int<0,max> */
     private int $maximumKeyLength;
 
+    /**
+     * @param StorageInterface<AdapterOptions> $storage
+     */
     private function memoizeMaximumKeyLengthCapability(StorageInterface $storage, Capabilities $capabilities): void
     {
         $maximumKeyLength = $capabilities->maxKeyLength;

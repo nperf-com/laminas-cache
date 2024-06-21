@@ -32,6 +32,7 @@ final class KeyListIterator implements IteratorInterface, Countable
     protected int $position = 0;
 
     /**
+     * @param StorageInterface<AdapterOptions> $storage
      * @param array<int,non-empty-string> $keys Keys to iterate over
      */
     public function __construct(
@@ -42,7 +43,7 @@ final class KeyListIterator implements IteratorInterface, Countable
     }
 
     /**
-     * Get storage instance
+     * @return StorageInterface<AdapterOptions>
      */
     public function getStorage(): StorageInterface
     {

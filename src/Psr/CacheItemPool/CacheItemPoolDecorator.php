@@ -7,6 +7,7 @@ use Laminas\Cache\Exception;
 use Laminas\Cache\Psr\Clock;
 use Laminas\Cache\Psr\MaximumKeyLengthTrait;
 use Laminas\Cache\Psr\SerializationTrait;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\ClearByNamespaceInterface;
 use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\StorageInterface;
@@ -292,6 +293,7 @@ final class CacheItemPoolDecorator implements CacheItemPoolInterface
     /**
      * Throws exception is storage is not compatible with PSR-6
      *
+     * @param StorageInterface<AdapterOptions> $storage
      * @throws CacheException
      */
     private function validateStorage(StorageInterface $storage): void

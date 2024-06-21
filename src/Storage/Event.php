@@ -3,6 +3,7 @@
 namespace Laminas\Cache\Storage;
 
 use ArrayObject;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\EventManager\Event as BaseEvent;
 
 /** @extends BaseEvent<StorageInterface, ArrayObject> */
@@ -12,6 +13,7 @@ class Event extends BaseEvent
      * Accept a storage adapter and its parameters.
      *
      * @param non-empty-string $name Event name
+     * @param StorageInterface<AdapterOptions> $storage
      * @param ArrayObject<string,mixed> $params
      */
     public function __construct(string $name, StorageInterface $storage, ArrayObject $params)
@@ -24,7 +26,7 @@ class Event extends BaseEvent
      *
      * @see    \Laminas\EventManager\Event::setTarget()
      *
-     * @param StorageInterface $target
+     * @param StorageInterface<AdapterOptions> $target
      */
     public function setTarget($target): void
     {
@@ -36,6 +38,8 @@ class Event extends BaseEvent
      * Alias of setTarget
      *
      * @see    \Laminas\EventManager\Event::setTarget()
+     *
+     * @param StorageInterface<AdapterOptions> $storage
      */
     public function setStorage(StorageInterface $storage): self
     {
@@ -45,6 +49,8 @@ class Event extends BaseEvent
 
     /**
      * Alias of getTarget
+     *
+     * @return StorageInterface<AdapterOptions>
      */
     public function getStorage(): StorageInterface
     {

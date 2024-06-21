@@ -8,6 +8,7 @@ use Laminas\Cache\Exception\InvalidArgumentException as LaminasCacheInvalidArgum
 use Laminas\Cache\Psr\Clock;
 use Laminas\Cache\Psr\MaximumKeyLengthTrait;
 use Laminas\Cache\Psr\SerializationTrait;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\ClearByNamespaceInterface;
 use Laminas\Cache\Storage\FlushableInterface;
@@ -54,6 +55,9 @@ final class SimpleCacheDecorator implements SimpleCacheInterface
 
     private ClockInterface $clock;
 
+    /**
+     * @param StorageInterface<AdapterOptions> $storage
+     */
     public function __construct(
         private readonly StorageInterface $storage,
         ?ClockInterface $clock = null,
