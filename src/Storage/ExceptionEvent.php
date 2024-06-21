@@ -3,6 +3,7 @@
 namespace Laminas\Cache\Storage;
 
 use ArrayObject;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Throwable;
 
 class ExceptionEvent extends PostEvent
@@ -21,6 +22,7 @@ class ExceptionEvent extends PostEvent
      * Accept a target and its parameters.
      *
      * @param non-empty-string $name Event name
+     * @param StorageInterface<AdapterOptions> $storage
      * @param ArrayObject<string,mixed> $params
      */
     public function __construct(

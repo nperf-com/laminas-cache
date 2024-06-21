@@ -3,6 +3,7 @@
 namespace Laminas\Cache\Pattern;
 
 use Laminas\Cache\Exception;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\StorageInterface;
 use Stringable;
 use Throwable;
@@ -21,6 +22,9 @@ final class ObjectCache extends AbstractStorageCapablePattern implements Stringa
 {
     private CallbackCache $callbackCache;
 
+    /**
+     * @param StorageInterface<AdapterOptions> $storage
+     */
     public function __construct(StorageInterface $storage, ?PatternOptions $options = null)
     {
         parent::__construct($storage, $options);
