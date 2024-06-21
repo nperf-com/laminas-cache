@@ -46,6 +46,8 @@ class AdapterOptions extends AbstractOptions
 
     /**
      * The adapter using these options
+     *
+     * @var StorageInterface<AdapterOptions>
      */
     protected ?StorageInterface $adapter = null;
 
@@ -78,6 +80,8 @@ class AdapterOptions extends AbstractOptions
 
     /**
      * Adapter using this instance
+     *
+     * @param StorageInterface<AdapterOptions> $adapter
      */
     public function setAdapter(?StorageInterface $adapter = null): self
     {

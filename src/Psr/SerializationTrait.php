@@ -2,6 +2,7 @@
 
 namespace Laminas\Cache\Psr;
 
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\StorageInterface;
 
 use function in_array;
@@ -16,6 +17,8 @@ trait SerializationTrait
 {
     /**
      * Determine if the given storage adapter requires serialization.
+     *
+     * @param StorageInterface<AdapterOptions> $storage
      */
     private function isSerializationRequired(StorageInterface $storage): bool
     {

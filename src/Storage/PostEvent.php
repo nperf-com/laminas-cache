@@ -3,6 +3,7 @@
 namespace Laminas\Cache\Storage;
 
 use ArrayObject;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 
 class PostEvent extends Event
 {
@@ -15,6 +16,7 @@ class PostEvent extends Event
      * Accept a target and its parameters.
      *
      * @param non-empty-string $name Event name
+     * @param StorageInterface<AdapterOptions> $storage
      * @param ArrayObject<string,mixed> $params
      */
     public function __construct(string $name, StorageInterface $storage, ArrayObject $params, mixed $result)

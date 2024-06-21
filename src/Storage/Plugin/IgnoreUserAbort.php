@@ -2,6 +2,7 @@
 
 namespace Laminas\Cache\Storage\Plugin;
 
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Event;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\EventManager\EventManagerInterface;
@@ -13,6 +14,8 @@ final class IgnoreUserAbort extends AbstractPlugin
 {
     /**
      * The storage who activated ignore_user_abort.
+     *
+     * @var StorageInterface<AdapterOptions>
      */
     protected ?StorageInterface $activatedTarget = null;
 
