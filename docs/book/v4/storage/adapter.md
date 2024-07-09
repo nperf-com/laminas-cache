@@ -111,7 +111,8 @@ storage adapters.
 ```php
 namespace Laminas\Cache\Storage;
 
-use Laminas\Cache\Storage\Adapter\AdapterOptions;use Traversable;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
+use Traversable;
 
 interface StorageInterface
 {
