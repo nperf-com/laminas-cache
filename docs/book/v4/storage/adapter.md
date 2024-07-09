@@ -774,9 +774,9 @@ This adapter implements the following interfaces:
 
 ### Metadata
 
-| Metadata | Type     | Description                                  |
-|----------|----------|:---------------------------------------------|
-| `id`     | `string` | The primary key within the mongo collection. |
+| Metadata   | Type     | Description                                  |
+|------------|----------|:---------------------------------------------|
+| `objectId` | `string` | The primary key within the mongo collection. |
 
 
 ### Adapter Specific Options
