@@ -95,13 +95,13 @@ The following configuration options are defined by `Laminas\Cache\Storage\Adapte
 are available for every supported adapter. Adapter-specific configuration options are described on
 adapter level below.
 
- Option        | Data Type | Default Value  | Description                                    
----------------|-----------|----------------|------------------------------------------------
- `ttl`         | `integer` | `0`            | Time to live                                   
- `namespace`   | `string`  | “laminascache” | The “namespace” in which cache items will live 
- `key_pattern` | `null     | string`        | `null`                                         | Pattern against which to validate cache keys
- `readable`    | `boolean` | `true`         | Enable/Disable reading data from cache         
- `writable`    | `boolean` | `true`         | Enable/Disable writing data to cache           
+| Option        | Data Type      | Default Value    | Description                                    |
+|---------------|----------------|------------------|------------------------------------------------|
+| `ttl`         | `integer`      | `0`              | Time to live                                   |
+| `namespace`   | `string`       | `"laminascache"` | The “namespace” in which cache items will live |
+| `key_pattern` | `null\|string` | `null`           | Pattern against which to validate cache keys   |
+| `readable`    | `boolean`      | `true`           | Enable/Disable reading data from cache         |
+| `writable`    | `boolean`      | `true`           | Enable/Disable writing data to cache           |
 
 ## StorageInterface
 
@@ -111,43 +111,23 @@ storage adapters.
 ```php
 namespace Laminas\Cache\Storage;
 
-use Traversable;
+use Laminas\Cache\Storage\Adapter\AdapterOptions;use Traversable;
 
 interface StorageInterface
 {
-    /**
-     * Set options.
-     *
-     * @param array|Traversable|Adapter\AdapterOptions $options
-     * @return StorageInterface Fluent interface
-     */
-    public function setOptions($options);
+    public function setOptions(AdapterOptions|iterable $options): self;
+
+    public function getOptions(): AdapterOptions;
 
     /**
-     * Get options
-     *
-     * @return Adapter\AdapterOptions
-     */
-    public function getOptions();
-
-    /* reading */
-
-    /**
-     * Get an item.
-     *
-     * @param  string  $key
-     * @param  bool $success
-     * @param  mixed   $casToken
-     * @return mixed Data on success, null on failure
+     * @param  non-empty-string  $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function getItem($key, & $success = null, & $casToken = null);
+    public function getItem(string $key, bool|null &$success = null, mixed &$casToken = null): mixed;
 
     /**
-     * Get multiple items.
-     *
-     * @param  array $keys
-     * @return array Associative array of keys and values
+     * @param  non-empty-list<non-empty-string> $keys
+     * @return array<non-empty-string,mixed> Associative array of keys and values
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
     public function getItems(array $keys);
@@ -155,79 +135,70 @@ interface StorageInterface
     /**
      * Test if an item exists.
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function hasItem($key);
+    public function hasItem(string $key): bool;
 
     /**
      * Test multiple items.
      *
-     * @param  array $keys
-     * @return array Array of found keys
+     * @param  non-empty-array<non-empty-string> $keys
+     * @return list<non-empty-string> Array of found keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function hasItems(array $keys);
-
-    /* writing */
+    public function hasItems(array $keys): array;
 
     /**
      * Store an item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function setItem($key, $value);
+    public function setItem(string $key, mixed $value): bool;
 
     /**
      * Store multiple items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array<non-empty-string,mixed> $keyValuePairs
+     * @return list<non-empty-string> Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function setItems(array $keyValuePairs);
+    public function setItems(array $keyValuePairs): array;
 
     /**
      * Add an item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function addItem($key, $value);
+    public function addItem(string $key, mixed $value): bool;
 
     /**
      * Add multiple items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array<non-empty-string,mixed> $keyValuePairs
+     * @return list<non-empty-string> Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function addItems(array $keyValuePairs);
+    public function addItems(array $keyValuePairs): array;
 
     /**
      * Replace an existing item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function replaceItem($key, $value);
+    public function replaceItem(string $key, mixed $value): bool;
 
     /**
      * Replace multiple existing items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array<non-empty-string,mixed> $keyValuePairs
+     * @return list<non-empty-string> Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function replaceItems(array $keyValuePairs);
+    public function replaceItems(array $keyValuePairs): array;
 
     /**
      * Set an item only if token matches
@@ -235,60 +206,48 @@ interface StorageInterface
      * It uses the token received from getItem() to check if the item has
      * changed before overwriting it.
      *
-     * @param  mixed  $token
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      * @see    getItem()
      * @see    setItem()
      */
-    public function checkAndSetItem($token, $key, $value);
+    public function checkAndSetItem(mixed $token, string $key, mixed $value): bool;
 
     /**
      * Reset lifetime of an item
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function touchItem($key);
+    public function touchItem(string $key): bool;
 
     /**
      * Reset lifetime of multiple items.
      *
-     * @param  array $keys
-     * @return array Array of not updated keys
+     * @param  non-empty-list<non-empty-string> $keys
+     * @return list<non-empty-string> Array of not updated keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function touchItems(array $keys);
+    public function touchItems(array $keys): array;
 
     /**
      * Remove an item.
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function removeItem($key);
+    public function removeItem(string $key): bool;
 
     /**
      * Remove multiple items.
      *
-     * @param  array $keys
-     * @return array Array of not removed keys
+     * @param  non-empty-array<non-empty-string> $keys
+     * @return list<non-empty-string> Array of not removed keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function removeItems(array $keys);
+    public function removeItems(array $keys): array;
 
-    /* status */
-
-    /**
-     * Capabilities of this storage
-     *
-     * @return Capabilities
-     */
-    public function getCapabilities();
+    public function getCapabilities(): Capabilities;
 }
 ```
 
@@ -304,10 +263,8 @@ interface AvailableSpaceCapableInterface
 {
     /**
      * Get available space in bytes
-     *
-     * @return int|float
      */
-    public function getAvailableSpace();
+    public function getAvailableSpace(): int;
 }
 ```
 
@@ -323,10 +280,8 @@ interface TotalSpaceCapableInterface
 {
     /**
      * Get total space in bytes
-     *
-     * @return int|float
      */
-    public function getTotalSpace();
+    public function getTotalSpace(): int;
 }
 ```
 
@@ -343,10 +298,9 @@ interface ClearByNamespaceInterface
     /**
      * Remove items of given namespace
      *
-     * @param string $namespace
-     * @return bool
+     * @param non-empty-string $namespace
      */
-    public function clearByNamespace($namespace);
+    public function clearByNamespace(string $namespace): bool;
 }
 ```
 
@@ -364,10 +318,9 @@ interface ClearByPrefixInterface
     /**
      * Remove items matching given prefix
      *
-     * @param string $prefix
-     * @return bool
+     * @param non-empty-string $prefix
      */
-    public function clearByPrefix($prefix);
+    public function clearByPrefix(string $prefix): bool;
 }
 ```
 
@@ -383,10 +336,8 @@ interface ClearExpiredInterface
 {
     /**
      * Remove expired items
-     *
-     * @return bool
      */
-    public function clearExpired();
+    public function clearExpired(): bool;
 }
 ```
 
@@ -402,10 +353,8 @@ interface FlushableInterface
 {
     /**
      * Flush the whole storage
-     *
-     * @return bool
      */
-    public function flush();
+    public function flush(): bool;
 }
 ```
 
@@ -422,15 +371,13 @@ namespace Laminas\Cache\Storage;
 use IteratorAggregate;
 
 /**
- *
- * @method IteratorInterface getIterator() Get the storage iterator
+ * @template-covariant TKey
+ * @template-covariant TValue
+ * @template-extends IteratorAggregate<TKey,TValue>
  */
 interface IterableInterface extends IteratorAggregate
 {
-    /**
-     * @return \Traversable
-     */
-    public function getIterator();
+    public function getIterator(): IteratorInterface;
 }
 ```
 
@@ -446,10 +393,8 @@ interface OptimizableInterface
 {
     /**
      * Optimize the storage
-     *
-     * @return bool
      */
-    public function optimize();
+    public function optimize(): bool;
 }
 ```
 
@@ -467,19 +412,18 @@ interface TaggableInterface
      * Set tags to an item by given key.
      * An empty array will remove all tags.
      *
-     * @param string   $key
+     * @param non-empty-string   $key
      * @param string[] $tags
-     * @return bool
      */
-    public function setTags($key, array $tags);
+    public function setTags(string $key, array $tags): bool;
 
     /**
      * Get tags of an item by given key
      *
-     * @param string $key
-     * @return string[]|FALSE
+     * @param non-empty-string $key
+     * @return string[]|false
      */
-    public function getTags($key);
+    public function getTags(string $key): array|false;
 
     /**
      * Remove items matching given tags.
@@ -488,10 +432,8 @@ interface TaggableInterface
      * else all given tags must match.
      *
      * @param string[] $tags
-     * @param  bool  $disjunction
-     * @return bool
      */
-    public function clearByTags(array $tags, $disjunction = false);
+    public function clearByTags(array $tags, bool $disjunction = false): bool;
 }
 ```
 
