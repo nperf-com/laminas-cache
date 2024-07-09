@@ -612,20 +612,20 @@ This adapter implements the following interfaces:
 
 ### Adapter Specific Options
 
-| Name                     | Data Type                               | Default Value          | Description                                                                         |
-|--------------------------|-----------------------------------------|------------------------|-------------------------------------------------------------------------------------|
-| `namespace_separator`    | `string`                                | ":"                    | A separator for the namespace and prefix                                            |
-| `cache_dir`              | `string`                                | ""                     | Directory to store cache files.                                                     |
-| `clear_stat_cache`       | `boolean`                               | `true`                 | Call `clearstatcache()` enabled?                                                    |
-| `dir_level`              | `integer`                               | `1`                    | Defines how much sub-directories should be created.                                 |
-| `dir_permission`         | `integer\|false`                        | `0700`                 | Set explicit permission on creating new directories.                                |
-| `file_locking`           | `boolean`                               | `true`                 | Lock files on writing.                                                              |
-| `file_permission`        | `integer`                               | `false`                | 0600    Set explicit permission on creating new files.                              |
-| `key_pattern`            | `string`                                | `/^[a-z0-9_\+\-]*$/Di` | Validate key against pattern.                                                       |
-| `no_atime`               | `boolean`                               | `true`                 | Don’t get `fileatime` as `atime` on metadata.                                       |
-| `no_ctime`               | `boolean`                               | `true`                 | Don’t get `filectime` as `ctime` on metadata.                                       |
-| `umask`                  | `integer\|false`                        | `false`                | Use [umask](http://wikipedia.org/wiki/Umask) to set file and directory permissions. |
-| `unserializable_classes` | `boolean\|non-empty-list<class-string>` | `true`                 | A list of classes which are allowed for unserialization when reading cache values   |
+| Name                     | Data Type                               | Default Value          | Description                                                                                                             |
+|--------------------------|-----------------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `namespace_separator`    | `string`                                | ":"                    | A separator for the namespace and prefix                                                                                |
+| `cache_dir`              | `string`                                | ""                     | Directory to store cache files.                                                                                         |
+| `clear_stat_cache`       | `boolean`                               | `true`                 | Call `clearstatcache()` enabled?                                                                                        |
+| `dir_level`              | `integer`                               | `1`                    | Defines how much sub-directories should be created.                                                                     |
+| `dir_permission`         | `integer\|false`                        | `0700`                 | Set explicit permission on creating new directories.                                                                    |
+| `file_locking`           | `boolean`                               | `true`                 | Lock files on writing.                                                                                                  |
+| `file_permission`        | `integer`                               | `false`                | 0600    Set explicit permission on creating new files.                                                                  |
+| `key_pattern`            | `string`                                | `/^[a-z0-9_\+\-]*$/Di` | Validate key against pattern.                                                                                           |
+| `no_atime`               | `boolean`                               | `true`                 | Don’t get `fileatime` as `atime` on metadata.                                                                           |
+| `no_ctime`               | `boolean`                               | `true`                 | Don’t get `filectime` as `ctime` on metadata.                                                                           |
+| `umask`                  | `integer\|false`                        | `false`                | Use [umask](http://wikipedia.org/wiki/Umask) to set file and directory permissions.                                     |
+| `unserializable_classes` | `boolean\|non-empty-list<class-string>` | `true`                 | A list of classes which are allowed for unserialization when reading cache values. Available as of v3.0 of the adapter. |
 
 ## Memcached Adapter
 
