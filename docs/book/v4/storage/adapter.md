@@ -712,9 +712,9 @@ This adapter implements the following interfaces:
 |----------------------|---------------------------------------------------------------------------------|
 | `supportedDatatypes` | `string`, `null`, `boolean`, `integer`, `double`, `array`, `object`, `resource` |
 | `ttlSupported`       | `true`                                                                          |
-| `ttlPrecision`       | `0.05`                                                                          |
+| `ttlPrecision`       | `1`                                                                             |
 | `usesRequestTime`    | `false`                                                                         |
-| `maxKeyLength`       | `0`                                                                             |
+| `maxKeyLength`       | `0` (unlimited)                                                                 |
 | `namespaceIsPrefix`  | `false`                                                                         |
 
 ### Metadata
@@ -725,19 +725,15 @@ This adapter implements the following interfaces:
 
 ### Adapter Specific Options
 
-| Name           | Data Type     | Default Value                   | Description                                                     |
-|----------------|---------------|---------------------------------|-----------------------------------------------------------------|
-| `memory_limit` | `string\|int` | 50% of `memory_limit` INI value | Limit of how much memory can PHP allocate to allow store items. |
+| Name        | Data Type | Default Value   | Description                                                                                         |
+|-------------|-----------|-----------------|-----------------------------------------------------------------------------------------------------|
+| `max_items` | `int`     | `0` (unlimited) | Limit of how many cache items are allowed to be stored. Available with v3.0 of the `Memory` adapter |
 
-> #### Memory Limit
+> #### Max Items
 >
-> The adapter has the following behavior with regards to the memory limit:
+> The adapter has the following behavior in regard to the `max_items` option:
 >
-> - If the consumed memory exceeds the limit provided, an `OutOfSpaceException`
-    >   is thrown.
-> - A number less the or equal to zero disables the memory limit.
-> - When a value is provided for the memory limit, the value is measured in
-    >   bytes. Shorthand notation may also be provided.
+> - If the items persisted to the memory cache are exceeding the limit, a new item will be stored while an older item will be removed
 
 > ### Current process only
 >
