@@ -733,7 +733,7 @@ This adapter implements the following interfaces:
 >
 > The adapter has the following behavior in regard to the `max_items` option:
 >
-> - If the items persisted to the memory cache are exceeding the limit, a new item will be stored while an older item will be removed
+> - If the items persisted to the memory cache are exceeding the limit, a new item will be stored while the oldest item will be removed
 
 > ### Current process only
 >
