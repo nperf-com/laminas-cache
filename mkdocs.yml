@@ -73,14 +73,14 @@ plugins:
   - search
   - redirects:
         redirect_maps:
-            installation.md: v3/installation.md
-            storage/adapter.md: v3/storage/adapter.md
-            storage/capabilities.md: v3/storage/capabilities.md
-            storage/plugin.md: v3/storage/plugin.md
-            pattern/intro.md: v3/pattern/intro.md
-            pattern/callback-cache.md: v3/pattern/callback-cache.md
-            pattern/object-cache.md: v3/pattern/object-cache.md
-            pattern/output-cache.md: v3/pattern/output-cache.md
-            pattern/capture-cache.md: v3/pattern/capture-cache.md
-            psr6.md: v3/psr6.md
-            psr16.md: v3/psr16.md
+            installation.md: v4/installation.md
+            storage/adapter.md: v4/storage/adapter.md
+            storage/capabilities.md: v4/storage/capabilities.md
+            storage/plugin.md: v4/storage/plugin.md
+            pattern/intro.md: v4/pattern/intro.md
+            pattern/callback-cache.md: v4/pattern/callback-cache.md
+            pattern/object-cache.md: v4/pattern/object-cache.md
+            pattern/output-cache.md: v4/pattern/output-cache.md
+            pattern/capture-cache.md: v4/pattern/capture-cache.md
+            psr6.md: v4/psr6.md
+            psr16.md: v4/psr16.md
