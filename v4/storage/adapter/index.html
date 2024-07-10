@@ -616,12 +616,12 @@ adapter level below.</p>
 <tr>
 <td><code>namespace</code></td>
 <td><code>string</code></td>
-<td>“laminascache”</td>
+<td><code>"laminascache"</code></td>
 <td>The “namespace” in which cache items will live</td>
 </tr>
 <tr>
 <td><code>key_pattern</code></td>
-<td><code>null     | string</code></td>
+<td><code>null|string</code></td>
 <td><code>null</code></td>
 <td>Pattern against which to validate cache keys</td>
 </tr>
@@ -644,43 +644,24 @@ adapter level below.</p>
 storage adapters.</p>
 <pre class="highlight"><code class="language-php">namespace Laminas\Cache\Storage;
 
+use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Traversable;
 
 interface StorageInterface
 {
-    /**
-     * Set options.
-     *
-     * @param array|Traversable|Adapter\AdapterOptions $options
-     * @return StorageInterface Fluent interface
-     */
-    public function setOptions($options);
+    public function setOptions(AdapterOptions|iterable $options): self;
+
+    public function getOptions(): AdapterOptions;
 
     /**
-     * Get options
-     *
-     * @return Adapter\AdapterOptions
-     */
-    public function getOptions();
-
-    /* reading */
-
-    /**
-     * Get an item.
-     *
-     * @param  string  $key
-     * @param  bool $success
-     * @param  mixed   $casToken
-     * @return mixed Data on success, null on failure
+     * @param  non-empty-string  $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function getItem($key, &amp; $success = null, &amp; $casToken = null);
+    public function getItem(string $key, bool|null &amp;$success = null, mixed &amp;$casToken = null): mixed;
 
     /**
-     * Get multiple items.
-     *
-     * @param  array $keys
-     * @return array Associative array of keys and values
+     * @param  non-empty-list&lt;non-empty-string&gt; $keys
+     * @return array&lt;non-empty-string,mixed&gt; Associative array of keys and values
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
     public function getItems(array $keys);
@@ -688,79 +669,70 @@ interface StorageInterface
     /**
      * Test if an item exists.
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function hasItem($key);
+    public function hasItem(string $key): bool;
 
     /**
      * Test multiple items.
      *
-     * @param  array $keys
-     * @return array Array of found keys
+     * @param  non-empty-array&lt;non-empty-string&gt; $keys
+     * @return list&lt;non-empty-string&gt; Array of found keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function hasItems(array $keys);
-
-    /* writing */
+    public function hasItems(array $keys): array;
 
     /**
      * Store an item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function setItem($key, $value);
+    public function setItem(string $key, mixed $value): bool;
 
     /**
      * Store multiple items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array&lt;non-empty-string,mixed&gt; $keyValuePairs
+     * @return list&lt;non-empty-string&gt; Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function setItems(array $keyValuePairs);
+    public function setItems(array $keyValuePairs): array;
 
     /**
      * Add an item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function addItem($key, $value);
+    public function addItem(string $key, mixed $value): bool;
 
     /**
      * Add multiple items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array&lt;non-empty-string,mixed&gt; $keyValuePairs
+     * @return list&lt;non-empty-string&gt; Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function addItems(array $keyValuePairs);
+    public function addItems(array $keyValuePairs): array;
 
     /**
      * Replace an existing item.
      *
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function replaceItem($key, $value);
+    public function replaceItem(string $key, mixed $value): bool;
 
     /**
      * Replace multiple existing items.
      *
-     * @param  array $keyValuePairs
-     * @return array Array of not stored keys
+     * @param  non-empty-array&lt;non-empty-string,mixed&gt; $keyValuePairs
+     * @return list&lt;non-empty-string&gt; Array of not stored keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function replaceItems(array $keyValuePairs);
+    public function replaceItems(array $keyValuePairs): array;
 
     /**
      * Set an item only if token matches
@@ -768,60 +740,48 @@ interface StorageInterface
      * It uses the token received from getItem() to check if the item has
      * changed before overwriting it.
      *
-     * @param  mixed  $token
-     * @param  string $key
-     * @param  mixed  $value
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      * @see    getItem()
      * @see    setItem()
      */
-    public function checkAndSetItem($token, $key, $value);
+    public function checkAndSetItem(mixed $token, string $key, mixed $value): bool;
 
     /**
      * Reset lifetime of an item
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function touchItem($key);
+    public function touchItem(string $key): bool;
 
     /**
      * Reset lifetime of multiple items.
      *
-     * @param  array $keys
-     * @return array Array of not updated keys
+     * @param  non-empty-list&lt;non-empty-string&gt; $keys
+     * @return list&lt;non-empty-string&gt; Array of not updated keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function touchItems(array $keys);
+    public function touchItems(array $keys): array;
 
     /**
      * Remove an item.
      *
-     * @param  string $key
-     * @return bool
+     * @param  non-empty-string $key
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function removeItem($key);
+    public function removeItem(string $key): bool;
 
     /**
      * Remove multiple items.
      *
-     * @param  array $keys
-     * @return array Array of not removed keys
+     * @param  non-empty-array&lt;non-empty-string&gt; $keys
+     * @return list&lt;non-empty-string&gt; Array of not removed keys
      * @throws \Laminas\Cache\Exception\ExceptionInterface
      */
-    public function removeItems(array $keys);
+    public function removeItems(array $keys): array;
 
-    /* status */
-
-    /**
-     * Capabilities of this storage
-     *
-     * @return Capabilities
-     */
-    public function getCapabilities();
+    public function getCapabilities(): Capabilities;
 }</code></pre>
 <h2 id="availablespacecapableinterface">AvailableSpaceCapableInterface</h2>
 <p><code>Laminas\Cache\Storage\AvailableSpaceCapableInterface</code> implements a method to allow
@@ -832,10 +792,8 @@ interface AvailableSpaceCapableInterface
 {
     /**
      * Get available space in bytes
-     *
-     * @return int|float
      */
-    public function getAvailableSpace();
+    public function getAvailableSpace(): int;
 }</code></pre>
 <h2 id="totalspacecapableinterface">TotalSpaceCapableInterface</h2>
 <p><code>Laminas\Cache\Storage\TotalSpaceCapableInterface</code> implements a method to allow
@@ -846,10 +804,8 @@ interface TotalSpaceCapableInterface
 {
     /**
      * Get total space in bytes
-     *
-     * @return int|float
      */
-    public function getTotalSpace();
+    public function getTotalSpace(): int;
 }</code></pre>
 <h2 id="clearbynamespaceinterface">ClearByNamespaceInterface</h2>
 <p><code>Laminas\Cache\Storage\ClearByNamespaceInterface</code> implements a method to allow
@@ -861,10 +817,9 @@ interface ClearByNamespaceInterface
     /**
      * Remove items of given namespace
      *
-     * @param string $namespace
-     * @return bool
+     * @param non-empty-string $namespace
      */
-    public function clearByNamespace($namespace);
+    public function clearByNamespace(string $namespace): bool;
 }</code></pre>
 <h2 id="clearbyprefixinterface">ClearByPrefixInterface</h2>
 <p><code>Laminas\Cache\Storage\ClearByPrefixInterface</code> implements a method to allow
@@ -877,10 +832,9 @@ interface ClearByPrefixInterface
     /**
      * Remove items matching given prefix
      *
-     * @param string $prefix
-     * @return bool
+     * @param non-empty-string $prefix
      */
-    public function clearByPrefix($prefix);
+    public function clearByPrefix(string $prefix): bool;
 }</code></pre>
 <h2 id="clearexpiredinterface">ClearExpiredInterface</h2>
 <p><code>Laminas\Cache\Storage\ClearExpiredInterface</code> implements a method to allow clearing
@@ -891,10 +845,8 @@ interface ClearExpiredInterface
 {
     /**
      * Remove expired items
-     *
-     * @return bool
      */
-    public function clearExpired();
+    public function clearExpired(): bool;
 }</code></pre>
 <h2 id="flushableinterface">FlushableInterface</h2>
 <p><code>Laminas\Cache\Storage\FlushableInterface</code> implements a method for flushing the
@@ -905,10 +857,8 @@ interface FlushableInterface
 {
     /**
      * Flush the whole storage
-     *
-     * @return bool
      */
-    public function flush();
+    public function flush(): bool;
 }</code></pre>
 <h2 id="iterableinterface">IterableInterface</h2>
 <p><code>Laminas\Cache\Storage\IterableInterface</code> implements a method for retrieving an
@@ -920,15 +870,13 @@ this interface using <code>foreach</code>.</p>
 use IteratorAggregate;
 
 /**
- *
- * @method IteratorInterface getIterator() Get the storage iterator
+ * @template-covariant TKey
+ * @template-covariant TValue
+ * @template-extends IteratorAggregate&lt;TKey,TValue&gt;
  */
 interface IterableInterface extends IteratorAggregate
 {
-    /**
-     * @return \Traversable
-     */
-    public function getIterator();
+    public function getIterator(): IteratorInterface;
 }</code></pre>
 <h2 id="optimizableinterface">OptimizableInterface</h2>
 <p><code>Laminas\Cache\Storage\OptimizableInterface</code> implements a method for running
@@ -939,10 +887,8 @@ interface OptimizableInterface
 {
     /**
      * Optimize the storage
-     *
-     * @return bool
      */
-    public function optimize();
+    public function optimize(): bool;
 }</code></pre>
 <h2 id="taggableinterface">TaggableInterface</h2>
 <p><code>Laminas\Cache\Storage\TaggableInterface</code> implements methods for tagging items, and
@@ -955,19 +901,18 @@ interface TaggableInterface
      * Set tags to an item by given key.
      * An empty array will remove all tags.
      *
-     * @param string   $key
+     * @param non-empty-string   $key
      * @param string[] $tags
-     * @return bool
      */
-    public function setTags($key, array $tags);
+    public function setTags(string $key, array $tags): bool;
 
     /**
      * Get tags of an item by given key
      *
-     * @param string $key
-     * @return string[]|FALSE
+     * @param non-empty-string $key
+     * @return string[]|false
      */
-    public function getTags($key);
+    public function getTags(string $key): array|false;
 
     /**
      * Remove items matching given tags.
@@ -976,10 +921,8 @@ interface TaggableInterface
      * else all given tags must match.
      *
      * @param string[] $tags
-     * @param  bool  $disjunction
-     * @return bool
      */
-    public function clearByTags(array $tags, $disjunction = false);
+    public function clearByTags(array $tags, bool $disjunction = false): bool;
 }</code></pre>
 <h2 id="apcu-adapter">APCu Adapter</h2>
 <p><code>Laminas\Cache\Storage\Adapter\Apcu</code> stores cache items in shared memory through the
@@ -1189,7 +1132,7 @@ PHP extension <a href="http://pecl.php.net/package/APCu">APCu</a> (Alternative P
 </tr>
 <tr>
 <td><code>maxKeyLength</code></td>
-<td><code>251</code></td>
+<td><code>249</code> (this is the maximum, but depending on the namespace being used, the length might be lower)</td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
@@ -1312,21 +1255,13 @@ PHP extension <a href="http://pecl.php.net/package/APCu">APCu</a> (Alternative P
 <td>Use <a href="http://wikipedia.org/wiki/Umask">umask</a> to set file and directory permissions.</td>
 </tr>
 <tr>
-<td><code>suffix</code></td>
-<td><code>string</code></td>
-<td><code>dat</code></td>
-<td>Suffix for cache files</td>
-</tr>
-<tr>
-<td><code>tag_suffix</code></td>
-<td><code>string</code></td>
-<td><code>tag</code></td>
-<td>Suffix for tag files</td>
+<td><code>unserializable_classes</code></td>
+<td><code>boolean|non-empty-list&lt;class-string&gt;</code></td>
+<td><code>true</code></td>
+<td>A list of classes which are allowed for unserialization when reading cache values. Available as of v3.0 of the adapter.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Note: the <code>suffix</code> and <code>tag_suffix</code> options will be escaped in order to be safe
-for glob operations.</p>
 <h2 id="memcached-adapter">Memcached Adapter</h2>
 <p><code>Laminas\Cache\Storage\Adapter\Memcached</code> stores cache items over the memcached
 protocol, using the PHP extension <a href="http://pecl.php.net/package/memcached">memcached</a>,
@@ -1687,7 +1622,7 @@ process only.</p>
 </tr>
 <tr>
 <td><code>ttlPrecision</code></td>
-<td><code>0.05</code></td>
+<td><code>1</code></td>
 </tr>
 <tr>
 <td><code>usesRequestTime</code></td>
@@ -1695,7 +1630,7 @@ process only.</p>
 </tr>
 <tr>
 <td><code>maxKeyLength</code></td>
-<td><code>0</code></td>
+<td><code>0</code> (unlimited)</td>
 </tr>
 <tr>
 <td><code>namespaceIsPrefix</code></td>
@@ -1732,22 +1667,18 @@ process only.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>memory_limit</code></td>
-<td><code>string|int</code></td>
-<td>50% of <code>memory_limit</code> INI value</td>
-<td>Limit of how much memory can PHP allocate to allow store items.</td>
+<td><code>max_items</code></td>
+<td><code>int</code></td>
+<td><code>0</code> (unlimited)</td>
+<td>Limit of how many cache items are allowed to be stored. Available with v3.0 of the <code>Memory</code> adapter</td>
 </tr>
 </tbody>
 </table></div>
 <blockquote>
-<h4 id="memory-limit">Memory Limit</h4>
-<p>The adapter has the following behavior with regards to the memory limit:</p>
+<h4 id="max-items">Max Items</h4>
+<p>The adapter has the following behavior in regard to the <code>max_items</code> option:</p>
 <ul>
-<li>If the consumed memory exceeds the limit provided, an <code>OutOfSpaceException</code>
-    &gt;   is thrown.</li>
-<li>A number less the or equal to zero disables the memory limit.</li>
-<li>When a value is provided for the memory limit, the value is measured in
-    &gt;   bytes. Shorthand notation may also be provided.</li>
+<li>If the items persisted to the memory cache are exceeding the limit, a new item will be stored while the oldest item will be removed</li>
 </ul>
 <h3 id="current-process-only">Current process only</h3>
 <p>All stored items will be lost on termination of the script. For web-facing
@@ -1808,7 +1739,7 @@ library using the following:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>id</code></td>
+<td><code>objectId</code></td>
 <td><code>string</code></td>
 <td style="text-align: left;">The primary key within the mongo collection.</td>
 </tr>
