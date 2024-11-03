@@ -24,10 +24,10 @@ final class CacheItem implements CacheItemInterface
      */
     private ?int $expiration = null;
 
-    private ClockInterface $clock;
+    private readonly ClockInterface $clock;
 
     public function __construct(
-        private string $key,
+        private readonly string $key,
         private mixed $value,
         /**
          * True if the cache item lookup resulted in a cache hit or if they item is deferred or successfully saved
