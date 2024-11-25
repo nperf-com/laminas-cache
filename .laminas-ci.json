@@ -1,5 +1,8 @@
 {
     "backwardCompatibilityCheck": true,
+    "ignore_php_platform_requirements": {
+        "8.4": true
+    },
     "additional_checks": [
         {
             "name": "Unit tests with psr/cache v2",
