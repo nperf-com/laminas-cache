@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 ## Installation
 
 ### Using Composer
@@ -13,3 +14,4 @@ $ composer require laminas/laminas-cache
         <a href="/laminas-cache/v3/application-integration/usage-in-a-laminas-mvc-application/">Usage in a laminas-mvc application</a>
     </li>
 </ul>
+<!-- markdownlint-enable -->
