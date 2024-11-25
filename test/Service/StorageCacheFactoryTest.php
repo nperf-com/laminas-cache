@@ -43,10 +43,22 @@ final class StorageCacheFactoryTest extends TestCase
             ->with($this->config['cache'])
             ->willReturn($this->createMock(StorageInterface::class));
 
+        $invokedCount = self::exactly(2);
         $this->container
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('get')
-            ->withConsecutive(['config'], [StorageAdapterFactoryInterface::class])
+            ->with(self::callback(static function (string $arg) use ($invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame('config', $arg);
+                        return true;
+                    case 2:
+                        self::assertSame(StorageAdapterFactoryInterface::class, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnOnConsecutiveCalls($this->config, $factory);
 
         ($this->factory)($this->container);
@@ -66,10 +78,22 @@ final class StorageCacheFactoryTest extends TestCase
             ->with($this->config['cache'])
             ->willReturn($this->createMock(StorageInterface::class));
 
+        $invokedCount = self::exactly(2);
         $this->container
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('get')
-            ->withConsecutive(['config'], [StorageAdapterFactoryInterface::class])
+            ->with(self::callback(static function (string $arg) use ($invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame('config', $arg);
+                        return true;
+                    case 2:
+                        self::assertSame(StorageAdapterFactoryInterface::class, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnOnConsecutiveCalls($this->config, $factory);
 
         ($this->factory)($this->container);

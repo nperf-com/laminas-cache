@@ -28,6 +28,7 @@ use ReflectionMethod;
 use function array_keys;
 use function array_merge;
 use function array_unique;
+use function array_values;
 use function call_user_func_array;
 use function count;
 use function current;
@@ -772,7 +773,7 @@ final class AbstractAdapterTest extends TestCase
                 }
             }
             $adapter = $this->getMockBuilder(AbstractAdapter::class)
-                ->onlyMethods(array_unique($methods))
+                ->onlyMethods(array_values(array_unique($methods)))
                 ->disableArgumentCloning()
                 ->getMock();
         }

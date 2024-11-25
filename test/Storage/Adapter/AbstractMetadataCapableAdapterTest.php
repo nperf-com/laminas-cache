@@ -18,6 +18,7 @@ use function array_keys;
 use function array_map;
 use function array_merge;
 use function array_unique;
+use function array_values;
 use function call_user_func_array;
 use function count;
 use function ucfirst;
@@ -39,7 +40,7 @@ final class AbstractMetadataCapableAdapterTest extends TestCase
      *     3: array|null
      * }>
      */
-    public function simpleEventHandlingMethodDefinitions(): array
+    public static function simpleEventHandlingMethodDefinitions(): array
     {
         return [
             //    name, internalName, args, returnValue
@@ -67,7 +68,7 @@ final class AbstractMetadataCapableAdapterTest extends TestCase
                 }
             }
             $adapter = $this->getMockBuilder(AbstractMetadataCapableAdapter::class)
-                ->onlyMethods(array_unique($methods))
+                ->onlyMethods(array_values(array_unique($methods)))
                 ->disableArgumentCloning()
                 ->getMock();
         }

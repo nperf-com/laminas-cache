@@ -66,10 +66,10 @@ final class SimpleCacheDecoratorTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:Capabilities}>
      */
-    public function unsupportedCapabilities(): Generator
+    public static function unsupportedCapabilities(): Generator
     {
         yield 'minimum key length <64 characters' => [
-            $this->createCapabilities(null, true, 63),
+            self::createCapabilities(null, true, 63),
         ];
     }
 
@@ -85,7 +85,7 @@ final class SimpleCacheDecoratorTest extends TestCase
      * @param SupportedDataTypesArrayShape|null $supportedDataTypes
      * @param int<-1,max> $maxKeyLength
      */
-    private function createCapabilities(
+    private static function createCapabilities(
         ?array $supportedDataTypes = null,
         bool $ttlSupported = true,
         int $maxKeyLength = -1
@@ -108,7 +108,7 @@ final class SimpleCacheDecoratorTest extends TestCase
         bool $ttlSupported = true,
         int $maxKeyLength = -1
     ): void {
-        $capabilities = $this->createCapabilities(
+        $capabilities = self::createCapabilities(
             $supportedDataTypes,
             $ttlSupported,
             $maxKeyLength
@@ -131,7 +131,7 @@ final class SimpleCacheDecoratorTest extends TestCase
      *
      * @return non-empty-array<non-empty-string,array{string,string}>
      */
-    public function invalidKeyProvider(): array
+    public static function invalidKeyProvider(): array
     {
         return [
             'brace-start'   => ['key{', 'cannot contain'],
@@ -151,7 +151,7 @@ final class SimpleCacheDecoratorTest extends TestCase
      *
      * @return non-empty-array<non-empty-string,array{int}>
      */
-    public function invalidatingTtls(): array
+    public static function invalidatingTtls(): array
     {
         return [
             'zero'         => [0],
@@ -270,10 +270,22 @@ final class SimpleCacheDecoratorTest extends TestCase
             ->method('getTtl')
             ->willReturn($originalTtl);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([$ttl], [$originalTtl])
+            ->with(self::callback(static function (int $arg) use ($ttl, $originalTtl, $invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame($ttl, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame($originalTtl, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $this->storage
@@ -408,10 +420,22 @@ final class SimpleCacheDecoratorTest extends TestCase
             ->method('getTtl')
             ->willReturn($originalTtl);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([$ttl], [$originalTtl])
+            ->with(self::callback(static function (int $arg) use ($ttl, $originalTtl, $invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame($ttl, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame($originalTtl, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $this->storage
@@ -654,10 +678,22 @@ final class SimpleCacheDecoratorTest extends TestCase
             ->method('getTtl')
             ->willReturn($originalTtl);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([$ttl], [$originalTtl])
+            ->with(self::callback(static function (int $arg) use ($ttl, $originalTtl, $invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame($ttl, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame($originalTtl, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $this->storage
@@ -686,10 +722,22 @@ final class SimpleCacheDecoratorTest extends TestCase
             ->method('getTtl')
             ->willReturn($originalTtl);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([$ttl], [$originalTtl])
+            ->with(self::callback(static function (int $arg) use ($ttl, $originalTtl, $invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame($ttl, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame($originalTtl, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $this->storage
@@ -819,10 +867,22 @@ final class SimpleCacheDecoratorTest extends TestCase
             ->method('getTtl')
             ->willReturn($originalTtl);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([$ttl], [$originalTtl])
+            ->with(self::callback(static function (int $arg) use ($ttl, $originalTtl, $invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame($ttl, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame($originalTtl, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $this->storage
@@ -933,7 +993,7 @@ final class SimpleCacheDecoratorTest extends TestCase
     /**
      * @return array<string,array{0:bool}>
      */
-    public function hasResultProvider(): array
+    public static function hasResultProvider(): array
     {
         return [
             'true'  => [true],
@@ -976,7 +1036,7 @@ final class SimpleCacheDecoratorTest extends TestCase
 
     public function testUseTtlFromOptionsWhenNotProvidedOnSet(): void
     {
-        $capabilities = $this->createCapabilities();
+        $capabilities = self::createCapabilities();
 
         $storage = new TestAsset\TtlStorage(['ttl' => 20]);
         $storage->setCapabilities($capabilities);
@@ -989,7 +1049,7 @@ final class SimpleCacheDecoratorTest extends TestCase
 
     public function testUseTtlFromOptionsWhenNotProvidedOnSetMultiple(): void
     {
-        $capabilities = $this->createCapabilities();
+        $capabilities = self::createCapabilities();
 
         $storage = new TestAsset\TtlStorage(['ttl' => 20]);
         $storage->setCapabilities($capabilities);
@@ -1072,7 +1132,7 @@ final class SimpleCacheDecoratorTest extends TestCase
     public function testWillUsePcreMaximumQuantifierLengthIfAdapterAllowsMoreThanThat(): void
     {
         $storage      = $this->createMock(StorageInterface::class);
-        $capabilities = $this->createCapabilities(
+        $capabilities = self::createCapabilities(
             null,
             ttlSupported: true,
             maxKeyLength: SimpleCacheDecorator::$pcreMaximumQuantifierLength
@@ -1110,7 +1170,7 @@ final class SimpleCacheDecoratorTest extends TestCase
     {
         $storage = $this->createMock(StorageInterface::class);
 
-        $capabilities = $this->createCapabilities();
+        $capabilities = self::createCapabilities();
 
         $storage
             ->method('getCapabilities')

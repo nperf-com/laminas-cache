@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Exception/BadMethodCallException.php">
     <UnusedClass>
       <code><![CDATA[BadMethodCallException]]></code>
@@ -336,12 +336,12 @@
       <code><![CDATA[TotalSpaceCapableInterface]]></code>
     </UnusedClass>
   </file>
-  <file src="test/Pattern/AbstractCommonPatternTest.php">
+  <file src="test/Pattern/AbstractCommonPatternTestCase.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[getCommonPatternNamesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/Pattern/AbstractCommonStoragePatternTest.php">
+  <file src="test/Pattern/AbstractCommonStoragePatternTestCase.php">
     <NonInvariantDocblockPropertyType>
       <code><![CDATA[$pattern]]></code>
       <code><![CDATA[$pattern]]></code>
@@ -396,10 +396,6 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="test/Psr/CacheItemPool/CacheItemPoolDecoratorTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$keys]]></code>
       <code><![CDATA[$keys]]></code>
@@ -438,13 +434,6 @@
     </InvalidArgument>
   </file>
   <file src="test/Psr/SimpleCache/SimpleCacheDecoratorTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
     <MissingReturnType>
       <code><![CDATA[testHasProxiesToStorage]]></code>
       <code><![CDATA[testSetMultipleShouldRaisePsrInvalidArgumentExceptionForInvalidKeys]]></code>
@@ -453,23 +442,6 @@
       <code><![CDATA[testSetShouldRaisePsrInvalidArgumentExceptionForInvalidKeys]]></code>
       <code><![CDATA[testSetShouldRemoveItemFromCacheIfTtlIsBelow1]]></code>
     </MissingReturnType>
-  </file>
-  <file src="test/Service/StorageAdapterFactoryFactoryTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
-  </file>
-  <file src="test/Service/StorageAdapterFactoryTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
-  </file>
-  <file src="test/Service/StorageCacheFactoryTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[withConsecutive]]></code>
-      <code><![CDATA[withConsecutive]]></code>
-    </DeprecatedMethod>
   </file>
   <file src="test/StaticAnalysis/AdapterPluginManagerTypes.php">
     <UnusedClass>
@@ -482,6 +454,12 @@
     </UnusedClass>
   </file>
   <file src="test/Storage/Adapter/AbstractAdapterTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[disableArgumentCloning]]></code>
+      <code><![CDATA[getMockForAbstractClass]]></code>
+      <code><![CDATA[returnValue]]></code>
+      <code><![CDATA[returnValue]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$success]]></code>
     </MixedArgument>
@@ -494,6 +472,17 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[simpleEventHandlingMethodDefinitions]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Storage/Adapter/AbstractMetadataCapableAdapterTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[disableArgumentCloning]]></code>
+      <code><![CDATA[getMockForAbstractClass]]></code>
+    </DeprecatedMethod>
+  </file>
+  <file src="test/Storage/Adapter/AdapterOptionsTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMockForAbstractClass]]></code>
+    </DeprecatedMethod>
   </file>
   <file src="test/Storage/Adapter/TestAsset/AdapterWithStorageAndEventsCapableInterface.php">
     <MissingReturnType>
@@ -513,9 +502,6 @@
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
     </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code><![CDATA[setMethods]]></code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$cb]]></code>
       <code><![CDATA[$cb]]></code>
@@ -554,6 +540,9 @@
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[getMockForAbstractClass]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$cb]]></code>
       <code><![CDATA[$cb]]></code>
@@ -568,9 +557,6 @@
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
       <code><![CDATA[$this->adapter->getEventManager()]]></code>
     </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code><![CDATA[setMethods]]></code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$cb]]></code>
       <code><![CDATA[$cb]]></code>

@@ -11,7 +11,7 @@ use Laminas\EventManager\Test\EventListenerIntrospectionTrait;
 
 use function array_shift;
 
-final class IgnoreUserAbortTest extends AbstractCommonPluginTest
+final class IgnoreUserAbortTest extends AbstractCommonPluginTestCase
 {
     use EventListenerIntrospectionTrait;
 
@@ -27,7 +27,7 @@ final class IgnoreUserAbortTest extends AbstractCommonPluginTest
         $this->plugin->setOptions($this->options);
     }
 
-    public function getCommonPluginNamesProvider(): array
+    public static function getCommonPluginNamesProvider(): array
     {
         return [
             'lowercase with underscore' => ['ignore_user_abort'],

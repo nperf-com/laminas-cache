@@ -10,7 +10,7 @@ use Laminas\Cache\Storage\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractCommonPluginTest extends TestCase
+abstract class AbstractCommonPluginTestCase extends TestCase
 {
     protected PluginInterface $plugin;
 
@@ -19,7 +19,7 @@ abstract class AbstractCommonPluginTest extends TestCase
      *
      * @return iterable<array-key,array{0:string}>
      */
-    abstract public function getCommonPluginNamesProvider(): iterable;
+    abstract public static function getCommonPluginNamesProvider(): iterable;
 
     /**
      * @dataProvider getCommonPluginNamesProvider

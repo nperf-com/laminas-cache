@@ -47,7 +47,7 @@ final class StorageAdapterFactoryTest extends TestCase
     /**
      * @return Generator<non-empty-string,array{0:non-empty-string,1:array<string,mixed>}>
      */
-    public function storageConfigurations(): Generator
+    public static function storageConfigurations(): Generator
     {
         yield 'Storage without options' => [
             'Foo',
@@ -63,7 +63,7 @@ final class StorageAdapterFactoryTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:list<PluginArrayConfigurationWithPriorityType>}>
      */
-    public function pluginConfigurations(): Generator
+    public static function pluginConfigurations(): Generator
     {
         yield 'list of plugin configurations' => [
             [
@@ -77,7 +77,7 @@ final class StorageAdapterFactoryTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:array<mixed>,1:non-empty-string}>
      */
-    public function invalidConfigurations(): Generator
+    public static function invalidConfigurations(): Generator
     {
         yield 'empty map' => [
             [],
@@ -153,21 +153,18 @@ final class StorageAdapterFactoryTest extends TestCase
 
         $plugin = $this->createMock(PluginInterface::class);
 
-        $consecutivePluginCreationArguments = $consecutivePluginAddArguments = [];
-        foreach ($plugins as $pluginConfiguration) {
-            $consecutivePluginCreationArguments[] = [$pluginConfiguration];
-            $priority                             = $pluginConfiguration['priority']
-                ?? StorageAdapterFactory::DEFAULT_PLUGIN_PRIORITY;
-            $consecutivePluginAddArguments[]      = [$plugin, $priority];
-        }
-
         $pluginCount = count($plugins);
 
+        $createFromArrayInvokedCount = self::exactly($pluginCount);
         $this
             ->plugins
-            ->expects(self::exactly($pluginCount))
+            ->expects($createFromArrayInvokedCount)
             ->method('createFromArrayConfiguration')
-            ->withConsecutive(...$consecutivePluginCreationArguments)
+            ->with(self::callback(static function ($arg) use ($plugins, $createFromArrayInvokedCount): bool {
+                $invocation = $createFromArrayInvokedCount->numberOfInvocations() - 1;
+                self::assertSame($plugins[$invocation], $arg);
+                return true;
+            }))
             ->willReturn($plugin);
 
         $adapterMock
@@ -176,10 +173,18 @@ final class StorageAdapterFactoryTest extends TestCase
             ->with($plugin)
             ->willReturn(false);
 
+        $addPluginInvokedCount = self::exactly($pluginCount);
         $adapterMock
-            ->expects(self::exactly($pluginCount))
+            ->expects($addPluginInvokedCount)
             ->method('addPlugin')
-            ->withConsecutive(...$consecutivePluginAddArguments);
+            ->with(self::callback(static function (...$args) use ($plugins, $addPluginInvokedCount, $plugin) {
+                $invocation = $addPluginInvokedCount->numberOfInvocations() - 1;
+                $config     = $plugins[$invocation];
+                $priority   = $config['priority'] ?? StorageAdapterFactory::DEFAULT_PLUGIN_PRIORITY;
+                $expect     = [$plugin, $priority];
+                self::assertSame($expect, $args);
+                return true;
+            }));
 
         $this->factory->create('foo', [], $plugins);
     }

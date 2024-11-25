@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace LaminasTest\Cache\Storage;
 
-use Laminas\Cache\Exception\ExtensionNotLoadedException;
 use Laminas\Cache\Storage\AdapterPluginManager;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\ServiceManager\AbstractSingleInstancePluginManager;
-use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 
 class AdapterPluginManagerTest extends TestCase
@@ -20,19 +19,18 @@ class AdapterPluginManagerTest extends TestCase
     }
 
     /**
-     * @dataProvider aliasProvider
+     * This inherited test has been disabled using a bogus PHP version requirement
+     *
+     * The plugin manager does not specify any aliases at all, so PHPUnit will complain about the empty data provider.
+     * We cannot delete the method either and nor can we skip it inside the method due to the method parameter
+     * requirements.
+     *
+     * @psalm-suppress PossiblyUnusedParam
      */
+    #[RequiresPhp('<8.0')]
     public function testPluginAliasesResolve(string $alias, string $expected)
     {
-        try {
-            $this->commonPluginAliasesResolve($alias, $expected);
-        } catch (ServiceNotCreatedException $e) {
-            // if we get as far as "extension not loaded" we've hit the constructor: alias has resolved
-            if (! $e->getPrevious() instanceof ExtensionNotLoadedException) {
-                self::fail($e->getMessage());
-            }
-        }
-        $this->addToAssertionCount(1);
+        self::markTestSkipped('There are no aliases to test');
     }
 
     protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
