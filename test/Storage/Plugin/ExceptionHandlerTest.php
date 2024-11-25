@@ -14,7 +14,7 @@ use LaminasTest\Cache\Storage\TestAsset\MockAdapter;
 
 use function array_shift;
 
-final class ExceptionHandlerTest extends AbstractCommonPluginTest
+final class ExceptionHandlerTest extends AbstractCommonPluginTestCase
 {
     use EventListenerIntrospectionTrait;
 
@@ -32,7 +32,7 @@ final class ExceptionHandlerTest extends AbstractCommonPluginTest
         parent::setUp();
     }
 
-    public function getCommonPluginNamesProvider(): array
+    public static function getCommonPluginNamesProvider(): array
     {
         return [
             'lowercase with underscore' => ['exception_handler'],

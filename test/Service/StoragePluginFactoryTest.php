@@ -29,7 +29,7 @@ final class StoragePluginFactoryTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:array<mixed>,1:non-empty-string}>
      */
-    public function invalidConfigurations(): Generator
+    public static function invalidConfigurations(): Generator
     {
         yield 'empty map' => [
             [],

@@ -17,9 +17,9 @@ use function ob_start;
 
 /**
  * @group      Laminas_Cache
- * @template-extends AbstractCommonStoragePatternTest<ObjectCache>
+ * @template-extends AbstractCommonStoragePatternTestCase<ObjectCache>
  */
-class ObjectCacheTest extends AbstractCommonStoragePatternTest
+class ObjectCacheTest extends AbstractCommonStoragePatternTestCase
 {
     protected function setUp(): void
     {

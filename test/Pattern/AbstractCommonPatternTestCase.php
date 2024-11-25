@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @group      Laminas_Cache
  * @covers Laminas\Cache\Pattern\PatternOptions<extended>
  */
-abstract class AbstractCommonPatternTest extends TestCase
+abstract class AbstractCommonPatternTestCase extends TestCase
 {
     protected PatternInterface $pattern;
 

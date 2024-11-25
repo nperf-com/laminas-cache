@@ -26,9 +26,9 @@ function bar(): string
 
 /**
  * @group      Laminas_Cache
- * @template-extends AbstractCommonStoragePatternTest<CallbackCache>
+ * @template-extends AbstractCommonStoragePatternTestCase<CallbackCache>
  */
-class CallbackCacheTest extends AbstractCommonStoragePatternTest
+class CallbackCacheTest extends AbstractCommonStoragePatternTestCase
 {
     protected function setUp(): void
     {

@@ -13,7 +13,7 @@ use LaminasTest\Cache\Storage\TestAsset\OptimizableMockAdapter;
 
 use function array_shift;
 
-final class OptimizeByFactorTest extends AbstractCommonPluginTest
+final class OptimizeByFactorTest extends AbstractCommonPluginTestCase
 {
     use EventListenerIntrospectionTrait;
 
@@ -31,7 +31,7 @@ final class OptimizeByFactorTest extends AbstractCommonPluginTest
         $this->plugin->setOptions($this->options);
     }
 
-    public function getCommonPluginNamesProvider(): array
+    public static function getCommonPluginNamesProvider(): array
     {
         return [
             'lowercase with underscore' => ['optimize_by_factor'],
@@ -77,7 +77,7 @@ final class OptimizeByFactorTest extends AbstractCommonPluginTest
     public function testOptimizeByFactor(): void
     {
         $adapter = $this->getMockBuilder($this->adapter::class)
-            ->setMethods(['optimize'])
+            ->onlyMethods(['optimize'])
             ->getMock();
 
         // test optimize will be called

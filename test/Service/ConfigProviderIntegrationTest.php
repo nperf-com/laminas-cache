@@ -44,7 +44,7 @@ final class ConfigProviderIntegrationTest extends TestCase
     /**
      * @return Generator<string, array{string}>
      */
-    public function servicesProvidedByConfigProvider(): Generator
+    public static function servicesProvidedByConfigProvider(): Generator
     {
         $provider     = new ConfigProvider();
         $dependencies = $provider->getDependencyConfig();

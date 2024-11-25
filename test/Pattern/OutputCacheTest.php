@@ -15,9 +15,9 @@ use function ob_start;
 /**
  * @group      Laminas_Cache
  * @covers \Laminas\Cache\Pattern\OutputCache<extended>
- * @template-extends AbstractCommonStoragePatternTest<OutputCache>
+ * @template-extends AbstractCommonStoragePatternTestCase<OutputCache>
  */
-class OutputCacheTest extends AbstractCommonStoragePatternTest
+class OutputCacheTest extends AbstractCommonStoragePatternTestCase
 {
     /**
      * Nesting level of output buffering used to restore on tearDown(): void

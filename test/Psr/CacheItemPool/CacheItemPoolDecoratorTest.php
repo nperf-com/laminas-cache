@@ -250,7 +250,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
     public function testGetItemsInvalidKeyThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $keys = ['ok'] + $this->getInvalidKeys();
+        $keys = ['ok'] + self::getInvalidKeys();
 
         assert($this->adapter instanceof CacheItemPoolDecorator);
         $this->adapter->getItems($keys);
@@ -325,10 +325,22 @@ final class CacheItemPoolDecoratorTest extends TestCase
             ->with('foo')
             ->willReturn(null);
 
+        $invokedCount = self::exactly(2);
         $this->options
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('setTtl')
-            ->withConsecutive([3600], [0])
+            ->with(self::callback(static function ($arg) use ($invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertEquals(3600, $arg);
+                        return true;
+                    case 2:
+                        self::assertEquals(0, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnSelf();
 
         $storage
@@ -738,10 +750,23 @@ final class CacheItemPoolDecoratorTest extends TestCase
     {
         $keys    = ['foo', 'bar', 'baz'];
         $storage = $this->storage;
+
+        $invokedCount = self::exactly(2);
         $storage
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('hasItem')
-            ->withConsecutive(['foo'], ['bar'])
+            ->with(self::callback(static function (string $arg) use ($invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame('foo', $arg);
+                        return true;
+                    case 2:
+                        self::assertSame('bar', $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturn(false);
 
         assert($this->adapter instanceof CacheItemPoolDecorator);
@@ -762,7 +787,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
     public function testDeleteItemsInvalidKeyThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $keys = ['ok'] + $this->getInvalidKeys();
+        $keys = ['ok'] + self::getInvalidKeys();
         assert($this->adapter instanceof CacheItemPoolDecorator);
         $this->adapter->deleteItems($keys);
     }
@@ -846,15 +871,15 @@ final class CacheItemPoolDecoratorTest extends TestCase
      * @return array<int,array{0:string|object}>
      * @psalm-return list<array{0:string|object}>
      */
-    public function invalidKeyProvider(): array
+    public static function invalidKeyProvider(): array
     {
-        return array_map(static fn($v): array => [$v], $this->getInvalidKeys());
+        return array_map(static fn($v): array => [$v], self::getInvalidKeys());
     }
 
     /**
      * @return list<string|object>
      */
-    private function getInvalidKeys(): array
+    private static function getInvalidKeys(): array
     {
         return [
             'key{',
@@ -891,7 +916,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
      */
     public function testWillVerifyKeyExistenceByUsingHasItemsWhenDeletionWasNotSuccessful(
         bool $exists,
-        bool $successful
+        bool $successful,
     ): void {
         $this->storage
             ->expects(self::once())
@@ -946,7 +971,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
     /**
      * @return array<non-empty-string,array{0:bool,1:bool}>
      */
-    public function deletionVerificationProvider(): array
+    public static function deletionVerificationProvider(): array
     {
         return [
             'deletion failed due to hasItems states the key still exists'       => [true, false],
@@ -958,7 +983,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
     {
         $storage      = $this->createMock(FlushableStorageAdapterInterface::class);
         $capabilities = $this->createCapabilities(
-            maxKeyLength: SimpleCacheDecorator::$pcreMaximumQuantifierLength
+            maxKeyLength: SimpleCacheDecorator::$pcreMaximumQuantifierLength,
         );
 
         $storage
@@ -970,7 +995,7 @@ final class CacheItemPoolDecoratorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'key is too long. Must be no more than %d characters',
-            CacheItemPoolDecorator::$pcreMaximumQuantifierLength - 1
+            CacheItemPoolDecorator::$pcreMaximumQuantifierLength - 1,
         ));
         $decorator->getItem($key);
     }
@@ -982,10 +1007,10 @@ final class CacheItemPoolDecoratorTest extends TestCase
             preg_match(
                 sprintf(
                     '/^.{%d,}$/',
-                    CacheItemPoolDecorator::$pcreMaximumQuantifierLength
+                    CacheItemPoolDecorator::$pcreMaximumQuantifierLength,
                 ),
-                ''
-            )
+                '',
+            ),
         );
     }
 

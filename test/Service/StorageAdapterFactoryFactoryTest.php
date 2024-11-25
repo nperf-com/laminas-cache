@@ -26,10 +26,22 @@ final class StorageAdapterFactoryFactoryTest extends TestCase
         $adapters      = $this->createMock(PluginManagerInterface::class);
         $pluginFactory = $this->createMock(StoragePluginFactoryInterface::class);
         $container     = $this->createMock(ContainerInterface::class);
+        $invokedCount  = self::exactly(2);
         $container
-            ->expects(self::exactly(2))
+            ->expects($invokedCount)
             ->method('get')
-            ->withConsecutive([AdapterPluginManager::class], [StoragePluginFactoryInterface::class])
+            ->with(self::callback(static function (string $arg) use ($invokedCount): bool {
+                switch ($invokedCount->numberOfInvocations()) {
+                    case 1:
+                        self::assertSame(AdapterPluginManager::class, $arg);
+                        return true;
+                    case 2:
+                        self::assertSame(StoragePluginFactoryInterface::class, $arg);
+                        return true;
+                    default:
+                        return false;
+                }
+            }))
             ->willReturnOnConsecutiveCalls($adapters, $pluginFactory);
 
         ($this->factory)($container);

@@ -21,7 +21,7 @@ use function array_shift;
 use function serialize;
 use function str_ends_with;
 
-final class SerializerTest extends AbstractCommonPluginTest
+final class SerializerTest extends AbstractCommonPluginTestCase
 {
     use EventListenerIntrospectionTrait;
 
@@ -37,7 +37,7 @@ final class SerializerTest extends AbstractCommonPluginTest
         $this->plugin->setOptions($this->options);
     }
 
-    public function getCommonPluginNamesProvider(): array
+    public static function getCommonPluginNamesProvider(): array
     {
         return [
             'lowercase' => ['serializer'],

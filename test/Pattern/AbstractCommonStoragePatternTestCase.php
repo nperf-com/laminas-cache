@@ -15,7 +15,7 @@ use function sprintf;
  * @psalm-suppress MissingConstructor
  * @template TPattern of PatternInterface&StorageCapableInterface
  */
-abstract class AbstractCommonStoragePatternTest extends AbstractCommonPatternTest
+abstract class AbstractCommonStoragePatternTestCase extends AbstractCommonPatternTestCase
 {
     protected StorageInterface&MockObject $storage;
 
