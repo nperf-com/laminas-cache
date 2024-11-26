@@ -90,7 +90,7 @@ final class SimpleCacheDecoratorTest extends TestCase
         bool $ttlSupported = true,
         int $maxKeyLength = -1
     ): Capabilities {
-        $supportedDataTypes = $supportedDataTypes ?? self::SIMPLE_CACHE_REQUIRED_TYPES;
+        $supportedDataTypes ??= self::SIMPLE_CACHE_REQUIRED_TYPES;
         return new Capabilities(
             maxKeyLength: $maxKeyLength,
             ttlSupported: $ttlSupported,

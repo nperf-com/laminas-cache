@@ -23,8 +23,8 @@ final class StorageAdapterFactory implements StorageAdapterFactoryInterface
     public const DEFAULT_PLUGIN_PRIORITY = 1;
 
     public function __construct(
-        private PluginManagerInterface $adapters,
-        private StoragePluginFactoryInterface $pluginFactory
+        private readonly PluginManagerInterface $adapters,
+        private readonly StoragePluginFactoryInterface $pluginFactory
     ) {
     }
 

@@ -14,7 +14,7 @@ use function assert;
 
 final class StoragePluginFactory implements StoragePluginFactoryInterface
 {
-    public function __construct(private PluginManagerInterface $plugins)
+    public function __construct(private readonly PluginManagerInterface $plugins)
     {
     }
 

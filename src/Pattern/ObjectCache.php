@@ -20,7 +20,7 @@ use function strtolower;
 
 final class ObjectCache extends AbstractStorageCapablePattern implements Stringable
 {
-    private CallbackCache $callbackCache;
+    private readonly CallbackCache $callbackCache;
 
     /**
      * @param StorageInterface<AdapterOptions> $storage
@@ -154,7 +154,7 @@ final class ObjectCache extends AbstractStorageCapablePattern implements Stringa
         if (! method_exists($object, $method)) {
             throw new Exception\RuntimeException(sprintf(
                 '%s only accepts methods which are implemented by %s',
-                $this::class,
+                self::class,
                 $object::class,
             ));
         }
