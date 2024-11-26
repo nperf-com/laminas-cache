@@ -84,17 +84,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
-                                    </div>
-                                </div>
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
                                 <div class="row align-items-center">
@@ -479,10 +468,12 @@ This allows per-storage Metadata which can differ depending on the storage being
 <ul>
 <li><code>AbstractAdapter</code> and <code>StorageInterface</code> are not aware of the methods <code>getMetadata</code> anymore. These were moved to the new <code>MetadataCapableInterface</code></li>
 <li><code>Capabilities</code> do not provide <code>supportedMetadata</code> anymore. The supported metadata is tied to the used storage adapter and thus, was already requiring projects to explicitly know the exact implementation of the cache backend in case of using these metadatas anyway</li>
-<li><code>KeyListIterator</code> and the corresponding <code>IteratorInterface</code> does not provide the <code>mode</code> <code>CURRENT_AS_METADATA</code> anymore </li>
+<li><code>KeyListIterator</code> and the corresponding <code>IteratorInterface</code> does not provide the <code>mode</code> <code>CURRENT_AS_METADATA</code> anymore</li>
 <li><code>PluginOptions#getSerializer</code> does not create a serializer anymore if a <code>string</code> option was passed, instead, the <code>string</code> is returned</li>
-<li>Increment and decrement feature was removed from <code>StorageInterface</code>, so there is no more <code>StorageInterface#incrementItem</code>, <code>StorageInterface#decrementItem</code>, <code>StorageInterface#decrementItems</code> and <code>StorageInterface#incrementItems</code></li>
+<li>Increment and decrement feature was removed from <code>StorageInterface</code>, so there is no more <code>StorageInterface#incrementItem</code>, <code>StorageInterface#decrementItem</code>, <code>StorageInterface#decrementItems</code> and <code>StorageInterface#incrementItems</code><ul>
 <li>this also removes <code>incrementItem</code>, <code>incrementItems</code>, <code>decrementItem</code>, <code>derementItems</code> events (<code>pre</code>, <code>post</code> and <code>exception</code>)</li>
+</ul>
+</li>
 <li>Every method now has native return types</li>
 <li>Every property now has native types</li>
 <li>Every method argument now has native types</li>
@@ -723,7 +714,7 @@ This allows per-storage Metadata which can differ depending on the storage being
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>

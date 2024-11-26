@@ -84,17 +84,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
-                                    </div>
-                                </div>
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
                                 <div class="row align-items-center">
@@ -509,6 +498,7 @@ final class IndexController extends AbstractActionController
 <h2 id="register-controller">Register Controller</h2>
 <p>To <a href="https://docs.laminas.dev/laminas-mvc/quick-start/#create-a-route">register the controller</a> for the application, extend the configuration of the module.
 Add the following lines to the module configuration file, e.g. <code>module/Application/config/module.config.php</code>:</p>
+<!-- markdownlint-disable no-inline-html -->
 <pre class="language-php" data-line="3,8"><code>
 namespace Application;
 
@@ -523,12 +513,14 @@ return [
     // …
 ];
 </code></pre>
+<!-- markdownlint-enable no-inline-html -->
 
 <p>The example uses the <a href="https://docs.laminas.dev/laminas-servicemanager/config-abstract-factory/">config factory from laminas-servicemanager</a> which allows any string to be used to fetch a service from the application service container, like the name of the configured cache: <code>default-cache</code>.</p>
 <p>This means that the factory <a href="https://docs.laminas.dev/laminas-servicemanager/config-abstract-factory/#configuration">searches for an appropriate configuration</a> to create the controller and to resolve the constructor dependencies for the controller class.</p>
 <h3 id="add-factory-configuration-for-controller">Add Factory Configuration For Controller</h3>
 <p>Extend the module configuration file to add the configuration for the controller.
 Use the name of the cache (<code>default-cache</code>), which was previously defined in the configuration of the caches, to retrieve the related cache storage instance:</p>
+<!-- markdownlint-disable no-inline-html -->
 <pre class="language-php" data-line="11-15"><code>
 namespace Application;
 
@@ -548,10 +540,12 @@ return [
     // …
 ];
 </code></pre>
+<!-- markdownlint-enable no-inline-html -->
 
 <h2 id="using-multiple-caches">Using Multiple Caches</h2>
 <p>The use more than one cache backend, the factory <code>Laminas\Cache\Service\StorageCacheAbstractServiceFactory</code> allows to define multiple cache storages.</p>
 <p>Extend the cache configuration in <code>config/autoload/cache.global.php</code> and add more cache adapters:</p>
+<!-- markdownlint-disable no-inline-html -->
 <pre class="language-php" data-line="9-14"><code>
 return [
     'caches' => [
@@ -570,15 +564,17 @@ return [
     ],
 ];
 </code></pre>
+<!-- markdownlint-enable no-inline-html -->
 
 <div class="admonition missing">
 <p class="admonition-title">Installation Requirements</p>
 <p>
-Make sure that the <a href="#preparation">used storage adapters are installed</a>:
-<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-cache-storage-adapter-memory laminas/laminas-cache-storage-adapter-blackhole</code></pre></p>
+Make sure that the <a href="#preparation">used storage adapters are installed</a>:</p>
 </div>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-cache-storage-adapter-memory laminas/laminas-cache-storage-adapter-blackhole</code></pre>
 <h3 id="change-used-adapter-for-controller">Change Used Adapter for Controller</h3>
 <p>To use a different cache adapter for the controller, change the related module configuration and use one of the previously defined names:</p>
+<!-- markdownlint-disable no-inline-html -->
 <pre class="language-php" data-line="13"><code>
 namespace Application;
 
@@ -598,6 +594,7 @@ return [
     // …
 ];
 </code></pre>
+<!-- markdownlint-enable no-inline-html -->
 
 <h2 id="learn-more">Learn More</h2>
 <ul>
@@ -840,7 +837,7 @@ return [
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>
