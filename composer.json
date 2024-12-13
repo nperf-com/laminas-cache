@@ -1,5 +1,5 @@
 {
-    "name": "laminas/laminas-cache",
+    "name": "nperf-com/laminas-cache",
     "description": "Caching implementation with a variety of storage options, as well as codified caching strategies for callbacks, classes, and output",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -31,10 +31,10 @@
         "laminas": {
             "component": "Laminas\\Cache",
             "config-provider": "Laminas\\Cache\\ConfigProvider"
-        },
-        "branch-alias": {
-            "dev-3.12.x": "3.12.x"
         }
+    },
+    "replace": {
+        "laminas/laminas-cache": "3.12.2"
     },
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
