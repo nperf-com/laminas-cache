@@ -33,7 +33,7 @@
             "config-provider": "Laminas\\Cache\\ConfigProvider"
         },
         "branch-alias": {
-            "dev-3.12.x": "3.12.x-dev"
+            "dev-3.12.x": "3.12.x"
         }
     },
     "require": {
